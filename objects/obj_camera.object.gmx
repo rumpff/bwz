@@ -550,7 +550,7 @@ y_BumpOffset += y_Bump;
           <argument>
             <kind>1</kind>
             <string>/// Draw debug info
-
+exit;
 draw_set_alpha(1);
 draw_set_colour(c_white);
 
@@ -589,7 +589,8 @@ draw_text(x_Camera, y_Camera + Offset_COM, "Camera");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>exit;
+draw_set_alpha(1);
 draw_set_colour(c_black);
 //draw_set_font(fnt_COM);
 draw_set_halign(fa_left);
@@ -628,7 +629,7 @@ draw_text(4, 164, "y_ZoomOut/2: " + string_format(y_ZoomOut/2, 5, 0));
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-
+exit;
 // Zoom out boundary
 
 var X1 = x_Zoom - x_ZoomOut/2,

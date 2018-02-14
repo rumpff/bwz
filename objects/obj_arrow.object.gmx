@@ -35,9 +35,13 @@ if(!m_wallHit)
     {
         var playerObject = obj_gameManager.m_playerArray[i];
                     
-        if (collision_line(x, y, xprevious, yprevious, playerObject, false, false))
-        {           
-            death(playerObject, m_id);
+        //if (collision_line(x, y, xprevious, yprevious, playerObject, false, false))
+        if(place_meeting(x, y, playerObject))
+        {      
+            if(playerObject.m_playerId == m_id &amp;&amp; m_initialCooldown &gt; 0)
+            { } // Prevent player from walking in its own arrow
+            else
+            { death(playerObject, m_id); } // Kill that sucker
         }
     }
 }
@@ -102,6 +106,30 @@ if(!m_wallHit)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Timers
+
+if(m_initialCooldown &gt; 0)
+{ m_initialCooldown--; }
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -143,8 +171,10 @@ if(!m_wallHit)
             <string>/// Initalize variables
 m_moveSpeed = 46;
 m_grav = 0.4;
-m_length = 48;
+m_length = ARROW_LENGTH;
 m_wallHit = false;
+
+m_initialCooldown = 10; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 
 m_moveX = lengthdir_x(m_moveSpeed, m_angle);
 m_moveY = lengthdir_y(m_moveSpeed, m_angle);
@@ -175,12 +205,14 @@ image_yscale = m_moveSpeed / 100;
             <kind>1</kind>
             <string>/// Draw the arrow
 
+draw_set_color(c_white);
+
 var angle = point_direction(x, y, x + m_moveX, y + m_moveY);
 
 var x2 = x + lengthdir_x(m_length, angle);
 var y2 = y + lengthdir_y(m_length, angle);
 
-draw_line_width(x, y, x2, y2, 8);
+draw_line_width(x, y, x2, y2, ARROW_WIDTH);
 </string>
           </argument>
         </arguments>

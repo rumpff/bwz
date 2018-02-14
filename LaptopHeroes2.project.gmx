@@ -3,7 +3,9 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\Easing and Tweening</extension>
+  </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
@@ -16,12 +18,46 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="Easing">
+      <script>scripts\ease_in_back.gml</script>
+      <script>scripts\ease_in_bounce.gml</script>
+      <script>scripts\ease_in_circ.gml</script>
+      <script>scripts\ease_in_cubic.gml</script>
+      <script>scripts\ease_in_elastic.gml</script>
+      <script>scripts\ease_in_expo.gml</script>
+      <script>scripts\ease_in_quad.gml</script>
+      <script>scripts\ease_in_quart.gml</script>
+      <script>scripts\ease_in_quint.gml</script>
+      <script>scripts\ease_in_sine.gml</script>
+      <script>scripts\ease_inout_back.gml</script>
+      <script>scripts\ease_inout_bounce.gml</script>
+      <script>scripts\ease_inout_circ.gml</script>
+      <script>scripts\ease_inout_cubic.gml</script>
+      <script>scripts\ease_inout_elastic.gml</script>
+      <script>scripts\ease_inout_expo.gml</script>
+      <script>scripts\ease_inout_quad.gml</script>
+      <script>scripts\ease_inout_quart.gml</script>
+      <script>scripts\ease_inout_quint.gml</script>
+      <script>scripts\ease_inout_sine.gml</script>
+      <script>scripts\ease_out_back.gml</script>
+      <script>scripts\ease_out_bounce.gml</script>
+      <script>scripts\ease_out_circ.gml</script>
+      <script>scripts\ease_out_cubic.gml</script>
+      <script>scripts\ease_out_elastic.gml</script>
+      <script>scripts\ease_out_expo.gml</script>
+      <script>scripts\ease_out_quad.gml</script>
+      <script>scripts\ease_out_quart.gml</script>
+      <script>scripts\ease_out_quint.gml</script>
+      <script>scripts\ease_out_sine.gml</script>
+      <script>scripts\ease_linear.gml</script>
+    </scripts>
     <script>scripts\death.gml</script>
     <script>scripts\collision_line_multiple.gml</script>
     <script>scripts\draw_text_debug.gml</script>
     <script>scripts\spawn_player.gml</script>
     <script>scripts\shoot_arrow.gml</script>
     <script>scripts\screenshake.gml</script>
+    <script>scripts\draw_bezier.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_player</object>

@@ -151,7 +151,14 @@ if (m_playerId == 0)
 // On the ground
 if (place_meeting(x,y+1,obj_collider)) 
 {
-     m_onGround = true;
+    if(!m_onGround)
+    {
+        // Set squishy landing
+        m_imageXScale = 1.4;
+        m_imageYScale = 0.7;
+    }
+    
+    m_onGround = true;
 }
 else 
 {
@@ -329,6 +336,10 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
       
       effect_create_below(ef_smoke, x, y + 16, 1, c_gray);
    }
+   
+   // Set squishy jump
+   m_imageXScale = 0.6;
+   m_imageYScale = 1.3;
 }
 
 if ((m_vsp &lt; 0) &amp;&amp; (!m_keyJumpHeld)) { 
@@ -437,11 +448,11 @@ x += m_hspFinal;
             <string>/// Vertical Collision
 if (place_meeting(x,y+m_vsp,obj_collider))
 {
-   while(!place_meeting(x, y+sign(m_vsp), obj_collider))
-   {
-      y += sign(m_vsp);
-   }
-   m_vsp = 0;
+    while(!place_meeting(x, y+sign(m_vsp), obj_collider))
+    {
+        y += sign(m_vsp);
+    }
+    m_vsp = 0;
 }
 
 y += m_vsp;
@@ -487,8 +498,8 @@ m_bowDistance = lerp(m_bowDistance, distance, 0.3);
 
 // Position the bow
 var yOffset = sprite_get_height(sprite_index) / 2;
-m_bowX = xprevious + lengthdir_x(m_bowDistance, m_bowAngle);
-m_bowY = (yprevious - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
+m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
+m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
 
 // Control shooting
 if(!m_bowActive)
@@ -504,6 +515,21 @@ else
     m_bowCharge++;
 }
 
+// Animate the string
+
+if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)
+{
+    m_stringDistance = ease_out_elastic(m_stringTimer, 32, -32, m_stringAnimTime)
+    
+    // time the timer
+    if(m_stringTimer &lt; m_stringAnimTime)
+    { m_stringTimer++; }
+}
+else if(m_bowActive)
+{ 
+    m_stringTimer = 0;
+    m_stringDistance = lerp(m_stringDistance, 32, 0.3); 
+}
 </string>
           </argument>
         </arguments>
@@ -526,9 +552,13 @@ else
             <kind>1</kind>
             <string>/// Animate
 
-signMove = sign(move)
+// Lerp scale for squishyness
+m_imageXScale = lerp(m_imageXScale, 1, 0.2);
+m_imageYScale = lerp(m_imageYScale, 1, 0.2);
 
-if (signMove != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageXScale = signMove; }
+signMove = sign(move);
+
+if (signMove != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
    
 if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
 {
@@ -684,6 +714,12 @@ m_bowDistance = 0;
 m_bowX = x;
 m_bowY = y;
 
+m_stringDistance = 0;
+m_stringPixelOffset = 2;
+m_stringAnimTime = 30;
+m_stringTimer = 0;
+
+
 // Keys
 m_keyJump = false;
 m_keyJumpPrev = false;
@@ -705,6 +741,8 @@ m_imageYScale = 1;
 m_imageAngle = 0;
 m_imageBlend = c_white;
 n_imageAlpha = 1;
+
+m_imageDirection = 1;
 
 // Controller
 m_controllerId = 0;
@@ -828,7 +866,7 @@ m_spriteBow = spr_bow;
           <argument>
             <kind>1</kind>
             <string>/// Draw debug info
-//if (m_playerId != 0)
+if (m_playerId != 0)
    exit;
 
 draw_text_debug(0, "lStick: " + string(m_lStickH));
@@ -841,7 +879,7 @@ draw_text_debug(6, "angle: " + string(m_imageAngle));
 draw_text_debug(7, "against wall: " + string(m_againstWall));
 draw_text_debug(8, "DDance timer: " + string(m_dashDanceTimer));
 draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
-draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow)));
+draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow))); 
 </string>
           </argument>
         </arguments>
@@ -870,7 +908,7 @@ var spriteHeight  = sprite_get_height(m_spriteIndex);
 var color = make_colour_hsv(m_playerId * 30, 255, 255);
 
 draw_sprite_ext(m_spriteIndex, m_imageIndex, x, y, // + (spriteHeight / 2)
-m_imageXScale, m_imageYScale, m_imageAngle, color, n_imageAlpha);
+m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, color, n_imageAlpha);
 </string>
           </argument>
         </arguments>
@@ -893,7 +931,39 @@ m_imageXScale, m_imageYScale, m_imageAngle, color, n_imageAlpha);
             <kind>1</kind>
             <string>/// Draw the bow
 
+// Calculate string positions
+var x1, y1, x2, y2, x3, y3;
+var height = sprite_get_height(m_spriteBow) / 2 - m_stringPixelOffset;
+
+x1 = m_bowX + lengthdir_x(height , m_bowAngle - 90);
+y1 = m_bowY + lengthdir_y(height , m_bowAngle - 90);
+
+x2 = m_bowX + lengthdir_x(height , m_bowAngle + 90);
+y2 = m_bowY + lengthdir_y(height , m_bowAngle + 90);
+
+x3 = m_bowX + lengthdir_x(m_stringDistance, m_bowAngle + 180);
+y3 = m_bowY + lengthdir_y(m_stringDistance, m_bowAngle + 180);
+
+// Draw the string
+draw_set_color(c_white);
+
+middle = draw_bezier(x1, y1, x3, y3, x2, y2);
+
+// Draw the bow sprite
 draw_sprite_ext(m_spriteBow, 0, m_bowX, m_bowY, 1, 1, m_bowAngle, c_white, 1);
+
+// Draw a 'fake' arrow, but only if the arrow isn't shot
+if(m_bowActive &amp;&amp; (m_bowCharge &lt;= m_bowFireRate))
+{
+    var x1, y1, x2, y2;
+    x1 = middle[0]
+    y1 = middle[1]
+    
+    x2 = x1 + lengthdir_x(ARROW_LENGTH, m_bowAngle)
+    y2 = y1 + lengthdir_y(ARROW_LENGTH, m_bowAngle)
+    
+    draw_line_width(x1, y1, x2, y2, ARROW_WIDTH);
+}
 </string>
           </argument>
         </arguments>
