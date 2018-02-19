@@ -481,12 +481,12 @@ y += m_vsp;
 // Check if active
 var largStick = max(abs(m_rStickH), abs(m_rStickV))
 
-if(largStick &gt; 0.6)
+if(largStick &gt; 0.8)
 { m_bowActive = true; }
 else { m_bowActive = false; }
 
 // Calculate bow's angle
-if(largStick &gt; 0.3)
+if(largStick &gt; 0.15)
 { m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); }
 
 
@@ -870,7 +870,7 @@ m_spriteBow = spr_bow;
 if (m_playerId != 0)
    exit;
 
-draw_text_debug(0, "lStick: " + string(m_lStickH));
+draw_text_debug(0, "lStick: h " + string(m_lStickH));
 draw_text_debug(1, "lerpstick: " + string(m_lerpedStick));
 draw_text_debug(2, "jumpStick: " + string(m_rTrigger));
 draw_text_debug(3, "hsp: " + string(m_hsp));
@@ -880,9 +880,15 @@ draw_text_debug(6, "angle: " + string(m_imageAngle));
 draw_text_debug(7, "against wall: " + string(m_againstWall));
 draw_text_debug(8, "DDance timer: " + string(m_dashDanceTimer));
 draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
+<<<<<<< HEAD
 draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow))); 
 draw_text_debug(11, "Player 1 score: " + string(obj_gameManager.m_playerScore[0]));
 draw_text_debug(12, "Player 2 score: " + string(obj_gameManager.m_playerScore[1]));
+=======
+draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow)));
+draw_text_debug(11, "rStick h: " + string(m_rStickH));
+draw_text_debug(12, "rStick v: " + string(m_rStickV));
+>>>>>>> 90f32f802caee912c3a77441ca1a85af7fce08df
 </string>
           </argument>
         </arguments>
