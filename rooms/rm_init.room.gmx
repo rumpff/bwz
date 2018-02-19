@@ -11,7 +11,6 @@
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
   <code>global.deathCooldown = 30;
-
 global.playerAmount = 2;
 
 room_goto_next();</code>

@@ -519,7 +519,8 @@ else
 
 if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)
 {
-    m_stringDistance = ease_out_elastic(m_stringTimer, 32, -32, m_stringAnimTime)
+    m_stringDistance = ease_out_elastic(m_stringTimer, ARROW_LENGTH, -ARROW_LENGTH, 
+                                        m_stringAnimTime);
     
     // time the timer
     if(m_stringTimer &lt; m_stringAnimTime)
@@ -528,7 +529,7 @@ if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)
 else if(m_bowActive)
 { 
     m_stringTimer = 0;
-    m_stringDistance = lerp(m_stringDistance, 32, 0.3); 
+    m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH, 0.3); 
 }
 </string>
           </argument>
@@ -880,6 +881,8 @@ draw_text_debug(7, "against wall: " + string(m_againstWall));
 draw_text_debug(8, "DDance timer: " + string(m_dashDanceTimer));
 draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
 draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow))); 
+draw_text_debug(11, "Player 1 score: " + string(obj_gameManager.m_playerScore[0]));
+draw_text_debug(12, "Player 2 score: " + string(obj_gameManager.m_playerScore[1]));
 </string>
           </argument>
         </arguments>
