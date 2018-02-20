@@ -480,13 +480,15 @@ y += m_vsp;
 
 // Check if active
 var largStick = max(abs(m_rStickH), abs(m_rStickV))
+var trigger = m_rTrigger;
+var arrowForce;
 
 if(largStick &gt; 0.8)
 { m_bowActive = true; }
 else { m_bowActive = false; }
 
 // Calculate bow's angle
-if(largStick &gt; 0.15)
+if(largStick &gt; 0.25)
 { m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); }
 
 
@@ -502,22 +504,10 @@ m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
 m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
 
 // Control shooting
-if(!m_bowActive)
-{ 
-    m_bowCharge = 0; 
-}
-else
-{
-    if(m_bowCharge == m_bowFireRate)
-    {
-        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_playerId);
-    }
-    m_bowCharge++;
-}
 
 // Animate the string
 
-if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)
+if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)// remove bowcharge
 {
     m_stringDistance = ease_out_elastic(m_stringTimer, ARROW_LENGTH, -ARROW_LENGTH, 
                                         m_stringAnimTime);
@@ -566,17 +556,12 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
     if (abs(move) &gt; 0.5) 
     {
         m_spriteIndex = m_spriteRun; 
-        m_imageSpeed = 1;
-    }
-    else if (abs(move) &gt; 0.01) 
-    {
-        m_spriteIndex = m_spriteWalk; 
-        m_imageSpeed = abs(move) + 0.5;
+        m_imageSpeed = 0.25;
     }
     else 
     {
         m_spriteIndex = m_spriteIdle; 
-        m_imageSpeed = 0.5;
+        m_imageSpeed = 0.25;
     }
 }
 else // Player is in the air
@@ -714,6 +699,10 @@ m_bowFireRate = 10;
 m_bowDistance = 0;
 m_bowX = x;
 m_bowY = y;
+m_triggerPrev = 0;
+m_bowDeltaMax = 3
+m_bowDeltaTimer = 0;
+m_bowDeltaThreshold = 0.3;
 
 m_stringDistance = 0;
 m_stringPixelOffset = 2;
@@ -835,13 +824,11 @@ gamepad_set_axis_deadzone(m_controllerId, m_controllerDeadzone);
             <kind>1</kind>
             <string>/// Assign character specific values
 
-m_spriteIdle = spr_player;
-m_spriteJump = spr_player;
-m_spriteFall = spr_player;
-m_spriteWalk = spr_player;
-m_spriteDash = spr_player;
-m_spriteRun = spr_player;
-m_spriteWallSlide = spr_player;
+m_spriteIdle = spr_p1_idle;
+m_spriteJump = spr_p1_jump;
+m_spriteFall = spr_p1_fall;
+m_spriteRun = spr_p1_walking;
+m_spriteWallSlide = spr_p1_wall;
 
 m_spriteBow = spr_bow;
 </string>
@@ -880,15 +867,9 @@ draw_text_debug(6, "angle: " + string(m_imageAngle));
 draw_text_debug(7, "against wall: " + string(m_againstWall));
 draw_text_debug(8, "DDance timer: " + string(m_dashDanceTimer));
 draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
-<<<<<<< HEAD
-draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow))); 
-draw_text_debug(11, "Player 1 score: " + string(obj_gameManager.m_playerScore[0]));
-draw_text_debug(12, "Player 2 score: " + string(obj_gameManager.m_playerScore[1]));
-=======
 draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow)));
 draw_text_debug(11, "rStick h: " + string(m_rStickH));
 draw_text_debug(12, "rStick v: " + string(m_rStickV));
->>>>>>> 90f32f802caee912c3a77441ca1a85af7fce08df
 </string>
           </argument>
         </arguments>
@@ -917,7 +898,7 @@ var spriteHeight  = sprite_get_height(m_spriteIndex);
 var color = make_colour_hsv(m_playerId * 30, 255, 255);
 
 draw_sprite_ext(m_spriteIndex, m_imageIndex, x, y, // + (spriteHeight / 2)
-m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, color, n_imageAlpha);
+m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, c_white, n_imageAlpha);
 </string>
           </argument>
         </arguments>

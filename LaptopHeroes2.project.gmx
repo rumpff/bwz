@@ -8,6 +8,15 @@
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprites name="Players">
+      <sprites name="Player1">
+        <sprite>sprites\spr_p1_idle</sprite>
+        <sprite>sprites\spr_p1_walking</sprite>
+        <sprite>sprites\spr_p1_jump</sprite>
+        <sprite>sprites\spr_p1_fall</sprite>
+        <sprite>sprites\spr_p1_wall</sprite>
+      </sprites>
+    </sprites>
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_spwn</sprite>

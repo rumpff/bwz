@@ -169,7 +169,7 @@ if(m_initialCooldown &gt; 0)
           <argument>
             <kind>1</kind>
             <string>/// Initalize variables
-m_moveSpeed = 46;
+m_moveSpeed = ARROW_SPEED * m_force;
 m_grav = 0.4;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
