@@ -549,7 +549,7 @@ m_imageYScale = lerp(m_imageYScale, 1, 0.2);
 
 signMove = sign(move);
 
-if (signMove != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
+if (m_lStickH != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
    
 if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
 {
