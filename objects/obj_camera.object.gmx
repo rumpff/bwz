@@ -25,6 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Test thing
+window_set_fullscreen(true);
+
+view_wport[0] = display_get_width();
+view_hport[0] = display_get_height();
+
+view_wview[0] = display_get_width();
+view_hview[0] = display_get_height();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Zoom in/out boundary thickness
 LineWidth = 2;
 
@@ -269,7 +297,7 @@ y_Zoom = y_Camera;
 ZoomOutSpeed = 0.6;                                         // Must be between 0 and 1; the larger the faster the zoom out speed
 ZoomInSpeed = 0.8;                                          // Must be between 0 and 1; the larger the faster the zoom out speed
 ZoomMax = room_width;
-ZoomMin = view_wview[0];
+ZoomMin = view_wview[0] / 2;
 ZoomOutBoundary = 0.6;                                      // Must be between 0 and 1; the larger the closer to the edge the player must travel before zooming out
 x_ZoomOut = ZoomOutBoundary * view_wview[0];
 y_ZoomOut = ZoomOutBoundary * view_hview[0];

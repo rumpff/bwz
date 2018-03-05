@@ -21,6 +21,7 @@
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_spwn</sprite>
     <sprite>sprites\spr_bow</sprite>
+    <sprite>sprites\spr_hat</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\spr_blood</sprite>
   </sprites>

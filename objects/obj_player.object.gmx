@@ -157,7 +157,7 @@ if (place_meeting(x,y+1,obj_collider))
         m_imageXScale = 1.4;
         m_imageYScale = 0.7;
     }
-    
+    m_againstWall = false;
     m_onGround = true;
 }
 else 
@@ -478,11 +478,10 @@ y += m_vsp;
             <kind>1</kind>
             <string>/// Control bow
 
-// Check if active
 var largStick = max(abs(m_rStickH), abs(m_rStickV))
-var trigger = m_rTrigger;
-var arrowForce;
+var trigger = m_lTrigger;
 
+// Check if active
 if(largStick &gt; 0.8)
 { m_bowActive = true; }
 else { m_bowActive = false; }
@@ -503,14 +502,51 @@ var yOffset = sprite_get_height(sprite_index) / 2;
 m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
 m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
 
+// Set arrow active
+if(m_arrowForce == 0 &amp;&amp; m_triggerPrev != 0)
+{ m_arrowActive = true; }
+
+// Update force
+m_arrowForce = lerp(m_arrowForce, m_triggerPrev, 0.2);
+
+// Delta Check
+if (m_bowDeltaTimer == m_bowDeltaMax)
+{
+    if ((trigger + m_bowDeltaThreshold) &lt; m_triggerPrev)
+    {
+        m_bowShoot = true;
+    }
+    
+    m_triggerPrev = trigger;
+    m_bowDeltaTimer = 0;
+}
+else
+{
+    m_bowDeltaTimer++;
+    m_bowShoot = false;
+}
+
 // Control shooting
+if(m_arrowForce &gt; m_arrowForceMin)
+{
+    if(m_holdTimer &gt; m_holdTimerMax &amp;&amp; m_bowShoot)
+    {
+        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_arrowForce, m_playerId);
+        m_arrowActive = false;
+        m_arrowForceOld = m_arrowForce;
+        m_arrowForce = 0;
+    }
+    
+    m_holdTimer++;
+}
+else { m_holdTimer = 0; }
 
 // Animate the string
-
-if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)// remove bowcharge
+if(!m_arrowActive)
 {
-    m_stringDistance = ease_out_elastic(m_stringTimer, ARROW_LENGTH, -ARROW_LENGTH, 
-                                        m_stringAnimTime);
+    // Ease the string
+    m_stringDistance = ease_out_elastic(m_stringTimer, ARROW_LENGTH * m_arrowForceOld, 
+                                        -(ARROW_LENGTH * m_arrowForceOld), m_stringAnimTime);
     
     // time the timer
     if(m_stringTimer &lt; m_stringAnimTime)
@@ -519,7 +555,7 @@ if((m_bowActive &amp;&amp; (m_bowCharge &gt;= m_bowFireRate)) || !m_bowActive)//
 else if(m_bowActive)
 { 
     m_stringTimer = 0;
-    m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH, 0.3); 
+    m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH * m_arrowForce, 0.3); 
 }
 </string>
           </argument>
@@ -566,7 +602,7 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
 }
 else // Player is in the air
 {
-     if (m_againstWall) { m_spriteIndex = m_spriteWallSlide }
+     if (m_againstWall) { m_spriteIndex = m_spriteWallSlide;}
      else if (m_vsp &lt; 0) { m_spriteIndex = m_spriteJump; } 
      else { m_spriteIndex = m_spriteFall; }
 }
@@ -693,16 +729,27 @@ m_wallDistance = 3;  // The distance for the player to cling to a wall
 
 // Bow
 m_bowActive = false;
-m_bowAngle = 0;
 m_bowCharge = 0;
 m_bowFireRate = 10;
 m_bowDistance = 0;
+m_bowShoot = false;
+
 m_bowX = x;
 m_bowY = y;
+m_bowAngle = 0;
+
+m_holdTimerMax = 4;
+m_holdTimer = 0;
+
 m_triggerPrev = 0;
 m_bowDeltaMax = 3
 m_bowDeltaTimer = 0;
 m_bowDeltaThreshold = 0.3;
+
+m_arrowActive = false;
+m_arrowForce = 0;
+m_arrowForceMin = 0.3;
+m_arrowForceOld = 0;
 
 m_stringDistance = 0;
 m_stringPixelOffset = 2;
@@ -831,6 +878,8 @@ m_spriteRun = spr_p1_walking;
 m_spriteWallSlide = spr_p1_wall;
 
 m_spriteBow = spr_bow;
+
+m_hatHeight = 24;
 </string>
           </argument>
         </arguments>
@@ -870,6 +919,13 @@ draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
 draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow)));
 draw_text_debug(11, "rStick h: " + string(m_rStickH));
 draw_text_debug(12, "rStick v: " + string(m_rStickV));
+draw_text_debug(13, "arrowForce: " + string(m_arrowForce));
+draw_text_debug(14, "arrowForceOld: " + string(m_arrowForceOld));
+draw_text_debug(15, "triggerPrev: " + string(m_triggerPrev));
+draw_text_debug(16, "stringTimer: " + string(m_stringTimer));
+draw_text_debug(17, "stringDistance: " + string(m_stringDistance));
+draw_text_debug(18, "arrowActive: " + string(m_arrowActive));
+
 </string>
           </argument>
         </arguments>
@@ -943,7 +999,7 @@ middle = draw_bezier(x1, y1, x3, y3, x2, y2);
 draw_sprite_ext(m_spriteBow, 0, m_bowX, m_bowY, 1, 1, m_bowAngle, c_white, 1);
 
 // Draw a 'fake' arrow, but only if the arrow isn't shot
-if(m_bowActive &amp;&amp; (m_bowCharge &lt;= m_bowFireRate))
+if(m_arrowActive)
 {
     var x1, y1, x2, y2;
     x1 = middle[0]
@@ -974,7 +1030,39 @@ if(m_bowActive &amp;&amp; (m_bowCharge &lt;= m_bowFireRate))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(x, y - 32, m_playerId);
+            <string>draw_text(x, y - 64, m_playerId);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the hat
+
+var ypos;
+
+if(m_vsp &gt; 0) { ypos = yprevious; }
+else { ypos = y; }
+
+var xdir = m_imageDirection * -m_againstWall;
+if (xdir = 0) { xdir = m_imageDirection; }
+
+draw_sprite_ext(spr_hat, 0, x - (8 * xdir), ypos - m_hatHeight,
+1, 1, (12 * xdir), c_white, 1);
 </string>
           </argument>
         </arguments>
