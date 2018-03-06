@@ -32,13 +32,11 @@ for (i = 0; i &lt; 4; i++)
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
     m_playerScore[i] = 0;
+    m_playerColor[i] = make_color_hsv(i * (255/4), 255, 255);
 }
 
-for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
-{
-    m_spawnLocations[i] = instance_find(obj_spawnLocation, i);
-}
-
+m_guiW = 0;
+m_guiH = 0;
 </string>
           </argument>
         </arguments>
@@ -60,6 +58,13 @@ for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
           <argument>
             <kind>1</kind>
             <string>/// Create instances
+
+for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
+{
+    m_spawnLocations[i] = instance_find(obj_spawnLocation, i);
+}
+
+
 for (i = 0; i &lt; global.playerAmount; i++)
 {
     m_playerArray[i] = spawn_player(m_spawnLocations, i);
@@ -103,6 +108,156 @@ for (i = 0; i &lt; global.playerAmount; i++)
          m_playerArray[i] = spawn_player(m_spawnLocations, i);
       }
    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update values
+
+m_guiW = display_get_gui_width();
+m_guiH = display_get_gui_height();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Powerup
+
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(fnt_gui);
+
+draw_text(m_guiW/2, 20, "Koele kid");
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Player info
+var pAmount = global.playerAmount;
+var bW = 96; // box Width
+var bH = 128; // box Height
+
+for (i = 0; i &lt; pAmount; i++)
+{
+    var xP = (m_guiW / pAmount / 2) + (m_guiW / pAmount * i); // X center
+    var yP = (m_guiH/2 + m_guiH/3); // Y center
+    
+    // Draw the box
+    draw_set_color(m_playerColor[i]);
+    draw_set_alpha(0.4);
+    draw_rectangle(xP-bW, yP-bH, xP+bW, yP+bH, false);
+    
+    draw_set_color(c_black);
+    draw_set_alpha(1);
+    draw_rectangle(xP-bW, yP-bH, xP+bW, yP+bH, true);
+    
+    // Draw the score    
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_bottom);
+    draw_set_font(fnt_gui);
+    draw_set_color(c_white);
+    
+    draw_text(xP+bW-5, yP+bH-5, m_playerScore[i])
+    
+    // Draw player name
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_top);
+    draw_set_font(fnt_gui);
+    draw_set_color(c_white);
+    
+    draw_text(xP, yP-bH+5, "nAme");
+    
+    // Draw player sprite
+    draw_sprite_part_ext(spr_p1_idle, 0, 8, 8, 24, 24, xP - bW + 32, yP,
+    4, 4, c_white, 1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw player indicators
+var pAmount = global.playerAmount;
+
+for (i = 0; i &lt; pAmount; i++)
+{
+    if(instance_exists(m_playerArray[i]))
+    {
+        var xp = m_playerArray[i].x;
+        var yp = m_playerArray[i].y;
+        
+        draw_set_alpha(0.4);
+        draw_set_color(m_playerColor[i]);
+        
+        draw_circle(xp, yp, 96, false);
+    }
 }
 </string>
           </argument>

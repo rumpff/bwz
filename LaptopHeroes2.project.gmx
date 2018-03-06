@@ -25,7 +25,9 @@
     <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\spr_blood</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background0</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Easing">
@@ -69,6 +71,10 @@
     <script>scripts\screenshake.gml</script>
     <script>scripts\draw_bezier.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_gui</font>
+    <font>fonts\fnt_debug</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_player</object>
     <object>objects\obj_collider</object>
