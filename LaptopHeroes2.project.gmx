@@ -90,6 +90,8 @@
     <script>scripts\shoot_arrow.gml</script>
     <script>scripts\screenshake.gml</script>
     <script>scripts\draw_bezier.gml</script>
+    <script>scripts\x_to_gui_x.gml</script>
+    <script>scripts\y_to_gui_y.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
@@ -103,10 +105,12 @@
     <object>objects\obj_spawnLocation</object>
     <object>objects\obj_camTracker</object>
     <object>objects\obj_arrow</object>
+    <object>objects\object7</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
     <room>rooms\room1</room>
+    <room>rooms\room2</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -140,7 +140,34 @@ m_guiH = display_get_gui_height();
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="73">
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Powerup
+
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(fnt_gui);
+
+draw_text(m_guiW/2, 20, "Koele kid");
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -170,51 +197,16 @@ for (i = 0; i &lt; pAmount; i++)
 {
     if(instance_exists(m_playerArray[i]))
     {
-        var xp = m_playerArray[i].x;
-        var yp = m_playerArray[i].y;
+        var xp = x_to_gui_x(m_playerArray[i].x);
+        var yp = y_to_gui_y(m_playerArray[i].y);
         
         draw_set_alpha(m_indicatorAlpha);
         draw_set_color(m_playerColor[i]);
         
-        for (ii = 0; ii &lt; 4; ii++)
-        {
-            var rad = 64 - 2 + ii
-            draw_circle(xp, yp, rad, true);
-        }
-        
-        
-        //draw_sprite_ext(spr_indicator, i, xp, yp, 3, 3, 0, m_playerColor[i], 0.5);
+        draw_text(xp, yp - 32, "playa" + string(i+1))
+        //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Powerup
-
-draw_set_halign(fa_center);
-draw_set_valign(fa_center);
-draw_set_font(fnt_gui);
-
-draw_text(m_guiW/2, 20, "Koele kid");
 </string>
           </argument>
         </arguments>
