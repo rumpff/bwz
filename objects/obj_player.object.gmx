@@ -121,9 +121,14 @@ if (m_playerId == 0)
 {
    if(!gamepad_is_connected(0))
    {
-      m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right))
+      m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
       m_keyJump = keyboard_check_pressed(vk_up);
       m_keyJumpHeld = keyboard_check(vk_up);
+      
+      m_rStickH = (-keyboard_check(ord("A")) + keyboard_check(ord("D")));
+      m_rStickV = (-keyboard_check(ord("W")) + keyboard_check(ord("S")));
+      
+      m_lTrigger = keyboard_check(vk_rshift);
    }
 }
 </string>
@@ -634,6 +639,42 @@ if(m_imageIndex &gt; sprite_get_number(m_spriteIndex))
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Do some sounds
+
+if(m_againstWall)
+{
+    if(!audio_is_playing(m_WallSlideSound))
+    {
+        m_WallSlideSound = audio_play_sound(snd_PlayerWallslide, 1, 99);
+    }
+    
+    var ptch = abs(m_vsp) / 8;
+    audio_sound_pitch(m_WallSlideSound, ptch)
+}
+else
+{
+    audio_stop_sound(m_WallSlideSound);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -756,6 +797,8 @@ m_stringPixelOffset = 2;
 m_stringAnimTime = 30;
 m_stringTimer = 0;
 
+// Sounds
+m_WallSlideSound = 0;
 
 // Keys
 m_keyJump = false;

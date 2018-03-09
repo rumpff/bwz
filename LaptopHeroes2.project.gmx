@@ -7,14 +7,24 @@
     <extension index="0">extensions\Easing and Tweening</extension>
   </NewExtensions>
   <sounds name="sound">
-    <sound>sound\snd_ArrowHit1</sound>
-    <sound>sound\snd_ArrowHit2</sound>
-    <sound>sound\snd_ArrowHit3</sound>
-    <sound>sound\snd_ArrowHit4</sound>
-    <sound>sound\snd_ArrowShoot1</sound>
-    <sound>sound\snd_ArrowShoot2</sound>
-    <sound>sound\snd_ArrowShoot3</sound>
-    <sound>sound\snd_ArrowShoot4</sound>
+    <sounds name="Arrow">
+      <sounds name="Arrow Hit">
+        <sound>sound\snd_ArrowHit1</sound>
+        <sound>sound\snd_ArrowHit2</sound>
+        <sound>sound\snd_ArrowHit3</sound>
+        <sound>sound\snd_ArrowHit4</sound>
+      </sounds>
+      <sounds name="Arrow Shoot">
+        <sound>sound\snd_ArrowShoot1</sound>
+        <sound>sound\snd_ArrowShoot2</sound>
+        <sound>sound\snd_ArrowShoot3</sound>
+        <sound>sound\snd_ArrowShoot4</sound>
+      </sounds>
+    </sounds>
+    <sounds name="Player">
+      <sound>sound\snd_PlayerJump1</sound>
+      <sound>sound\snd_PlayerWallslide</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
