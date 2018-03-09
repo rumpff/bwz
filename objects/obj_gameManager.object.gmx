@@ -37,6 +37,8 @@ for (i = 0; i &lt; 4; i++)
 
 m_guiW = 0;
 m_guiH = 0;
+
+m_indicatorAlpha = 0;
 </string>
           </argument>
         </arguments>
@@ -138,6 +140,57 @@ m_guiH = display_get_gui_height();
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw player indicators
+var pAmount = global.playerAmount;
+var alpha;
+
+if(view_wview &gt; 2500) { alpha = 0.5; }
+else { alpha = 0; }
+
+m_indicatorAlpha = lerp(m_indicatorAlpha, alpha, 0.2);
+
+for (i = 0; i &lt; pAmount; i++)
+{
+    if(instance_exists(m_playerArray[i]))
+    {
+        var xp = m_playerArray[i].x;
+        var yp = m_playerArray[i].y;
+        
+        draw_set_alpha(m_indicatorAlpha);
+        draw_set_color(m_playerColor[i]);
+        
+        for (ii = 0; ii &lt; 4; ii++)
+        {
+            var rad = 64 - 2 + ii
+            draw_circle(xp, yp, rad, true);
+        }
+        
+        
+        //draw_sprite_ext(spr_indicator, i, xp, yp, 3, 3, 0, m_playerColor[i], 0.5);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
@@ -220,44 +273,6 @@ for (i = 0; i &lt; pAmount; i++)
     // Draw player sprite
     draw_sprite_part_ext(spr_p1_idle, 0, 8, 8, 24, 24, xP - bW + 32, yP,
     4, 4, c_white, 1);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw player indicators
-var pAmount = global.playerAmount;
-
-for (i = 0; i &lt; pAmount; i++)
-{
-    if(instance_exists(m_playerArray[i]))
-    {
-        var xp = m_playerArray[i].x;
-        var yp = m_playerArray[i].y;
-        
-        draw_set_alpha(0.4);
-        draw_set_color(m_playerColor[i]);
-        
-        draw_circle(xp, yp, 96, false);
-    }
 }
 </string>
           </argument>

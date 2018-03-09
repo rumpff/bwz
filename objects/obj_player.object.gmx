@@ -927,6 +927,8 @@ draw_text_debug(17, "stringDistance: " + string(m_stringDistance));
 draw_text_debug(18, "arrowActive: " + string(m_arrowActive));
 draw_text_debug(19, "lTrigger: " + string(m_lTrigger));
 draw_text_debug(20, "Camera Zoom: " + string(view_wview));
+draw_text_debug(21, "bowDeltaTimer: " + string(m_bowDeltaTimer));
+
 
 
 

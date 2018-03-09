@@ -6,7 +6,16 @@
   <NewExtensions>
     <extension index="0">extensions\Easing and Tweening</extension>
   </NewExtensions>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_ArrowHit1</sound>
+    <sound>sound\snd_ArrowHit2</sound>
+    <sound>sound\snd_ArrowHit3</sound>
+    <sound>sound\snd_ArrowHit4</sound>
+    <sound>sound\snd_ArrowShoot1</sound>
+    <sound>sound\snd_ArrowShoot2</sound>
+    <sound>sound\snd_ArrowShoot3</sound>
+    <sound>sound\snd_ArrowShoot4</sound>
+  </sounds>
   <sprites name="sprites">
     <sprites name="Players">
       <sprites name="Player1">
@@ -24,6 +33,7 @@
     <sprite>sprites\spr_hat</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\spr_blood</sprite>
+    <sprite>sprites\spr_indicator</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
