@@ -35,12 +35,18 @@
         <sprite>sprites\spr_p1_fall</sprite>
         <sprite>sprites\spr_p1_wall</sprite>
       </sprites>
+      <sprites name="Hats">
+        <sprite>sprites\spr_hat1</sprite>
+        <sprite>sprites\spr_hat2</sprite>
+        <sprite>sprites\spr_hat3</sprite>
+        <sprite>sprites\spr_hat4</sprite>
+        <sprite>sprites\spr_hat5</sprite>
+      </sprites>
     </sprites>
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_spwn</sprite>
     <sprite>sprites\spr_bow</sprite>
-    <sprite>sprites\spr_hat</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\spr_blood</sprite>
     <sprite>sprites\spr_indicator</sprite>
@@ -105,12 +111,10 @@
     <object>objects\obj_spawnLocation</object>
     <object>objects\obj_camTracker</object>
     <object>objects\obj_arrow</object>
-    <object>objects\object7</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
     <room>rooms\room1</room>
-    <room>rooms\room2</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

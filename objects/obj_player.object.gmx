@@ -1093,8 +1093,8 @@ else { ypos = y; }
 var xdir = m_imageDirection * -m_againstWall;
 if (xdir = 0) { xdir = m_imageDirection; }
 
-draw_sprite_ext(spr_hat, 0, x - (8 * xdir), ypos - m_hatHeight,
-1, 1, (12 * xdir), c_white, 1);
+draw_sprite_ext(spr_hat4, 0, x - (8 * xdir), ypos - m_hatHeight,
+xdir, 1, (12 * xdir), c_white, 1);
 </string>
           </argument>
         </arguments>

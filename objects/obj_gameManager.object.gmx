@@ -184,49 +184,6 @@ draw_text(m_guiW/2, 20, "Koele kid");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw player indicators
-var pAmount = global.playerAmount;
-var alpha;
-
-if(view_wview &gt; 2500) { alpha = 0.5; }
-else { alpha = 0; }
-
-m_indicatorAlpha = lerp(m_indicatorAlpha, alpha, 0.2);
-
-for (i = 0; i &lt; pAmount; i++)
-{
-    if(instance_exists(m_playerArray[i]))
-    {
-        var xp = x_to_gui_x(m_playerArray[i].x);
-        var yp = y_to_gui_y(m_playerArray[i].y);
-        
-        draw_set_alpha(m_indicatorAlpha);
-        draw_set_color(m_playerColor[i]);
-        
-        draw_text(xp, yp - 32, "playa" + string(i+1))
-        //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Player info
 var pAmount = global.playerAmount;
 var bW = 96; // box Width
@@ -265,6 +222,50 @@ for (i = 0; i &lt; pAmount; i++)
     // Draw player sprite
     draw_sprite_part_ext(spr_p1_idle, 0, 8, 8, 24, 24, xP - bW + 32, yP,
     4, 4, c_white, 1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw player indicators
+var pAmount = global.playerAmount;
+var alpha;
+
+if(view_wview &gt; 2500) { alpha = 0.5; }
+else { alpha = 0; }
+
+m_indicatorAlpha = lerp(m_indicatorAlpha, alpha, 0.2);
+
+for (i = 0; i &lt; pAmount; i++)
+{
+    if(instance_exists(m_playerArray[i]))
+    {
+        var xp = x_to_gui_x(m_playerArray[i].x);
+        var yp = y_to_gui_y(m_playerArray[i].y);
+        
+        draw_set_alpha(m_indicatorAlpha);
+        draw_set_color(m_playerColor[i]);
+        
+        draw_text(xp, yp - 96, "playa" + string(i+1))
+        draw_triangle(xp - 16, yp - 48, xp + 16, yp - 48, xp, yp - 32, false);
+        //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
+    }
 }
 </string>
           </argument>
