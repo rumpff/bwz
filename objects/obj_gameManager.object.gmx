@@ -32,7 +32,6 @@ for (i = 0; i &lt; 4; i++)
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
     m_playerScore[i] = 0;
-    m_playerColor[i] = make_color_hsv(i * (255/4), 255, 255);
 }
 
 m_guiW = 0;
@@ -195,7 +194,7 @@ for (i = 0; i &lt; pAmount; i++)
     var yP = (m_guiH/2 + m_guiH/3); // Y center
     
     // Draw the box
-    draw_set_color(m_playerColor[i]);
+    draw_set_color(global.playerColor[i]);
     draw_set_alpha(0.4);
     draw_rectangle(xP-bW, yP-bH, xP+bW, yP+bH, false);
     
@@ -217,7 +216,7 @@ for (i = 0; i &lt; pAmount; i++)
     draw_set_font(fnt_gui);
     draw_set_color(c_white);
     
-    draw_text(xP, yP-bH+5, "nAme");
+    draw_text(xP, yP-bH+5, global.playerName[i]);
     
     // Draw player sprite
     draw_sprite_part_ext(spr_p1_idle, 0, 8, 8, 24, 24, xP - bW + 32, yP,
@@ -260,9 +259,9 @@ for (i = 0; i &lt; pAmount; i++)
         var yp = y_to_gui_y(m_playerArray[i].y);
         
         draw_set_alpha(m_indicatorAlpha);
-        draw_set_color(m_playerColor[i]);
+        draw_set_color(global.playerColor[i]);
         
-        draw_text(xp, yp - 96, "playa" + string(i+1))
+        draw_text(xp, yp - 96, global.playerName[i])
         draw_triangle(xp - 16, yp - 48, xp + 16, yp - 48, xp, yp - 32, false);
         //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
     }

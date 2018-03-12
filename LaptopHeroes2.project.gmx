@@ -25,6 +25,15 @@
       <sound>sound\snd_PlayerJump1</sound>
       <sound>sound\snd_PlayerWallslide</sound>
     </sounds>
+    <sounds name="Menu">
+      <sounds name="Character Select">
+        <sound>sound\snd_cursorMove</sound>
+        <sound>sound\snd_letterEnter</sound>
+        <sound>sound\snd_letterFull</sound>
+        <sound>sound\snd_letterRemove</sound>
+        <sound>sound\snd_sweep</sound>
+      </sounds>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
@@ -50,6 +59,12 @@
     <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\spr_blood</sprite>
     <sprite>sprites\spr_indicator</sprite>
+    <sprites name="Menu">
+      <sprites name="Character Select">
+        <sprite>sprites\spr_players</sprite>
+        <sprite>sprites\spr_hats</sprite>
+      </sprites>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -98,10 +113,14 @@
     <script>scripts\draw_bezier.gml</script>
     <script>scripts\x_to_gui_x.gml</script>
     <script>scripts\y_to_gui_y.gml</script>
+    <script>scripts\draw_text_outline.gml</script>
+    <script>scripts\input_timers_active.gml</script>
+    <script>scripts\input_timers_reset.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
     <font>fonts\fnt_debug</font>
+    <font>fonts\fnt_letters</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_player</object>
@@ -111,10 +130,13 @@
     <object>objects\obj_spawnLocation</object>
     <object>objects\obj_camTracker</object>
     <object>objects\obj_arrow</object>
+    <object>objects\obj_charSelector</object>
+    <object>objects\obj_charSelectManager</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
-    <room>rooms\room1</room>
+    <room>rooms\rm_charSelect</room>
+    <room>rooms\rm_tstLvl</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

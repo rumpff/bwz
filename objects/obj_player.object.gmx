@@ -888,6 +888,54 @@ m_controllerId = m_playerId;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Get the hat sprite
+
+switch(global.playerHat[m_playerId])
+{
+    case 0:
+        m_spriteHat = spr_hats;
+        break;
+    
+    case 1:
+        m_spriteHat = spr_hat1;
+        break;
+    
+    case 2:
+        m_spriteHat = spr_hat2;
+        break;
+        
+    case 3:
+        m_spriteHat = spr_hat3;
+        break;
+        
+    case 4:
+        m_spriteHat = spr_hat4;
+        break;
+        
+    case 5:
+        m_spriteHat = spr_hat5;
+        break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Initalize controller
 
 // Set the deadzone
@@ -1093,7 +1141,7 @@ else { ypos = y; }
 var xdir = m_imageDirection * -m_againstWall;
 if (xdir = 0) { xdir = m_imageDirection; }
 
-draw_sprite_ext(spr_hat4, 0, x - (8 * xdir), ypos - m_hatHeight,
+draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight,
 xdir, 1, (12 * xdir), c_white, 1);
 </string>
           </argument>
