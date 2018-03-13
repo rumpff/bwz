@@ -246,7 +246,7 @@ for (i = 0; i &lt; pAmount; i++)
 var pAmount = global.playerAmount;
 var alpha;
 
-if(view_wview &gt; 2500) { alpha = 0.5; }
+if(view_wview &gt; 2500) { alpha = 0.7; }
 else { alpha = 0; }
 
 m_indicatorAlpha = lerp(m_indicatorAlpha, alpha, 0.2);
@@ -261,7 +261,7 @@ for (i = 0; i &lt; pAmount; i++)
         draw_set_alpha(m_indicatorAlpha);
         draw_set_color(global.playerColor[i]);
         
-        draw_text(xp, yp - 96, global.playerName[i])
+        draw_text(xp, yp - 96, global.playerName[i]);
         draw_triangle(xp - 16, yp - 48, xp + 16, yp - 48, xp, yp - 32, false);
         //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
     }

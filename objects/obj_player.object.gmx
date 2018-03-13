@@ -489,23 +489,19 @@ var trigger = m_lTrigger;
 // Check if active
 if(largStick &gt; 0.6)
 { m_bowActive = true; }
-else { m_bowActive = false; }
+else 
+{ 
+    m_bowActive = false;
+    
+    trigger = 0;
+    m_triggerPrev = 0;
+}
 
-// Calculate bow's angle
-if(largStick &gt; 0.25)
-{ m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); }
-
-
-// Calculate distance
-var distance = 16;
-if(m_bowActive) { distance = 32; }
-
-m_bowDistance = lerp(m_bowDistance, distance, 0.3);
-
-// Position the bow
-var yOffset = sprite_get_height(sprite_index) / 2;
-m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
-m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
+if(!m_arrowActive &amp;&amp; m_stringTimer &lt; 25)
+{
+    trigger = 0;
+    m_triggerPrev = 0;
+}
 
 // Set arrow active
 if(m_arrowForce == 0 &amp;&amp; m_triggerPrev != 0)
@@ -530,6 +526,22 @@ else
     m_bowDeltaTimer++;
     m_bowShoot = false;
 }
+
+// Calculate bow's angle
+if(largStick &gt; 0.25)
+{ m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); }
+
+
+// Calculate distance
+var distance = 16;
+if(m_bowActive) { distance = 32; }
+
+m_bowDistance = lerp(m_bowDistance, distance, 0.3);
+
+// Position the bow
+var yOffset = sprite_get_height(sprite_index) / 2;
+m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
+m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
 
 // Control shooting
 if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
@@ -557,7 +569,7 @@ if(!m_arrowActive)
     if(m_stringTimer &lt; m_stringAnimTime)
     { m_stringTimer++; }
 }
-else if(m_bowActive)
+else if(m_arrowActive)
 { 
     m_stringTimer = 0;
     m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH * m_arrowForce, 0.3); 
@@ -634,42 +646,6 @@ m_imageIndex += m_imageSpeed;
 if(m_imageIndex &gt; sprite_get_number(m_spriteIndex))
 {
     m_imageIndex = 0;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Do some sounds
-
-if(m_againstWall)
-{
-    if(!audio_is_playing(m_WallSlideSound))
-    {
-        m_WallSlideSound = audio_play_sound(snd_PlayerWallslide, 1, 99);
-    }
-    
-    var ptch = abs(m_vsp) / 8;
-    audio_sound_pitch(m_WallSlideSound, ptch)
-}
-else
-{
-    audio_stop_sound(m_WallSlideSound);
 }
 </string>
           </argument>
