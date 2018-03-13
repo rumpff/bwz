@@ -5,6 +5,7 @@
   </Configs>
   <NewExtensions>
     <extension index="0">extensions\Easing and Tweening</extension>
+    <extension index="1">extensions\Eight-bit chillout Shader</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Arrow">
@@ -57,14 +58,15 @@
     <sprite>sprites\spr_spwn</sprite>
     <sprite>sprites\spr_bow</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
-    <sprite>sprites\spr_blood</sprite>
-    <sprite>sprites\spr_indicator</sprite>
     <sprites name="Menu">
       <sprites name="Character Select">
         <sprite>sprites\spr_players</sprite>
         <sprite>sprites\spr_hats</sprite>
       </sprites>
     </sprites>
+    <sprite>sprites\spr_head</sprite>
+    <sprite>sprites\spr_leg</sprite>
+    <sprite>sprites\msk_player</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>

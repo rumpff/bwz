@@ -6,7 +6,7 @@
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
-  <maskName>&lt;undefined&gt;</maskName>
+  <maskName>msk_player</maskName>
   <events>
     <event eventtype="3" enumb="1">
       <action>
@@ -539,9 +539,8 @@ if(m_bowActive) { distance = 32; }
 m_bowDistance = lerp(m_bowDistance, distance, 0.3);
 
 // Position the bow
-var yOffset = sprite_get_height(sprite_index) / 2;
 m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
-m_bowY = (y - yOffset) + lengthdir_y(m_bowDistance, m_bowAngle);
+m_bowY = (y - BODY_OFFSET) + lengthdir_y(m_bowDistance, m_bowAngle);
 
 // Control shooting
 if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
@@ -646,6 +645,104 @@ m_imageIndex += m_imageSpeed;
 if(m_imageIndex &gt; sprite_get_number(m_spriteIndex))
 {
     m_imageIndex = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Animate new
+
+signMove = sign(move);
+
+// Check which direction the player should face
+if (m_lStickH != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
+
+// All the code here is for when the player faces right
+// Check in which state the player is
+if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
+{
+    if (abs(move) &gt; 0.1) // walking
+    {   
+        // Time the timer pretty fast 
+        m_bodyOffSin += 0.21 * abs(move);
+        m_legAngleSin = m_bodyOffSin; // The legs must time perfectly with the body
+        
+        // Calculate an offset which makes the body bounce
+        m_bodyOffsetY = abs(sin(m_bodyOffSin) * 7.5) * -1;
+        
+        // Stick the legs to the body
+        m_legROffsetY = m_bodyOffsetY;
+        m_legLOffsetY = m_bodyOffsetY;
+        
+        // Animate the leg rotation
+        m_legRAngle = sin(m_legAngleSin) * 70;
+        m_legLAngle = sin(m_legAngleSin) * 70 * -1;
+    }
+    else // idle
+    {   
+        // Time the timer slowly 
+        m_bodyOffSin += 0.05;
+        
+        // Calculate an offset
+        // Do a quick lerp which makes the transition from walking look nicer
+        m_bodyOffsetY = lerp(m_bodyOffsetY, sin(m_bodyOffSin) * 2, 0.3);
+        
+        // Set the leg offsets to zero
+        m_legROffsetY = 0;
+        m_legLOffsetY = 0;
+        
+        // Lerp the leg angles to zero
+        m_legRAngle = lerp(m_legRAngle, 0, 0.33);
+        m_legLAngle = lerp(m_legLAngle, 0, 0.33);
+    }
+    
+    m_bodyAngle = lerp(m_bodyAngle, 0, 0.3);
+}
+else // Player is in the air
+{
+    if (m_againstWall) // Against wall
+    { 
+        
+    }
+    else // In-Air
+    {         
+        if(m_vsp &lt; 0) // player is moving up
+        {
+            // Set the leg offset dependend on the vertical speed
+            m_legROffsetY = clamp(m_vsp * 0.3, -12, 4);
+            m_legLOffsetY = clamp(m_vsp * 0.3 * -1, -12, 4);
+            
+            // Lerp the leg angles to zero
+            m_legRAngle = lerp(m_legRAngle, 0, 0.2);
+            m_legLAngle = lerp(m_legLAngle, 0, 0.2);
+        }
+        else // player is falling
+        {
+            m_legROffsetY = 0;
+            m_legLOffsetY = 0;
+            
+            m_legRAngle = clamp(m_vsp * 1.4 * -1, -30, 30);
+            m_legLAngle = clamp(m_vsp * 1.4, -30, 30);
+        }
+        
+        m_bodyAngle = (25 * (move * -1));
+    }
 }
 </string>
           </argument>
@@ -780,6 +877,23 @@ m_WallSlideSound = 0;
 m_keyJump = false;
 m_keyJumpPrev = false;
 m_keyJumpHeld = false;
+
+// Animation
+m_spriteBody = noone;
+m_spriteLeg = noone;
+
+m_bodyOffsetY = 0;
+m_bodyAngle = 0;
+
+m_legLOffsetY = 0;
+m_legROffsetY = 0;
+
+m_legLAngle = 0;
+m_legRAngle = 0;
+
+m_bodyOffSin = 0;
+m_legOffSin = 0;
+m_legAngleSin = 0;
 
 // Sprites
 m_spriteIndex = 0;
@@ -1026,12 +1140,70 @@ draw_text_debug(26, "player y: " + string(y));
           <argument>
             <kind>1</kind>
             <string>/// Draw the player
-var spriteHeight  = sprite_get_height(m_spriteIndex);
-
-var color = make_colour_hsv(m_playerId * 30, 255, 255);
-
-draw_sprite_ext(m_spriteIndex, m_imageIndex, x, y, // + (spriteHeight / 2)
+/*
+draw_sprite_ext(m_spriteIndex, m_imageIndex, x, y,
 m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, c_white, n_imageAlpha);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the player new
+
+// Variables for leg positions, yOffset and Angle
+var legLX, legLY, legRX, legRY, legLYOff, legRYOff, legLA, legRA;
+
+// Set the right values for if the player is facing left
+if(m_imageDirection == 1) // Player faces right, nothing changes
+{
+    legLYOff = m_legLOffsetY;
+    legRYOff = m_legROffsetY;
+
+}
+else // Player faces left, values need to be flipped
+{
+    legLYOff = m_legROffsetY;
+    legRYOff = m_legLOffsetY;
+}
+
+legLA = m_legLAngle + m_bodyAngle;
+legRA = m_legRAngle + m_bodyAngle;
+
+// Calculate leg positions based on bodyAngle using lengthdir
+// old vals: xoff = 8, yoff = 4
+legLX = -8;
+legLY = 4;
+
+legRX = 8;
+legRY = 4;
+
+// Draw the legs
+// Left leg
+draw_sprite_ext(spr_leg, 0, x+legLX, y + legLY + legLYOff, 
+    m_imageDirection, 1, legRA, c_white, 1);
+    
+// Right leg
+draw_sprite_ext(spr_leg, 0, x+legRX, y + legRY + legRYOff, 
+    m_imageDirection, 1, legLA, c_white, 1);
+
+// Draw the body
+draw_sprite_ext(spr_head, 0, x, y - BODY_OFFSET + m_bodyOffsetY,
+m_imageDirection, 1, m_bodyAngle, c_white, 1);
 </string>
           </argument>
         </arguments>
@@ -1117,7 +1289,7 @@ else { ypos = y; }
 var xdir = m_imageDirection * -m_againstWall;
 if (xdir = 0) { xdir = m_imageDirection; }
 
-draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight,
+draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight + m_bodyOffsetY,
 xdir, 1, (12 * xdir), c_white, 1);
 </string>
           </argument>
