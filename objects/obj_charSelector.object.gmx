@@ -127,26 +127,26 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
           <argument>
             <kind>1</kind>
             <string>/// Get input keyboar
-/*
-if(m_id == 1)
+
+if(m_id == 0)
 {
-// Up
-m_inputUp = keyboard_check_pressed(vk_up);
-
-// Down
-m_inputDown = keyboard_check_pressed(vk_down);
-
-// Left
-m_inputLeft = keyboard_check_pressed(vk_left);
-
-// Right
-
-m_inputRight = keyboard_check_pressed(vk_right);
-
-// Buttons
-m_inputSelect = keyboard_check_pressed(vk_enter);
-m_inputShift = keyboard_check(vk_lshift);
-m_inputBack = keyboard_check_pressed(vk_escape);
+    // Up
+    m_inputUp = keyboard_check_pressed(vk_up);
+    
+    // Down
+    m_inputDown = keyboard_check_pressed(vk_down);
+    
+    // Left
+    m_inputLeft = keyboard_check_pressed(vk_left);
+    
+    // Right
+    
+    m_inputRight = keyboard_check_pressed(vk_right);
+    
+    // Buttons
+    m_inputSelect = keyboard_check_pressed(vk_enter);
+    m_inputShift = keyboard_check(vk_lshift);
+    m_inputBack = keyboard_check_pressed(vk_escape);
 }
 </string>
           </argument>

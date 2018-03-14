@@ -1167,6 +1167,8 @@ m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, c_white, n_imageA
 
 // Variables for leg positions, yOffset and Angle
 var legLX, legLY, legRX, legRY, legLYOff, legRYOff, legLA, legRA;
+// Variables for calculating the position of the legs
+var xOff, yOff, length, dir;
 
 // Set the right values for if the player is facing left
 if(m_imageDirection == 1) // Player faces right, nothing changes
@@ -1185,16 +1187,26 @@ legLA = m_legLAngle + m_bodyAngle;
 legRA = m_legRAngle + m_bodyAngle;
 
 // Calculate leg positions based on bodyAngle using lengthdir
-// old vals: xoff = 8, yoff = 4
-legLX = -8;
-legLY = 4;
+xoff = 8; 
+yoff = 4;
 
-legRX = 8;
-legRY = 4;
+// Calculate the horizontal offset
+legRX = lengthdir_x(8, m_bodyAngle);
+legRY = lengthdir_y(8, m_bodyAngle);
+
+legLX = lengthdir_x(8, m_bodyAngle);
+legLY = lengthdir_y(8, m_bodyAngle);
+
+// Add the vertical offset
+legRX += lengthdir_x(4, m_bodyAngle - 90);
+legRY += lengthdir_y(4, m_bodyAngle - 90);
+
+legLX += lengthdir_x(4, m_bodyAngle - 90);
+legLY += lengthdir_y(4, m_bodyAngle - 90);
 
 // Draw the legs
 // Left leg
-draw_sprite_ext(spr_leg, 0, x+legLX, y + legLY + legLYOff, 
+draw_sprite_ext(spr_leg, 0, x-legLX, y + legLY + legLYOff, 
     m_imageDirection, 1, legRA, c_white, 1);
     
 // Right leg
