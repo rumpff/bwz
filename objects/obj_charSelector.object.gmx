@@ -246,6 +246,34 @@ if(m_currentState == 3)
     global.playerHat[m_id] = m_currentHat;
     global.playerColor[m_id] = make_color_hsv(m_currentColor, 255, 255);
     global.playerName[m_id] = m_name;
+    
+    if (m_uwahTimer == 30)
+    {
+        var sound;
+        
+        switch(m_id)
+        {
+            case 0:
+                sound = snd_uwah1;
+                break;  
+                
+            case 1:
+                sound = snd_uwah2;
+                break;
+                
+            case 2:
+                sound = snd_uwah3;
+                break;
+                
+            case 3:
+                sound = snd_uwah4;
+                break; 
+        }
+        
+        audio_play_sound(sound, 1, 0);
+    }
+    
+    m_uwahTimer++;
 }
 </string>
           </argument>
@@ -320,6 +348,8 @@ if(m_currentState == 2)
         if(m_charCurrent == 3)
         {
             m_currentState++;
+            audio_play_sound(snd_swordSlice, 1, 0);
+            m_uwahTimer = 0;
         }
         else
         {
@@ -653,7 +683,7 @@ if(m_currentState == 0)
     
     // Check for input
     if (m_inputSelect)
-    { m_currentState++; } // Go to the next state
+    { audio_play_sound(snd_pressedA, 1, 0); m_currentState++; } // Go to the next state
 }
 </string>
           </argument>
@@ -720,6 +750,8 @@ m_contHeight = 0; // The height where the box lerps to
 
 m_sinCounter = 0; // Value for sinus effects
 m_containterSin = (m_id / 4);
+
+m_uwahTimer = 0;
 
 /// Input
 m_controllerId = m_id; // Which controller controlls this selector

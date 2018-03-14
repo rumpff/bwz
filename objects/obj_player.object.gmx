@@ -161,6 +161,8 @@ if (place_meeting(x,y+1,obj_collider))
         // Set squishy landing
         m_imageXScale = 1.4;
         m_imageYScale = 0.7;
+        
+        m_bodyOffsetY += 12;
     }
     m_againstWall = false;
     m_onGround = true;
@@ -906,22 +908,8 @@ m_bodyOffSin = 0;
 m_legOffSin = 0;
 m_legAngleSin = 0;
 
-// Sprites
-m_spriteIndex = 0;
-
-m_spriteIdle = noone;
-m_spriteJump = noone;
-m_spriteFall = noone;
-m_spriteWalk = noone;
-m_spriteRun = noone;
-
-m_imageIndex = 0;
-m_imageSpeed = 1;
-m_imageXScale = 1;
-m_imageYScale = 1;
-m_imageAngle = 0;
-m_imageBlend = c_white;
-n_imageAlpha = 1;
+m_headSprite = noone;
+m_legSprite = noone;
 
 m_imageDirection = 1;
 
@@ -969,6 +957,35 @@ m_buttonYPressed = false;
             <kind>1</kind>
             <string>/// Initalize player
 m_controllerId = m_playerId;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Get the player sprite
+
+switch(global.playerSprite[m_playerId])
+{
+    case 0:
+        m_headSprite = spr_head1;
+        m_legSprite = spr_leg1;
+        break;
+}
 </string>
           </argument>
         </arguments>
@@ -1063,15 +1080,9 @@ gamepad_set_axis_deadzone(m_controllerId, m_controllerDeadzone);
             <kind>1</kind>
             <string>/// Assign character specific values
 
-m_spriteIdle = spr_p1_idle;
-m_spriteJump = spr_p1_jump;
-m_spriteFall = spr_p1_fall;
-m_spriteRun = spr_p1_walking;
-m_spriteWallSlide = spr_p1_wall;
-
 m_spriteBow = spr_bow;
 
-m_hatHeight = 14;
+m_hatHeight = get_hat_height(global.playerSprite[m_playerId]);
 </string>
           </argument>
         </arguments>
@@ -1104,27 +1115,26 @@ draw_text_debug(2, "jumpStick: " + string(m_rTrigger));
 draw_text_debug(3, "hsp: " + string(m_hsp));
 draw_text_debug(4, "vsp: " + string(m_vsp));
 draw_text_debug(5, "playerstate: " + string(m_playerState));
-draw_text_debug(6, "angle: " + string(m_imageAngle));
-draw_text_debug(7, "against wall: " + string(m_againstWall));
-draw_text_debug(8, "DDance timer: " + string(m_dashDanceTimer));
-draw_text_debug(9, "DDance prev: " + string(m_dashDancePrev));
-draw_text_debug(10, "Arrow count: " + string(instance_number(obj_arrow)));
-draw_text_debug(11, "rStick h: " + string(m_rStickH));
-draw_text_debug(12, "rStick v: " + string(m_rStickV));
-draw_text_debug(13, "arrowForce: " + string(m_arrowForce));
-draw_text_debug(14, "arrowForceOld: " + string(m_arrowForceOld));
-draw_text_debug(15, "triggerPrev: " + string(m_triggerPrev));
-draw_text_debug(16, "stringTimer: " + string(m_stringTimer));
-draw_text_debug(17, "stringDistance: " + string(m_stringDistance));
-draw_text_debug(18, "arrowActive: " + string(m_arrowActive));
-draw_text_debug(19, "lTrigger: " + string(m_lTrigger));
-draw_text_debug(20, "bowDeltaTimer: " + string(m_bowDeltaTimer));
-draw_text_debug(21, "view_xview: " + string(view_xview));
-draw_text_debug(22, "view_yview: " + string(view_yview));
-draw_text_debug(23, "view_wview: " + string(view_wview));
-draw_text_debug(24, "view_hview: " + string(view_hview));
-draw_text_debug(25, "player x: " + string(x));
-draw_text_debug(26, "player y: " + string(y));
+draw_text_debug(6, "against wall: " + string(m_againstWall));
+draw_text_debug(7, "DDance timer: " + string(m_dashDanceTimer));
+draw_text_debug(8, "DDance prev: " + string(m_dashDancePrev));
+draw_text_debug(9, "Arrow count: " + string(instance_number(obj_arrow)));
+draw_text_debug(10, "rStick h: " + string(m_rStickH));
+draw_text_debug(11, "rStick v: " + string(m_rStickV));
+draw_text_debug(12, "arrowForce: " + string(m_arrowForce));
+draw_text_debug(13, "arrowForceOld: " + string(m_arrowForceOld));
+draw_text_debug(14, "triggerPrev: " + string(m_triggerPrev));
+draw_text_debug(15, "stringTimer: " + string(m_stringTimer));
+draw_text_debug(16, "stringDistance: " + string(m_stringDistance));
+draw_text_debug(17, "arrowActive: " + string(m_arrowActive));
+draw_text_debug(18, "lTrigger: " + string(m_lTrigger));
+draw_text_debug(19, "bowDeltaTimer: " + string(m_bowDeltaTimer));
+draw_text_debug(20, "view_xview: " + string(view_xview));
+draw_text_debug(21, "view_yview: " + string(view_yview));
+draw_text_debug(22, "view_wview: " + string(view_wview));
+draw_text_debug(23, "view_hview: " + string(view_hview));
+draw_text_debug(24, "player x: " + string(x));
+draw_text_debug(25, "player y: " + string(y));
 
 
 
@@ -1192,15 +1202,15 @@ legLY = legBY + lengthdir_y(8, m_bodyAngle);
 
 // Draw the legs
 // Left leg
-draw_sprite_ext(spr_leg, 0, legRX, legRY + legLYOff, 
+draw_sprite_ext(m_legSprite, 0, legRX, legRY + legLYOff, 
     m_imageDirection, 1, legRA, c_white, 1);
     
 // Right leg
-draw_sprite_ext(spr_leg, 0, legLX, legLY + legRYOff, 
+draw_sprite_ext(m_legSprite, 0, legLX, legLY + legRYOff, 
     m_imageDirection, 1, legLA, c_white, 1);
 
 // Draw the body
-draw_sprite_ext(spr_head, 0, x, y + m_bodyOffsetY,
+draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY,
     m_imageDirection, 1, m_bodyAngle, c_white, 1);
 
 </string>

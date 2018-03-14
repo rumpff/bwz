@@ -29,16 +29,24 @@
     <sounds name="Menu">
       <sounds name="Character Select">
         <sound>sound\snd_cursorMove</sound>
+        <sound>sound\snd_pressedA</sound>
         <sound>sound\snd_letterEnter</sound>
         <sound>sound\snd_letterFull</sound>
         <sound>sound\snd_letterRemove</sound>
         <sound>sound\snd_sweep</sound>
+        <sound>sound\snd_swordSlice</sound>
+        <sound>sound\snd_uwah1</sound>
+        <sound>sound\snd_uwah2</sound>
+        <sound>sound\snd_uwah3</sound>
+        <sound>sound\snd_uwah4</sound>
       </sounds>
     </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
       <sprites name="Player1">
+        <sprite>sprites\spr_head1</sprite>
+        <sprite>sprites\spr_leg1</sprite>
         <sprite>sprites\spr_p1_idle</sprite>
         <sprite>sprites\spr_p1_walking</sprite>
         <sprite>sprites\spr_p1_jump</sprite>
@@ -64,8 +72,6 @@
         <sprite>sprites\spr_hats</sprite>
       </sprites>
     </sprites>
-    <sprite>sprites\spr_head</sprite>
-    <sprite>sprites\spr_leg</sprite>
     <sprite>sprites\msk_player</sprite>
   </sprites>
   <backgrounds name="background">
@@ -119,6 +125,7 @@
     <script>scripts\input_timers_active.gml</script>
     <script>scripts\input_timers_reset.gml</script>
     <script>scripts\pyth.gml</script>
+    <script>scripts\get_hat_height.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
