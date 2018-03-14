@@ -118,6 +118,7 @@
     <script>scripts\draw_text_outline.gml</script>
     <script>scripts\input_timers_active.gml</script>
     <script>scripts\input_timers_reset.gml</script>
+    <script>scripts\pyth.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>

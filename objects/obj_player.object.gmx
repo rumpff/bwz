@@ -540,7 +540,7 @@ m_bowDistance = lerp(m_bowDistance, distance, 0.3);
 
 // Position the bow
 m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
-m_bowY = (y - BODY_OFFSET) + lengthdir_y(m_bowDistance, m_bowAngle);
+m_bowY = y + lengthdir_y(m_bowDistance, m_bowAngle);
 
 // Control shooting
 if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
@@ -593,8 +593,8 @@ else if(m_arrowActive)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Animate
-
+            <string>/// Animate OLD
+/*
 // Lerp scale for squishyness
 m_imageXScale = lerp(m_imageXScale, 1, 0.2);
 m_imageYScale = lerp(m_imageYScale, 1, 0.2);
@@ -666,7 +666,7 @@ if(m_imageIndex &gt; sprite_get_number(m_spriteIndex))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Animate new
+            <string>/// Animate New
 
 signMove = sign(move);
 
@@ -718,7 +718,18 @@ else // Player is in the air
 {
     if (m_againstWall) // Against wall
     { 
+        // Calculate an offset
+        m_bodyOffsetY = lerp(m_bodyOffsetY, 0, 0.3);
         
+        // Set the leg offsets to zero
+        m_legROffsetY = 0;
+        m_legLOffsetY = 0;
+        
+        // Lerp the leg angles to zero
+        m_legRAngle = lerp(m_legRAngle, -90, 0.33);
+        m_legLAngle = lerp(m_legLAngle, 90, 0.33);
+        
+        m_bodyAngle = lerp(m_bodyAngle, 90 * m_wallDir, 0.3);
     }
     else // In-Air
     {         
@@ -1060,7 +1071,7 @@ m_spriteWallSlide = spr_p1_wall;
 
 m_spriteBow = spr_bow;
 
-m_hatHeight = 24;
+m_hatHeight = 14;
 </string>
           </argument>
         </arguments>
@@ -1140,35 +1151,11 @@ draw_text_debug(26, "player y: " + string(y));
           <argument>
             <kind>1</kind>
             <string>/// Draw the player
-/*
-draw_sprite_ext(m_spriteIndex, m_imageIndex, x, y,
-m_imageXScale * m_imageDirection, m_imageYScale, m_imageAngle, c_white, n_imageAlpha);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw the player new
 
 // Variables for leg positions, yOffset and Angle
 var legLX, legLY, legRX, legRY, legLYOff, legRYOff, legLA, legRA;
 // Variables for calculating the position of the legs
-var xOff, yOff, length, dir;
+var xOff, yOff, legBX, legBY, length, dir;
 
 // Set the right values for if the player is facing left
 if(m_imageDirection == 1) // Player faces right, nothing changes
@@ -1190,32 +1177,32 @@ legRA = m_legRAngle + m_bodyAngle;
 xoff = 8; 
 yoff = 4;
 
-// Calculate the horizontal offset
-legRX = lengthdir_x(8, m_bodyAngle);
-legRY = lengthdir_y(8, m_bodyAngle);
+// Calculate the vertical offset
+legBX = x + lengthdir_x(12, m_bodyAngle - 90);
+legBY = y + lengthdir_y(12, m_bodyAngle - 90);
 
-legLX = lengthdir_x(8, m_bodyAngle);
-legLY = lengthdir_y(8, m_bodyAngle);
+// Add the horizontal offset
+legRX = legBX + lengthdir_x(8, m_bodyAngle - 180);
+legRY = legBY + lengthdir_y(8, m_bodyAngle - 180);
 
-// Add the vertical offset
-legRX += lengthdir_x(4, m_bodyAngle - 90);
-legRY += lengthdir_y(4, m_bodyAngle - 90);
+legLX = legBX + lengthdir_x(8, m_bodyAngle);
+legLY = legBY + lengthdir_y(8, m_bodyAngle);
 
-legLX += lengthdir_x(4, m_bodyAngle - 90);
-legLY += lengthdir_y(4, m_bodyAngle - 90);
+
 
 // Draw the legs
 // Left leg
-draw_sprite_ext(spr_leg, 0, x-legLX, y + legLY + legLYOff, 
+draw_sprite_ext(spr_leg, 0, legRX, legRY + legLYOff, 
     m_imageDirection, 1, legRA, c_white, 1);
     
 // Right leg
-draw_sprite_ext(spr_leg, 0, x+legRX, y + legRY + legRYOff, 
+draw_sprite_ext(spr_leg, 0, legLX, legLY + legRYOff, 
     m_imageDirection, 1, legLA, c_white, 1);
 
 // Draw the body
-draw_sprite_ext(spr_head, 0, x, y - BODY_OFFSET + m_bodyOffsetY,
-m_imageDirection, 1, m_bodyAngle, c_white, 1);
+draw_sprite_ext(spr_head, 0, x, y + m_bodyOffsetY,
+    m_imageDirection, 1, m_bodyAngle, c_white, 1);
+
 </string>
           </argument>
         </arguments>
@@ -1298,11 +1285,24 @@ var ypos;
 if(m_vsp &gt; 0) { ypos = yprevious; }
 else { ypos = y; }
 
-var xdir = m_imageDirection * -m_againstWall;
-if (xdir = 0) { xdir = m_imageDirection; }
+var xdir = m_imageDirection;
 
-draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight + m_bodyOffsetY,
-xdir, 1, (12 * xdir), c_white, 1);
+// Calculate the vertical offset
+hatBX = x + lengthdir_x(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
+hatBY = y + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
+
+// Add the horizontal offset
+var val = 0;
+if(xdir == 1) { val = 180; }
+
+hatX = hatBX + lengthdir_x(8, m_bodyAngle - val);
+hatY = hatBY + lengthdir_y(8, m_bodyAngle - val);
+
+draw_sprite_ext(m_spriteHat, 0, hatX, hatY,
+xdir, 1, (12 * xdir) + m_bodyAngle, c_white, 1);
+
+//draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight + m_bodyOffsetY,
+//xdir, 1, (12 * xdir) + m_bodyAngle, c_white, 1);
 </string>
           </argument>
         </arguments>
