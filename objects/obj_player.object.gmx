@@ -489,7 +489,7 @@ var largStick = max(abs(m_rStickH), abs(m_rStickV))
 var trigger = m_lTrigger;
 
 // Check if active
-if(largStick &gt; 0.6)
+if(largStick &gt; 0.5)
 { m_bowActive = true; }
 else 
 { 
