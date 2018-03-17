@@ -5,7 +5,7 @@ var playerIndex = argument0;
 switch(playerIndex)
 {
     case 0:
-        return 4;
+        return 8;
         break;
         
     default:

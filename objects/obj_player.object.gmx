@@ -331,15 +331,22 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
    {
       m_hspFinal = 0;
       m_hsp = 0;
-    
+        
+      if(m_lStickH != 0)
+      { m_bodyAngle += (360 * sign(m_lStickH)); }
+      else
+      { m_bodyAngle += (360 * sign(move)); }
+      
       m_playerState = m_playerStates.airDashing
-      m_lerpedStick = (m_lStickH * m_airDashSpeed) * 0.7;
+      m_lerpedStick = (m_lStickH * m_airDashSpeed) * 0.7; 
       
       if (m_againstWall)
       {
          m_lerpedStick -= m_wallDir;
          m_vsp = -m_jumpspeed * 1.2;
       }
+      
+      
       
       effect_create_below(ef_smoke, x, y + 16, 1, c_gray);
    }
@@ -719,10 +726,7 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
 else // Player is in the air
 {
     if (m_againstWall) // Against wall
-    { 
-        // Calculate an offset
-        m_bodyOffsetY = lerp(m_bodyOffsetY, 0, 0.3);
-        
+    {  
         // Set the leg offsets to zero
         m_legROffsetY = 0;
         m_legLOffsetY = 0;
@@ -750,13 +754,19 @@ else // Player is in the air
             m_legROffsetY = 0;
             m_legLOffsetY = 0;
             
-            m_legRAngle = clamp(m_vsp * 1.4 * -1, -30, 30);
-            m_legLAngle = clamp(m_vsp * 1.4, -30, 30);
+            m_legRAngle = (m_vsp * 1.4 * -1);
+            m_legLAngle = (m_vsp * 1.4);
         }
+        // Lerp the offset to zero
+        m_bodyOffsetY = lerp(m_bodyOffsetY, 0, 0.4);
         
-        m_bodyAngle = (25 * (move * -1));
+        m_bodyAngle = lerp(m_bodyAngle, (25 * (move * -1)), 0.1);
     }
 }
+
+// Clamp the lerps!!
+m_legRAngle = clamp(m_legRAngle, -90, 90);
+m_legLAngle = clamp(m_legLAngle, -90, 90);
 </string>
           </argument>
         </arguments>
@@ -982,7 +992,7 @@ m_controllerId = m_playerId;
 switch(global.playerSprite[m_playerId])
 {
     case 0:
-        m_headSprite = spr_head1;
+        m_headSprite = spr_head2;
         m_legSprite = spr_leg1;
         break;
 }
@@ -1135,6 +1145,8 @@ draw_text_debug(22, "view_wview: " + string(view_wview));
 draw_text_debug(23, "view_hview: " + string(view_hview));
 draw_text_debug(24, "player x: " + string(x));
 draw_text_debug(25, "player y: " + string(y));
+draw_text_debug(26, "bodyAngle: " + string(m_bodyAngle));
+
 
 
 
@@ -1299,7 +1311,7 @@ var xdir = m_imageDirection;
 
 // Calculate the vertical offset
 hatBX = x + lengthdir_x(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
-hatBY = y + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
+hatBY = ypos + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
 
 // Add the horizontal offset
 var val = 0;

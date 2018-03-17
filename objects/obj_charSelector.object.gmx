@@ -326,6 +326,8 @@ if(m_currentState == 2)
         case 2:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4), 1);
             m_charSelectNormal = true;
+            
+            
             break;
         case 3:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/2.5), 1);
@@ -931,12 +933,12 @@ var h = m_drawHeight/2;
 // Draw box
 draw_set_color(c_black);
 draw_set_alpha(0.2);
-draw_rectangle(x - w, y - h, x + w, y + h, false);
+draw_roundrect(x - w, y - h, x + w, y + h, false);
 
 draw_set_alpha(1);
 
 // Draw outline
-draw_rectangle(x - w, y - h, x + w, y + h, true);
+draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
 </string>
           </argument>
         </arguments>

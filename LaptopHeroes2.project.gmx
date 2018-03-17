@@ -45,21 +45,26 @@
   <sprites name="sprites">
     <sprites name="Players">
       <sprites name="Player1">
-        <sprite>sprites\spr_head1</sprite>
-        <sprite>sprites\spr_leg1</sprite>
         <sprite>sprites\spr_p1_idle</sprite>
         <sprite>sprites\spr_p1_walking</sprite>
         <sprite>sprites\spr_p1_jump</sprite>
         <sprite>sprites\spr_p1_fall</sprite>
         <sprite>sprites\spr_p1_wall</sprite>
       </sprites>
-      <sprites name="Hats">
-        <sprite>sprites\spr_hat1</sprite>
-        <sprite>sprites\spr_hat2</sprite>
-        <sprite>sprites\spr_hat3</sprite>
-        <sprite>sprites\spr_hat4</sprite>
-        <sprite>sprites\spr_hat5</sprite>
+      <sprites name="Heads">
+        <sprite>sprites\spr_head1</sprite>
+        <sprite>sprites\spr_head2</sprite>
       </sprites>
+      <sprites name="Legs">
+        <sprite>sprites\spr_leg1</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="Hats">
+      <sprite>sprites\spr_hat1</sprite>
+      <sprite>sprites\spr_hat2</sprite>
+      <sprite>sprites\spr_hat3</sprite>
+      <sprite>sprites\spr_hat4</sprite>
+      <sprite>sprites\spr_hat5</sprite>
     </sprites>
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_wall</sprite>
@@ -126,6 +131,7 @@
     <script>scripts\input_timers_reset.gml</script>
     <script>scripts\pyth.gml</script>
     <script>scripts\get_hat_height.gml</script>
+    <script>scripts\draw_roundrect_width.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
