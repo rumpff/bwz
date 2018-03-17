@@ -197,37 +197,38 @@ for (i = 0; i &lt; pAmount; i++)
     draw_set_color(global.playerColor[i]);
     draw_set_alpha(0.4);
     draw_rectangle(xP - 64, yP, xP - 64 + (24*4), yP + (24*4), false);
-    
-    draw_set_color(c_black);
     draw_set_alpha(1);
-    draw_rectangle(xP-bW, yP-bH, xP+bW, yP+bH, true);
     
     // Draw the score    
-    draw_set_halign(fa_right);
-    draw_set_valign(fa_bottom);
-    draw_set_font(fnt_gui);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_left);
+    draw_set_font(fnt_score);
     
     draw_set_color(c_black);
-    draw_text_outline(xP+bW, yP+bH, m_playerScore[i], 1, c_black, 50);
+    draw_text_outline(xP+42, yP, m_playerScore[i], 1, c_black, 50);
     
     draw_set_color(c_white);
-    draw_text_outline(xP+bW-5, yP+bH-5, m_playerScore[i], 1, c_black, 50);
+    draw_text_outline(xP-5+42, yP-5, m_playerScore[i], 1, c_black, 50);
        
     // Draw player sprite
-    draw_sprite_part_ext(spr_p1_idle, 0, 8, 8, 24, 24, xP - 64, yP,
+    draw_sprite_part_ext(head_sprite(global.playerHead[i]), 0, 8, 8, 24, 24, xP - 64, yP,
     4, 4, c_white, 1);
     
+    
+    
     // Draw player name
-    draw_set_halign(fa_center);
+    draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_font(fnt_gui);
     
-    draw_set_color(global.playerColor[i]);
+    var shadowcol = make_color_hsv(color_get_hue(global.playerColor[i]), 255, 100)
     
-    draw_text(xP+2, yP+(24*3)+2, global.playerName[i]);
+    draw_set_color(shadowcol); 
+    
+    draw_text(xP - 64 + 4, yP+(24*3)+4, global.playerName[i]);
     
     draw_set_color(c_white); 
-    draw_text_outline(xP, yP+(24*3), global.playerName[i], 1, global.playerColor[i], 50);
+    draw_text_outline(xP - 64, yP+(24*3), global.playerName[i], 1, shadowcol, 50);
 }
 </string>
           </argument>
@@ -267,6 +268,9 @@ for (i = 0; i &lt; pAmount; i++)
         
         draw_set_alpha(m_indicatorAlpha);
         draw_set_color(global.playerColor[i]);
+        
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_top);
         
         draw_text(xp, yp - 96, global.playerName[i]);
         draw_triangle(xp - 16, yp - 48, xp + 16, yp - 48, xp, yp - 32, false);

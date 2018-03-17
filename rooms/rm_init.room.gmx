@@ -15,7 +15,8 @@ global.playerAmount = 2;
 
 for (i = 0; i &lt; 4; i++)
 {
-    global.playerSprite[i] = 0;
+    global.playerHead[i] = 0;
+    global.playerLeg[i] = 0;
     global.playerHat[i] = 0;
     global.playerColor[i] = 0;
     global.playerName[i] = 0;
@@ -30,8 +31,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1020</w>
-    <h>602</h>
+    <w>1000</w>
+    <h>612</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>

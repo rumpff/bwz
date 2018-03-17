@@ -57,6 +57,7 @@
       </sprites>
       <sprites name="Legs">
         <sprite>sprites\spr_leg1</sprite>
+        <sprite>sprites\spr_leg2</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">
@@ -132,9 +133,13 @@
     <script>scripts\pyth.gml</script>
     <script>scripts\get_hat_height.gml</script>
     <script>scripts\draw_roundrect_width.gml</script>
+    <script>scripts\head_sprite.gml</script>
+    <script>scripts\leg_sprite.gml</script>
+    <script>scripts\hat_sprite.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
+    <font>fonts\fnt_score</font>
     <font>fonts\fnt_debug</font>
     <font>fonts\fnt_letters</font>
   </fonts>

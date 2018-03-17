@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(m_id == 999)
+if(m_id == 0)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -241,8 +241,10 @@ if(m_currentState == 3)
     // set the container to the right size   
     m_contWidth = 250;
     m_contHeight = 125;
+
     
-    global.playerSprite[m_id] = m_currentPlayer;
+    global.playerHead[m_id] = m_currentHead;
+    global.playerLeg[m_id] = m_currentLeg;
     global.playerHat[m_id] = m_currentHat;
     global.playerColor[m_id] = make_color_hsv(m_currentColor, 255, 255);
     global.playerName[m_id] = m_name;
@@ -325,11 +327,15 @@ if(m_currentState == 2)
         
         case 2:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4), 1);
-            m_charSelectNormal = true;
-            
-            
+            m_charSelectNormal = true;          
             break;
+            
         case 3:
+            m_charSelectPos = lerp(m_charSelectPos, y + (h/4) + (12*2.5) , 1);
+            m_charSelectNormal = true;          
+            break;
+            
+        case 4:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/2.5), 1);
             m_charSelectNormal = false;
             break;
@@ -339,15 +345,14 @@ if(m_currentState == 2)
     m_charSROffset = lerp(m_charSROffset, 0, 0.2);
     
     // Set the ready text
-    if(m_charCurrent == 3)
+    if(m_charCurrent == 4)
     {  m_readyText = "READY?"; }
     else { m_readyText = "READY"; }
     
-    // Check the inputs
-    
+    // Check the inputs    
     if(m_inputSelect)
     {
-        if(m_charCurrent == 3)
+        if(m_charCurrent == 4)
         {
             m_currentState++;
             audio_play_sound(snd_swordSlice, 1, 0);
@@ -355,7 +360,7 @@ if(m_currentState == 2)
         }
         else
         {
-            m_charCurrent = 3;
+            m_charCurrent = 4;
         }
     }
     
@@ -367,7 +372,7 @@ if(m_currentState == 2)
     
     if (m_inputDown)
     {
-        if(m_charCurrent &lt; 3)
+        if(m_charCurrent &lt; 4)
         { m_charCurrent++; audio_play_sound(snd_cursorMove, 1, 0); }
     }
     
@@ -391,8 +396,13 @@ if(m_currentState == 2)
                 break;
                 
             case 2:
-                if (m_currentPlayer &gt; 0) 
-                { m_currentPlayer--; valid = true;}
+                if (m_currentHead &gt; 0) 
+                { m_currentHead--; valid = true;}
+                break;
+                
+            case 3:
+                if (m_currentLeg &gt; 0) 
+                { m_currentLeg--; valid = true;}
                 break;
         }
         
@@ -420,8 +430,13 @@ if(m_currentState == 2)
                 break;
                 
             case 2:
-                if (m_currentPlayer &lt; (sprite_get_number(spr_players) - 1)) 
-                { m_currentPlayer++; valid = true;}
+                if (m_currentHead &lt; HEAD_AMOUNT-1) 
+                { m_currentHead++; valid = true;}
+                break;
+                
+            case 3:
+                if (m_currentLeg &lt; LEG_AMOUNT-1) 
+                { m_currentLeg++; valid = true;}
                 break;
         }
         
@@ -842,7 +857,7 @@ m_selectorDist = 0;
 m_selectorAngleOff = 0;
 
 m_name = ""; // The name that the player enters
-m_maxNameLength = 5;
+m_maxNameLength = 8;
 </string>
           </argument>
         </arguments>
@@ -865,7 +880,8 @@ m_maxNameLength = 5;
             <kind>1</kind>
             <string>/// State 2 specifics
 
-m_currentPlayer = 0;
+m_currentHead = 0;
+m_currentLeg = 0;
 m_currentHat = 0;
 m_currentColor = 0;
 
@@ -1084,11 +1100,17 @@ if(m_currentState == 2)
     draw_line(m_RUX1 - offset, m_RUY1, m_RUX2 - offset, m_RUY2);
     draw_line(m_RBX1 - offset, m_RBY1, m_RBX2 - offset, m_RBY2);
     
-    // Draw the sprites
+    // Draw the hat
     draw_sprite_ext(spr_hats, m_currentHat, x, y, 2.5, 2.5, 0, c_white, 1);
-    draw_sprite_ext(spr_players, m_currentPlayer, x, y + (h/4), 2.5, 2.5, 0, c_white, 1);
     
-    // Draw the color
+    // Legs
+    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x - (8 * 2.5), y + (h/4) + (12*2.5) , 2.5, 2.5, 0, c_white, 1)
+    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x + (8 * 2.5), y + (h/4) + (12*2.5) , 2.5, 2.5, 0, c_white, 1)
+    
+    // Head
+    draw_sprite_ext(head_sprite(m_currentHead), 0, x, y + (h/4), 2.5, 2.5, 0, c_white, 1);
+    
+    // Color block
     draw_set_color(make_color_hsv(m_currentColor, 255, 255));
     
     var bSize = 32;

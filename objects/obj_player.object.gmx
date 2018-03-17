@@ -335,7 +335,7 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
       if(m_lStickH != 0)
       { m_bodyAngle += (360 * sign(m_lStickH)); }
       else
-      { m_bodyAngle += (360 * sign(move)); }
+      { m_bodyAngle += (360 * m_imageDirection); }
       
       m_playerState = m_playerStates.airDashing
       m_lerpedStick = (m_lStickH * m_airDashSpeed) * 0.7; 
@@ -987,63 +987,11 @@ m_controllerId = m_playerId;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Get the player sprite
+            <string>/// Get the sprites
 
-switch(global.playerSprite[m_playerId])
-{
-    case 0:
-        m_headSprite = spr_head2;
-        m_legSprite = spr_leg1;
-        break;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Get the hat sprite
-
-switch(global.playerHat[m_playerId])
-{
-    case 0:
-        m_spriteHat = spr_hats;
-        break;
-    
-    case 1:
-        m_spriteHat = spr_hat1;
-        break;
-    
-    case 2:
-        m_spriteHat = spr_hat2;
-        break;
-        
-    case 3:
-        m_spriteHat = spr_hat3;
-        break;
-        
-    case 4:
-        m_spriteHat = spr_hat4;
-        break;
-        
-    case 5:
-        m_spriteHat = spr_hat5;
-        break;
-}
+m_headSprite = head_sprite(global.playerHead[m_playerId]);
+m_legSprite = leg_sprite(global.playerLeg[m_playerId]);
+m_spriteHat = hat_sprite(global.playerHat[m_playerId]);
 </string>
           </argument>
         </arguments>
@@ -1092,7 +1040,7 @@ gamepad_set_axis_deadzone(m_controllerId, m_controllerDeadzone);
 
 m_spriteBow = spr_bow;
 
-m_hatHeight = get_hat_height(global.playerSprite[m_playerId]);
+m_hatHeight = get_hat_height(global.playerHead[m_playerId]);
 </string>
           </argument>
         </arguments>
