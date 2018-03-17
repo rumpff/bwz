@@ -498,7 +498,7 @@ var trigger = m_lTrigger;
 // Check if active
 if(largStick &gt; 0.5)
 { m_bowActive = true; }
-else 
+else if(!m_arrowActive)
 { 
     m_bowActive = false;
     
@@ -538,14 +538,25 @@ else
 
 // Calculate bow's angle
 if(largStick &gt; 0.25)
-{ m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); }
+{ 
+    // Calcutate angle
+    angle_next = point_direction(0, 0, m_rStickH, m_rStickV); // The angle where we need to go to
+    angle_prev = m_bowAngle; // the last angle of the image
+    angle_diff = angle_difference(angle_prev, angle_next); // get the difference between the angle
+    
+    angle_next = angle_prev - angle_diff; // convert the angle to a number outside of 0-360 if needed
+    
+    m_bowAngle = lerp(m_bowAngle, angle_next, 0.6);
+    
+    //m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); 
+}
 
 
 // Calculate distance
 var distance = 16;
 if(m_bowActive) { distance = 32; }
 
-m_bowDistance = lerp(m_bowDistance, distance, 0.3);
+m_bowDistance = lerp(m_bowDistance, distance, 0.6);
 
 // Position the bow
 m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
@@ -693,7 +704,7 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
         m_legAngleSin = m_bodyOffSin; // The legs must time perfectly with the body
         
         // Calculate an offset which makes the body bounce
-        m_bodyOffsetY = abs(sin(m_bodyOffSin) * 7.5) * -1;
+        m_bodyOffsetY = abs(sin(m_bodyOffSin) * 10) * -1;
         
         // Stick the legs to the body
         m_legROffsetY = m_bodyOffsetY;

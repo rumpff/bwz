@@ -15,14 +15,6 @@ switch(argument0)
         break;
         
     case 3:
-        return spr_hat3;
-        break;
-        
-    case 4:
-        return spr_hat4;
-        break;
-        
-    case 5:
         return spr_hat5;
         break;
 }
