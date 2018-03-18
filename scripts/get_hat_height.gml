@@ -12,6 +12,10 @@ switch(playerIndex)
         return -4;
         break;
         
+    case 2:
+        return 10;
+        break;
+        
     default:
         return 0;
         break;

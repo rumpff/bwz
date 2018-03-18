@@ -296,8 +296,8 @@ x_Zoom = x_Camera;
 y_Zoom = y_Camera;
 ZoomOutSpeed = 0.6;                                         // Must be between 0 and 1; the larger the faster the zoom out speed
 ZoomInSpeed = 0.8;                                          // Must be between 0 and 1; the larger the faster the zoom out speed
-ZoomMax = room_width;
-ZoomMin = view_wview[0] / 2;
+ZoomMax = room_height*2; // Was width
+ZoomMin = view_hview[0] / 2;
 ZoomOutBoundary = 0.6;                                      // Must be between 0 and 1; the larger the closer to the edge the player must travel before zooming out
 x_ZoomOut = ZoomOutBoundary * view_wview[0];
 y_ZoomOut = ZoomOutBoundary * view_hview[0];
@@ -657,7 +657,7 @@ draw_text(4, 164, "y_ZoomOut/2: " + string_format(y_ZoomOut/2, 5, 0));
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-exit;
+//exit;
 // Zoom out boundary
 
 var X1 = x_Zoom - x_ZoomOut/2,

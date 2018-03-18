@@ -857,7 +857,7 @@ m_selectorDist = 0;
 m_selectorAngleOff = 0;
 
 m_name = ""; // The name that the player enters
-m_maxNameLength = 8;
+m_maxNameLength = 10;
 </string>
           </argument>
         </arguments>

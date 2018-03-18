@@ -54,6 +54,7 @@
       <sprites name="Heads">
         <sprite>sprites\spr_head1</sprite>
         <sprite>sprites\spr_head2</sprite>
+        <sprite>sprites\spr_head3</sprite>
       </sprites>
       <sprites name="Legs">
         <sprite>sprites\spr_leg1</sprite>
@@ -80,6 +81,7 @@
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
+    <background>background\bg_cloudTiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
