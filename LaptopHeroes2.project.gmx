@@ -16,24 +16,28 @@
         <sound>sound\snd_ArrowHit4</sound>
       </sounds>
       <sounds name="Arrow Shoot">
-        <sound>sound\snd_ArrowShoot1</sound>
-        <sound>sound\snd_ArrowShoot2</sound>
-        <sound>sound\snd_ArrowShoot3</sound>
-        <sound>sound\snd_ArrowShoot4</sound>
+        <sound>sound\snd_arrowShoot1</sound>
+        <sound>sound\snd_arrowShoot2</sound>
+        <sound>sound\snd_arrowShoot3</sound>
+        <sound>sound\snd_arrowShoot4</sound>
       </sounds>
+      <sound>sound\snd_StringStretch</sound>
     </sounds>
     <sounds name="Player">
       <sound>sound\snd_PlayerJump1</sound>
+      <sound>sound\snd_playerDeath1</sound>
       <sound>sound\snd_PlayerWallslide</sound>
     </sounds>
     <sounds name="Menu">
       <sounds name="Character Select">
         <sound>sound\snd_cursorMove</sound>
         <sound>sound\snd_pressedA</sound>
-        <sound>sound\snd_letterEnter</sound>
         <sound>sound\snd_letterFull</sound>
         <sound>sound\snd_letterRemove</sound>
         <sound>sound\snd_sweep</sound>
+        <sound>sound\snd_charNext</sound>
+        <sound>sound\snd_charReturn</sound>
+        <sound>sound\snd_letterEnter</sound>
         <sound>sound\snd_swordSlice</sound>
         <sound>sound\snd_uwah1</sound>
         <sound>sound\snd_uwah2</sound>
@@ -41,6 +45,7 @@
         <sound>sound\snd_uwah4</sound>
       </sounds>
     </sounds>
+    <sound>sound\snd_score</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
@@ -78,6 +83,7 @@
       </sprites>
     </sprites>
     <sprite>sprites\msk_player</sprite>
+    <sprite>sprites\spr_bloodParticles</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -153,6 +159,8 @@
     <object>objects\obj_arrow</object>
     <object>objects\obj_charSelector</object>
     <object>objects\obj_charSelectManager</object>
+    <object>objects\obj_blood</object>
+    <object>objects\obj_scoreEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

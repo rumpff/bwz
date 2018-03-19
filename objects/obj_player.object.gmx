@@ -544,7 +544,10 @@ if(!m_arrowActive &amp;&amp; m_stringTimer &lt; 25)
 
 // Set arrow active
 if(m_arrowForce == 0 &amp;&amp; m_triggerPrev != 0)
-{ m_arrowActive = true; }
+{ 
+    if(!m_arrowActive) { audio_play_sound(snd_StringStretch, 1, 0); }
+    m_arrowActive = true; 
+}
 
 // Update force
 m_arrowForce = lerp(m_arrowForce, m_triggerPrev, 0.2);
@@ -601,6 +604,8 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
         m_arrowActive = false;
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;
+        var sound = choose(snd_arrowShoot1, snd_arrowShoot2, snd_arrowShoot3, snd_arrowShoot4);
+        audio_play_sound(sound, 1, 0);
     }
     
     m_holdTimer++;

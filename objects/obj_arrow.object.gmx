@@ -25,6 +25,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Do da drew angla
+
+m_drawAngle = point_direction(x, y, x + m_moveX, y + m_moveY);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Check for collision with the player
 
 if(!m_wallHit)
@@ -173,6 +196,7 @@ m_moveSpeed = ARROW_SPEED * m_force;
 m_grav = 0.4;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
+m_drawAngle = 0;
 
 m_initialCooldown = 10; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 
@@ -207,10 +231,8 @@ image_yscale = m_moveSpeed / 100;
 
 draw_set_color(c_white);
 
-var angle = point_direction(x, y, x + m_moveX, y + m_moveY);
-
-var x2 = x + lengthdir_x(m_length, angle);
-var y2 = y + lengthdir_y(m_length, angle);
+var x2 = x + lengthdir_x(m_length, m_drawAngle);
+var y2 = y + lengthdir_y(m_length, m_drawAngle);
 
 draw_line_width(x, y, x2, y2, ARROW_WIDTH);
 </string>

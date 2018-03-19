@@ -198,6 +198,7 @@ m_drawHeight = lerp(m_drawHeight, m_contHeight, 0.2) + (sin(m_containterSin) * 2
 if((m_inputBack) &amp;&amp; (m_currentState &gt; 0))
 {
     m_currentState--;
+    audio_play_sound(snd_charReturn, 1, 0);
 }
 
 m_sinCounter += 0.03;
@@ -607,6 +608,7 @@ if(m_currentState == 1)
                 if(nameLength &gt; 0) // name isn't empty
                 {
                     m_currentState++;
+                    audio_play_sound(snd_charNext, 1, 0);
                 }
                 break;
                 
