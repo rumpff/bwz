@@ -657,7 +657,7 @@ draw_text(4, 164, "y_ZoomOut/2: " + string_format(y_ZoomOut/2, 5, 0));
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-//exit;
+exit;
 // Zoom out boundary
 
 var X1 = x_Zoom - x_ZoomOut/2,
