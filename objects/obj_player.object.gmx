@@ -117,7 +117,7 @@ m_keyJumpHeld = (m_rTrigger &gt; m_controllerDeadzone);
           <argument>
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
-if (m_playerId == 1)
+if (m_playerId == 0)
 {
    if(!gamepad_is_connected(0))
    {
@@ -281,14 +281,14 @@ if (m_againstWall)
 {
    if (m_vsp &lt; m_maxFallSpeed / 4)
    {
-      m_vsp += m_grav
+      m_vsp += global.grav;
    }
 }
 else
 {
    if (m_vsp &lt; m_maxFallSpeed) 
    { 
-       m_vsp += m_grav; 
+       m_vsp += global.grav;
    }
 }
 </string>
@@ -888,8 +888,6 @@ m_legLAngle = clamp(m_legLAngle, -90, 90);
             <kind>1</kind>
             <string>/// Initialize variables
 
-m_grav = 0.8;
-
 // Player's states
 m_playerState = m_playerStates.normal;
 
@@ -925,7 +923,7 @@ m_lerpedStick = 0;
 m_jumps = 0;
 m_jumpsmax = 2;
 m_jumpspeed = 18;
-m_maxFallSpeed = 30;
+m_maxFallSpeed = 44;
 
 m_airDashSpeed = 2.2;   // lerpStick gets multiplied with this value
 

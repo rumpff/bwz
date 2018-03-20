@@ -12,6 +12,7 @@
   <showcolour>-1</showcolour>
   <code>global.deathCooldown = 30;
 global.playerAmount = 2;
+global.grav = 0.8;
 
 for (i = 0; i &lt; 4; i++)
 {

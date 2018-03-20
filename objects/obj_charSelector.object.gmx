@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(m_id == 99999999)
+if(m_id == 0)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -311,6 +311,35 @@ if(m_currentState == 2)
     if(m_drawHeight &gt; 740)
     {
         m_contWidth = 350; 
+    }
+    
+    // Set the text
+    switch(m_charCurrent)
+    {
+        case 0:
+            m_topText = "Pick a color";
+            m_bottomText = "";
+            break;
+            
+        case 1:
+            m_topText = "Choose a hat";
+            m_bottomText = "";
+            break;
+        
+        case 2:
+            m_topText = "Pick your head";
+            m_bottomText = "";          
+            break;
+            
+        case 3:
+            m_topText = "Choose your legs";
+            m_bottomText = "";     
+            break;
+            
+        case 4:
+            m_topText = "";
+            m_bottomText = "";
+            break;
     }
     
     // Lerp the selector pos
@@ -546,6 +575,10 @@ if(m_currentState == 1)
     m_selectorDist = lerp(m_selectorDist, m_selectorMaxDistance, 0.17);
     m_selectorAngleOff = lerp(m_selectorAngleOff, 0, 0.17);
     
+    // Set the name
+    m_topText = "Enter your name";
+    m_bottomText = "";
+    
     // Set all the positions for the letters
     m_letterBoxX[0] = 0;
     m_letterBoxY[0] = 0;  
@@ -703,6 +736,9 @@ if(m_currentState == 0)
     // Check for input
     if (m_inputSelect)
     { audio_play_sound(snd_pressedA, 1, 0); m_currentState++; } // Go to the next state
+    
+    m_topText = "";
+    m_bottomText = "";
 }
 </string>
           </argument>
@@ -771,6 +807,9 @@ m_sinCounter = 0; // Value for sinus effects
 m_containterSin = (m_id / 4);
 
 m_uwahTimer = 0;
+
+m_topText = "top text";
+m_bottomText = "bottom text";
 
 /// Input
 m_controllerId = m_id; // Which controller controlls this selector
@@ -957,6 +996,17 @@ draw_set_alpha(1);
 
 // Draw outline
 draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
+
+// Draw text
+draw_set_halign(fa_center)
+
+draw_set_valign(fa_bottom);
+draw_text(x, y-h, m_topText);
+
+draw_set_valign(fa_top);
+draw_text(x, y+h, m_bottomText);
+
+draw_set_valign(fa_center);
 </string>
           </argument>
         </arguments>

@@ -93,7 +93,7 @@ if(!m_wallHit)
             <string>/// Update movement
 if(!m_wallHit)
 {
-    m_moveY += m_grav;
+    m_moveY += global.grav;
     
     image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
     
@@ -223,7 +223,6 @@ if(m_initialCooldown &gt; 0)
             <kind>1</kind>
             <string>/// Initalize variables
 m_moveSpeed = ARROW_SPEED * m_force;
-m_grav = 0.4;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
 m_drawAngle = m_angle;

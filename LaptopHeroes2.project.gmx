@@ -66,6 +66,7 @@
       <sprites name="Legs">
         <sprite>sprites\spr_leg1</sprite>
         <sprite>sprites\spr_leg2</sprite>
+        <sprite>sprites\spr_leg3</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">
