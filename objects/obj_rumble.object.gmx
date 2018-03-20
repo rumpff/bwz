@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,10 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// m_playerId
-m_startTimer = 20;
-m_player = 0;
-m_easeTimer = 0;
+            <string>/*  m_id;
+    m_rumbleStart;
+    m_maxTime;  */
+    
+m_timer = 0;
+m_rumbleAmount = 0;
 </string>
           </argument>
         </arguments>
@@ -51,67 +53,16 @@ m_easeTimer = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!instance_exists(obj_gameManager.m_playerArray[m_playerId]))
+            <string>if(m_timer == m_maxTime)
 {
+    gamepad_set_vibration(m_id, 0, 0);
     instance_destroy();
 }
-else
-{
-    m_player = obj_gameManager.m_playerArray[m_playerId];
-    if(m_startTimer == 0)
-    {
-        audio_play_sound(snd_score, 1, 0);
-        
-        x = m_player.x;
-        y = m_player.y;
-    }
-    
-    if(m_startTimer &lt;= 0)
-    {
-        x = m_player.x;
-        y = m_player.y - 
-        ease_out_back(m_easeTimer, 0, 96, 30);
-        
-        m_easeTimer++;
-    }
-    if(m_easeTimer &gt; 30)
-    {
-        instance_destroy();
-    }
-    
-    m_startTimer--;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(m_startTimer &lt;= 0)
-{
-    draw_set_color(c_white);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    draw_set_font(fnt_gui);
-    
-    draw_text(x, y, "+1")
-}
+
+m_rumbleAmount = ease_in_cubic(m_timer, m_rumbleStart, -m_rumbleStart, m_maxTime);
+m_timer++;
+
+gamepad_set_vibration(m_id, m_rumbleAmount, m_rumbleAmount);
 </string>
           </argument>
         </arguments>

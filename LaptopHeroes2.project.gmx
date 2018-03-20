@@ -27,6 +27,7 @@
       <sound>sound\snd_PlayerJump1</sound>
       <sound>sound\snd_playerDeath1</sound>
       <sound>sound\snd_PlayerWallslide</sound>
+      <sound>sound\snd_PlayerStep</sound>
     </sounds>
     <sounds name="Menu">
       <sounds name="Character Select">
@@ -60,6 +61,7 @@
         <sprite>sprites\spr_head1</sprite>
         <sprite>sprites\spr_head2</sprite>
         <sprite>sprites\spr_head3</sprite>
+        <sprite>sprites\spr_head4</sprite>
       </sprites>
       <sprites name="Legs">
         <sprite>sprites\spr_leg1</sprite>
@@ -88,6 +90,7 @@
   <backgrounds name="background">
     <background>background\background0</background>
     <background>background\bg_cloudTiles</background>
+    <background>background\bg_green</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -142,6 +145,7 @@
     <script>scripts\head_sprite.gml</script>
     <script>scripts\leg_sprite.gml</script>
     <script>scripts\hat_sprite.gml</script>
+    <script>scripts\gamepad_rumble.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
@@ -157,10 +161,12 @@
     <object>objects\obj_spawnLocation</object>
     <object>objects\obj_camTracker</object>
     <object>objects\obj_arrow</object>
+    <object>objects\obj_arrowBounce</object>
     <object>objects\obj_charSelector</object>
     <object>objects\obj_charSelectManager</object>
     <object>objects\obj_blood</object>
     <object>objects\obj_scoreEffect</object>
+    <object>objects\obj_rumble</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

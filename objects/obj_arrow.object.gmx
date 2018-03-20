@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Do da drew angla
 
-m_drawAngle = point_direction(x, y, x + m_moveX, y + m_moveY);
+m_drawAngle = point_direction(0, 0, m_moveX, m_moveY);
 </string>
           </argument>
         </arguments>
@@ -145,6 +145,36 @@ if(!m_wallHit)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Warp room borders
+
+if (x &lt; 0)
+    { x += room_width; } 
+if (x &gt; room_width)
+    { x -= room_width; }
+if (y &lt; 0)
+    { y += room_height; }
+if (y &gt; room_height)
+    { y -= room_height; }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Timers
 
 if(m_initialCooldown &gt; 0)
@@ -196,7 +226,7 @@ m_moveSpeed = ARROW_SPEED * m_force;
 m_grav = 0.4;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
-m_drawAngle = 0;
+m_drawAngle = m_angle;
 
 m_initialCooldown = 10; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 
