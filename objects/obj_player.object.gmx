@@ -600,7 +600,7 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
 {
     if(m_holdTimer &gt; m_holdTimerMax &amp;&amp; m_bowShoot)
     {
-        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_arrowForce, m_playerId);
+        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_arrowForce, m_playerId, 0);
         m_arrowActive = false;
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;

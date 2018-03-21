@@ -88,14 +88,16 @@ player2 = obj_gameManager.m_playerArray[1];
 player3 = obj_gameManager.m_playerArray[2];
 player4 = obj_gameManager.m_playerArray[3];
 
+var destX, destY;
+
 switch (WhoAmI)
 {
    case "P1":
    {
       if (instance_exists(player1))
       {
-         phy_position_x = player1.x;
-         phy_position_y = player1.y;
+         destX = player1.x;
+         destY = player1.y;
          break;
       }
    }
@@ -104,8 +106,8 @@ switch (WhoAmI)
    {
       if (instance_exists(player2))
       {
-         phy_position_x = player2.x;
-         phy_position_y = player2.y;
+         destX = player2.x;
+         destY = player2.y;
          break;
       }
    }
@@ -114,8 +116,8 @@ switch (WhoAmI)
    {
       if (instance_exists(player3))
       {
-         phy_position_x = player3.x;
-         phy_position_y = player3.y;
+         destX = player3.x;
+         destY = player3.y;
          break;
       }
    }
@@ -124,18 +126,21 @@ switch (WhoAmI)
    {
       if (instance_exists(player4))
       {
-         phy_position_x = player4.x;
-         phy_position_y = player4.y;
+         destX = player4.x;
+         destY = player4.y;
          break;
       }
    }
    default:
    {
-      phy_position_x = obj_camera.x_COM
-      phy_position_y = obj_camera.y_COM
+      destX = obj_camera.x_COM
+      destY = obj_camera.y_COM
       break;
    }
 }
+
+phy_position_x = destX;
+phy_position_y = destY;
 
 phy_angular_velocity = 0;
 phy_rotation = 0;

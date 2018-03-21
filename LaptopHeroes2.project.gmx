@@ -157,12 +157,11 @@
   <objects name="objects">
     <object>objects\obj_player</object>
     <object>objects\obj_collider</object>
-    <object>objects\obj_camera</object>
     <object>objects\obj_gameManager</object>
-    <object>objects\obj_spawnLocation</object>
+    <object>objects\obj_camera</object>
     <object>objects\obj_camTracker</object>
+    <object>objects\obj_spawnLocation</object>
     <object>objects\obj_arrow</object>
-    <object>objects\obj_arrowBounce</object>
     <object>objects\obj_charSelector</object>
     <object>objects\obj_charSelectManager</object>
     <object>objects\obj_blood</object>

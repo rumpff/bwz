@@ -269,7 +269,7 @@ ViewRatio = view_wview[0] / view_hview[0];                  // View ration ensur
             <string>/// Panning parameters
 x_Camera = view_xview[0] + view_wview[0]/2;
 y_Camera = view_yview[0] + view_hview[0]/2;
-PanSpeed = 0.6;                                             // Must be between 0 and 1; the larger the faster the pan speed
+PanSpeed = 0.3;                                             // Must be between 0 and 1; the larger the faster the pan speed
 
 </string>
           </argument>
@@ -294,8 +294,8 @@ PanSpeed = 0.6;                                             // Must be between 0
             <string>/// Zoom parameters
 x_Zoom = x_Camera;
 y_Zoom = y_Camera;
-ZoomOutSpeed = 0.6;                                         // Must be between 0 and 1; the larger the faster the zoom out speed
-ZoomInSpeed = 0.8;                                          // Must be between 0 and 1; the larger the faster the zoom out speed
+ZoomOutSpeed = 0.4;                                         // Must be between 0 and 1; the larger the faster the zoom out speed
+ZoomInSpeed = 0.4;                                          // Must be between 0 and 1; the larger the faster the zoom out speed
 ZoomMax = room_height*3; // Was width
 ZoomMin = view_hview[0] / 2;
 ZoomOutBoundary = 0.6;                                      // Must be between 0 and 1; the larger the closer to the edge the player must travel before zooming out
@@ -530,31 +530,6 @@ view_yview = y_Camera - view_hview[0]/2;
 
 x_Zoom = view_xview[0] + view_wview[0]/2;
 y_Zoom = view_yview[0] + view_hview[0]/2;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="10">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Adds camera bump for when dash hits the ground
-
-y_BumpOffset += y_Bump;
 </string>
           </argument>
         </arguments>

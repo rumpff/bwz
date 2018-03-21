@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Initalize variables
 
-for (i = 0; i &lt; 4; i++)
+for (i = 0; i &lt; global.maxPlayers; i++)
 {
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;

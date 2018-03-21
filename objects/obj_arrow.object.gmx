@@ -91,7 +91,7 @@ if(!m_wallHit)
           <argument>
             <kind>1</kind>
             <string>/// Update movement
-if(!m_wallHit)
+if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
 {
     m_moveY += global.grav;
     
@@ -118,6 +118,62 @@ if(!m_wallHit)
         };
         
         m_wallHit = true;
+    }
+    else
+    {
+        x += m_moveX;
+        y += m_moveY;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Type 1
+
+if(!m_wallHit &amp;&amp; m_bounces &gt; 0 &amp;&amp; m_arrowType == 1)
+{
+    m_moveY += global.grav;
+    
+    image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
+    
+    if (place_meeting(x + m_moveX, y + m_moveY, obj_collider))
+    {
+        var horizontalSpeed = m_moveX;
+        for (i = 0; i &lt; abs(horizontalSpeed); i++)
+        {
+            if (!place_meeting(x + sign(horizontalSpeed), y, obj_collider))
+            {
+                x += sign(horizontalSpeed);
+            } else { m_moveX *= -1; break; }
+        };
+        
+        var verticalSpeed = m_moveY;
+        for (i = 0; i &lt; abs(verticalSpeed); i++)
+        {
+            if (!place_meeting(x, y + sign(verticalSpeed), obj_collider))
+            {
+                y += sign(verticalSpeed);
+            } else { m_moveY *= -1; break; }
+        };
+        
+        m_bounces--; 
     }
     else
     {
@@ -222,6 +278,12 @@ if(m_initialCooldown &gt; 0)
           <argument>
             <kind>1</kind>
             <string>/// Initalize variables
+
+//m_angle;
+//m_force;
+//m_id;
+//m_arrowType;
+
 m_moveSpeed = ARROW_SPEED * m_force;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
@@ -234,6 +296,30 @@ m_moveY = lengthdir_y(m_moveSpeed, m_angle);
 
 image_xscale = m_moveSpeed / 100;
 image_yscale = m_moveSpeed / 100;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Type Specials
+
+// type 1 (bounce)
+m_bounces = 2;
 </string>
           </argument>
         </arguments>
