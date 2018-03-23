@@ -20,10 +20,10 @@ if(killerId != player.m_playerId && killerId != -1)
 
 gamepad_rumble(argument0.m_playerId, 1, 20);
 
-var parAmount = 50;
+var parAmount = 100;
 
 repeat(parAmount)
 { instance_create(player.x, player.y, obj_blood); }
 
 instance_destroy(player);
-audio_play_sound(snd_playerDeath1, 1 ,0);
+play_sound(snd_playerDeath1);

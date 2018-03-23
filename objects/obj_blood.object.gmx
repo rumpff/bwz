@@ -28,7 +28,7 @@
             <string>m_xSpeed = random_range(-25, 25);
 m_ySpeed = random_range(-25, 25);
 
-image_index = random_range(0, image_index-1);
+image_index = random_range(0, image_number-1);
 image_speed = 0;
 </string>
           </argument>
@@ -54,10 +54,10 @@ image_speed = 0;
             <kind>1</kind>
             <string>image_angle = point_direction(0, 0, m_xSpeed, m_ySpeed);
 
-m_ySpeed += 0.8;
+m_ySpeed += (0.8 * global.timeScale);
 
-x += m_xSpeed;
-y += m_ySpeed;
+x += (m_xSpeed * global.timeScale);
+y += (m_ySpeed * global.timeScale);
 
 if(place_meeting(x, y, obj_collider))
 {

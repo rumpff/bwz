@@ -151,6 +151,29 @@ if (m_playerId == 0)
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// shit
+if(m_playerId == 0)
+{ global.timeScale = clamp(abs(m_lStickH), 0.02, 1); }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Update playerstates
 
 // On the ground
@@ -229,7 +252,7 @@ else // InAir
     inertia = m_inertiaAir;
 }
 
-m_lerpedStick = lerp(m_lerpedStick, stick, inertia);
+m_lerpedStick = lerp(m_lerpedStick, stick, (inertia * global.timeScale));
 
 
 </string>
@@ -281,14 +304,14 @@ if (m_againstWall)
 {
    if (m_vsp &lt; m_maxFallSpeed / 4)
    {
-      m_vsp += global.grav;
+      m_vsp += (global.grav * global.timeScale);
    }
 }
 else
 {
    if (m_vsp &lt; m_maxFallSpeed) 
    { 
-       m_vsp += global.grav;
+       m_vsp += (global.grav * global.timeScale);
    }
 }
 </string>
@@ -394,7 +417,7 @@ if (m_onGround) // Check if the player is on the ground
          m_lerpedStick = sign(m_lStickH); // Apply the new velocity multiplier
       }
    
-      m_dashDanceTimer--; // Time the timer
+      m_dashDanceTimer -= global.timeScale; // Time the timer
    }
    
    if (abs(m_lerpedStick) &gt; m_dashDanceMargin &amp;&amp; !m_dashDanceActive) // Check if the velocity multiplier is higher then 0.9
@@ -456,9 +479,9 @@ if (y &gt; room_height)
           <argument>
             <kind>1</kind>
             <string>/// Horizontal Collision
-if (place_meeting(x+m_hspFinal,y,obj_collider))
+if (place_meeting(x + (m_hspFinal * global.timeScale), y, obj_collider))
 {
-    while(!place_meeting(x+sign(m_hspFinal), y, obj_collider))
+    while(!place_meeting(x + sign(m_hspFinal), y, obj_collider))
     {
         x += sign(m_hspFinal);
     }
@@ -468,7 +491,7 @@ if (place_meeting(x+m_hspFinal,y,obj_collider))
     m_lerpedStick = 0;
 }
 
-x += m_hspFinal;
+x += (m_hspFinal * global.timeScale);
 </string>
           </argument>
         </arguments>
@@ -490,16 +513,16 @@ x += m_hspFinal;
           <argument>
             <kind>1</kind>
             <string>/// Vertical Collision
-if (place_meeting(x,y+m_vsp,obj_collider))
+if (place_meeting(x, y + (m_vsp * global.timeScale), obj_collider))
 {
-    while(!place_meeting(x, y+sign(m_vsp), obj_collider))
+    while(!place_meeting(x, y + sign(m_vsp), obj_collider))
     {
         y += sign(m_vsp);
     }
     m_vsp = 0;
 }
 
-y += m_vsp;
+y += (m_vsp * global.timeScale);
 </string>
           </argument>
         </arguments>
@@ -545,12 +568,12 @@ if(!m_arrowActive &amp;&amp; m_stringTimer &lt; 25)
 // Set arrow active
 if(m_arrowForce == 0 &amp;&amp; m_triggerPrev != 0)
 { 
-    if(!m_arrowActive) { audio_play_sound(snd_StringStretch, 1, 0); }
+    if(!m_arrowActive) { play_sound(snd_StringStretch); }
     m_arrowActive = true; 
 }
 
 // Update force
-m_arrowForce = lerp(m_arrowForce, m_triggerPrev, 0.2);
+m_arrowForce = lerp(m_arrowForce, m_triggerPrev, (0.2 * global.timeScale));
 
 // Delta Check
 if (m_bowDeltaTimer == m_bowDeltaMax)
@@ -565,7 +588,7 @@ if (m_bowDeltaTimer == m_bowDeltaMax)
 }
 else
 {
-    m_bowDeltaTimer++;
+    m_bowDeltaTimer += 1;
     m_bowShoot = false;
 }
 
@@ -579,7 +602,7 @@ if(largStick &gt; 0.25)
     
     angle_next = angle_prev - angle_diff; // convert the angle to a number outside of 0-360 if needed
     
-    m_bowAngle = lerp(m_bowAngle, angle_next, 0.6);
+    m_bowAngle = lerp(m_bowAngle, angle_next, 0.6 );
     
     //m_bowAngle = point_direction(0, 0, m_rStickH, m_rStickV); 
 }
@@ -589,7 +612,7 @@ if(largStick &gt; 0.25)
 var distance = 16;
 if(m_bowActive) { distance = 32; }
 
-m_bowDistance = lerp(m_bowDistance, distance, 0.6);
+m_bowDistance = lerp(m_bowDistance, distance, (0.6 * global.timeScale));
 
 // Position the bow
 m_bowX = x + lengthdir_x(m_bowDistance, m_bowAngle);
@@ -605,10 +628,10 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;
         var sound = choose(snd_arrowShoot1, snd_arrowShoot2, snd_arrowShoot3, snd_arrowShoot4);
-        audio_play_sound(sound, 1, 0);
+        snd = play_sound(sound);
     }
     
-    m_holdTimer++;
+    m_holdTimer += global.timeScale;
 }
 else { m_holdTimer = 0; }
 
@@ -621,12 +644,12 @@ if(!m_arrowActive)
     
     // time the timer
     if(m_stringTimer &lt; m_stringAnimTime)
-    { m_stringTimer++; }
+    { m_stringTimer += global.timeScale; }
 }
 else if(m_arrowActive)
 { 
     m_stringTimer = 0;
-    m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH * m_arrowForce, 0.3); 
+    m_stringDistance = lerp(m_stringDistance, ARROW_LENGTH * m_arrowForce, (0.3 * global.timeScale)); 
 }
 </string>
           </argument>
@@ -735,7 +758,7 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
     if (abs(move) &gt; 0.1) // walking
     {   
         // Time the timer pretty fast 
-        m_bodyOffSin += 0.20 * abs(move);
+        m_bodyOffSin += (0.20 * abs(move) * global.timeScale);
         m_legAngleSin = m_bodyOffSin; // The legs must time perfectly with the body
         
         // Calculate an offset which makes the body bounce
@@ -752,22 +775,22 @@ if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
     else // idle
     {   
         // Time the timer slowly 
-        m_bodyOffSin += 0.05;
+        m_bodyOffSin += (0.05 * global.timeScale);
         
         // Calculate an offset
         // Do a quick lerp which makes the transition from walking look nicer
-        m_bodyOffsetY = lerp(m_bodyOffsetY, sin(m_bodyOffSin) * 2, 0.3);
+        m_bodyOffsetY = lerp(m_bodyOffsetY, sin(m_bodyOffSin) * 2, (0.3 * global.timeScale));
         
         // Set the leg offsets to zero
         m_legROffsetY = 0;
         m_legLOffsetY = 0;
         
         // Lerp the leg angles to zero
-        m_legRAngle = lerp(m_legRAngle, 0, 0.33);
-        m_legLAngle = lerp(m_legLAngle, 0, 0.33);
+        m_legRAngle = lerp(m_legRAngle, 0, (0.33 * global.timeScale));
+        m_legLAngle = lerp(m_legLAngle, 0, (0.33 * global.timeScale));
     }
     
-    m_bodyAngle = lerp(m_bodyAngle, 0, 0.3);
+    m_bodyAngle = lerp(m_bodyAngle, 0, (0.3 * global.timeScale));
 }
 else // Player is in the air
 {
@@ -778,10 +801,10 @@ else // Player is in the air
         m_legLOffsetY = 0;
         
         // Lerp the leg angles to zero
-        m_legRAngle = lerp(m_legRAngle, -90, 0.33);
-        m_legLAngle = lerp(m_legLAngle, 90, 0.33);
+        m_legRAngle = lerp(m_legRAngle, -90, (0.33 * global.timeScale));
+        m_legLAngle = lerp(m_legLAngle, 90, (0.33 * global.timeScale));
         
-        m_bodyAngle = lerp(m_bodyAngle, 90 * m_wallDir, 0.3);
+        m_bodyAngle = lerp(m_bodyAngle, 90 * m_wallDir, (0.3 * global.timeScale));
     }
     else // In-Air
     {         
@@ -792,8 +815,8 @@ else // Player is in the air
             m_legLOffsetY = clamp(m_vsp * 0.3 * -1, -12, 4);
             
             // Lerp the leg angles to zero
-            m_legRAngle = lerp(m_legRAngle, 0, 0.2);
-            m_legLAngle = lerp(m_legLAngle, 0, 0.2);
+            m_legRAngle = lerp(m_legRAngle, 0, (0.2 * global.timeScale));
+            m_legLAngle = lerp(m_legLAngle, 0, (0.2 * global.timeScale));
         }
         else // player is falling
         {
@@ -804,9 +827,9 @@ else // Player is in the air
             m_legLAngle = (m_vsp * 1.4);
         }
         // Lerp the offset to zero
-        m_bodyOffsetY = lerp(m_bodyOffsetY, 0, 0.4);
+        m_bodyOffsetY = lerp(m_bodyOffsetY, 0, (0.4 * global.timeScale));
         
-        m_bodyAngle = lerp(m_bodyAngle, (25 * (move * -1)), 0.1);
+        m_bodyAngle = lerp(m_bodyAngle, (25 * (move * -1)), (0.1 * global.timeScale));
     }
 }
 
@@ -840,7 +863,7 @@ m_legLAngle = clamp(m_legLAngle, -90, 90);
         var value = radtodeg(sin(m_bodyOffSin));
         if(value &lt; 5 &amp;&amp; value &gt; -5)
         {
-            audio_play_sound(snd_PlayerStep, 1, 0);
+            snd = play_sound(snd_PlayerStep);
         }
     }
 }
@@ -1139,7 +1162,7 @@ m_hatHeight = get_hat_height(global.playerHead[m_playerId]);
           <argument>
             <kind>1</kind>
             <string>/// Draw debug info
-//if (m_playerId != 0)
+if (m_playerId != 0)
    exit;
 
 draw_text_debug(0, "lStick: h " + string(m_lStickH));
@@ -1169,6 +1192,8 @@ draw_text_debug(23, "view_hview: " + string(view_hview));
 draw_text_debug(24, "player x: " + string(x));
 draw_text_debug(25, "player y: " + string(y));
 draw_text_debug(26, "bodyAngle: " + string(m_bodyAngle));
+draw_text_debug(27, "timeScale: " + string(global.timeScale));
+
 </string>
           </argument>
         </arguments>

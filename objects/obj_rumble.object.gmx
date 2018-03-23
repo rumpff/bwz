@@ -60,7 +60,7 @@ m_rumbleAmount = 0;
 }
 
 m_rumbleAmount = ease_in_cubic(m_timer, m_rumbleStart, -m_rumbleStart, m_maxTime);
-m_timer++;
+m_timer += global.timeScale;
 
 gamepad_set_vibration(m_id, m_rumbleAmount, m_rumbleAmount);
 </string>

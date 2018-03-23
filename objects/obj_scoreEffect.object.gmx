@@ -29,6 +29,7 @@
 m_startTimer = 20;
 m_player = 0;
 m_easeTimer = 0;
+m_active = false;
 </string>
           </argument>
         </arguments>
@@ -58,28 +59,29 @@ m_easeTimer = 0;
 else
 {
     m_player = obj_gameManager.m_playerArray[m_playerId];
-    if(m_startTimer == 0)
+    if(m_startTimer &lt;= 0 &amp;&amp; !m_active)
     {
-        audio_play_sound(snd_score, 1, 0);
+        play_sound(snd_score);
         
         x = m_player.x;
         y = m_player.y;
-    }
-    
-    if(m_startTimer &lt;= 0)
+        
+        m_active = true;
+    } 
+    else if(m_startTimer &lt;= 0 &amp;&amp; m_active)
     {
         x = m_player.x;
         y = m_player.y - 
         ease_out_back(m_easeTimer, 0, 96, 30);
         
-        m_easeTimer++;
+        m_easeTimer += global.timeScale;
     }
     if(m_easeTimer &gt; 30)
     {
         instance_destroy();
     }
     
-    m_startTimer--;
+    m_startTimer -= global.timeScale;
 }
 </string>
           </argument>

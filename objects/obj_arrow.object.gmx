@@ -93,13 +93,13 @@ if(!m_wallHit)
             <string>/// Update movement
 if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
 {
-    m_moveY += global.grav;
+    m_moveY += (global.grav * global.timeScale);
     
     image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
     
-    if (place_meeting(x + m_moveX, y + m_moveY, obj_collider))
+    if (place_meeting(x + (m_moveX * global.timeScale), y + (m_moveY * global.timeScale), obj_collider))
     {
-        var horizontalSpeed = m_moveX;
+        var horizontalSpeed = (m_moveX * global.timeScale);
         for (i = 0; i &lt; abs(horizontalSpeed); i++)
         {
             if (!place_meeting(x + sign(horizontalSpeed), y, obj_collider))
@@ -108,7 +108,7 @@ if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
             } else break;
         };
         
-        var verticalSpeed = m_moveY;
+        var verticalSpeed = (m_moveY * global.timeScale);
         for (i = 0; i &lt; abs(verticalSpeed); i++)
         {
             if (!place_meeting(x, y + sign(verticalSpeed), obj_collider))
@@ -121,8 +121,8 @@ if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
     }
     else
     {
-        x += m_moveX;
-        y += m_moveY;
+        x += (m_moveX * global.timeScale);
+        y += (m_moveY * global.timeScale);
     }
 }
 </string>
@@ -149,13 +149,13 @@ if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
 
 if(!m_wallHit &amp;&amp; m_bounces &gt; 0 &amp;&amp; m_arrowType == 1)
 {
-    m_moveY += global.grav;
+    m_moveY += (global.grav * global.timeScale);
     
     image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
     
-    if (place_meeting(x + m_moveX, y + m_moveY, obj_collider))
+    if (place_meeting(x + (m_moveX * global.timeScale), y + (m_moveY * global.timeScale), obj_collider))
     {
-        var horizontalSpeed = m_moveX;
+        var horizontalSpeed = (m_moveX * global.timeScale);
         for (i = 0; i &lt; abs(horizontalSpeed); i++)
         {
             if (!place_meeting(x + sign(horizontalSpeed), y, obj_collider))
@@ -164,7 +164,7 @@ if(!m_wallHit &amp;&amp; m_bounces &gt; 0 &amp;&amp; m_arrowType == 1)
             } else { m_moveX *= -1; break; }
         };
         
-        var verticalSpeed = m_moveY;
+        var verticalSpeed = (m_moveY * global.timeScale);
         for (i = 0; i &lt; abs(verticalSpeed); i++)
         {
             if (!place_meeting(x, y + sign(verticalSpeed), obj_collider))
@@ -177,8 +177,8 @@ if(!m_wallHit &amp;&amp; m_bounces &gt; 0 &amp;&amp; m_arrowType == 1)
     }
     else
     {
-        x += m_moveX;
-        y += m_moveY;
+        x += (m_moveX * global.timeScale);
+        y += (m_moveY * global.timeScale);
     }
 }
 </string>
@@ -234,7 +234,7 @@ if (y &gt; room_height)
             <string>/// Timers
 
 if(m_initialCooldown &gt; 0)
-{ m_initialCooldown--; }
+{ m_initialCooldown -= global.timeScale; }
 </string>
           </argument>
         </arguments>
