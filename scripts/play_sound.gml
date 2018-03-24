@@ -1,6 +1,8 @@
 ///play_sound(index)
 
+var list = obj_gameManager.m_sfxList;
 var snd = audio_play_sound(argument0, 1, 0);
-audio_sound_pitch(snd, global.timeScale);
+
+ds_list_add(list, snd);
 
 return snd;
