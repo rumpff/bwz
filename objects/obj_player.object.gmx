@@ -151,29 +151,6 @@ if (m_playerId == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// shit
-if(m_playerId == 0)
-{ global.timeScale = clamp(abs(m_lStickH), 0.02, 1); }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Update playerstates
 
 // On the ground
@@ -856,17 +833,35 @@ m_legLAngle = clamp(m_legLAngle, -90, 90);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
+            <string>/// Calc pos and rot's for the sprites
+
+// Set the right values for if the player is facing left
+if(m_imageDirection == 1) // Player faces right, nothing changes
 {
-    if (abs(move) &gt; 0.1) // walking
-    {  
-        var value = radtodeg(sin(m_bodyOffSin));
-        if(value &lt; 5 &amp;&amp; value &gt; -5)
-        {
-            snd = play_sound(snd_PlayerStep);
-        }
-    }
+    m_legLYOff = m_legLOffsetY;
+    m_legRYOff = m_legROffsetY;
+
 }
+else // Player faces left, values need to be flipped
+{
+    m_legLYOff = m_legROffsetY;
+    m_legRYOff = m_legLOffsetY;
+}
+
+m_legLA = m_legLAngle + m_bodyAngle;
+m_legRA = m_legRAngle + m_bodyAngle;
+
+// Calculate leg positions based on bodyAngle
+// Calculate the vertical offset
+m_legBX = x + lengthdir_x(12, m_bodyAngle - 90);
+m_legBY = y + lengthdir_y(12, m_bodyAngle - 90);
+
+// Add the horizontal offset
+m_legRX = m_legBX + lengthdir_x(8, m_bodyAngle - 180);
+m_legRY = m_legBY + lengthdir_y(8, m_bodyAngle - 180);
+
+m_legLX = m_legBX + lengthdir_x(8, m_bodyAngle);
+m_legLY = m_legBY + lengthdir_y(8, m_bodyAngle);
 </string>
           </argument>
         </arguments>
@@ -1020,6 +1015,24 @@ m_headSprite = noone;
 m_legSprite = noone;
 
 m_imageDirection = 1;
+
+// Variables for leg positions, yOffset and Angle
+m_legLX = 0; 
+m_legLY = 0; 
+m_legRX = 0; 
+m_legRY = 0; 
+m_legLYOff = 0; 
+m_legRYOff = 0; 
+m_legLA = 0; 
+m_legRA = 0;
+
+// Variables for calculating the position of the legs
+m_xOff = 0; 
+m_yOff = 0; 
+m_legBX = 0; 
+m_legBY = 0; 
+m_length = 0; 
+m_dir = 0;
 
 // Controller
 m_controllerId = 0;
@@ -1218,52 +1231,16 @@ draw_text_debug(27, "timeScale: " + string(global.timeScale));
             <kind>1</kind>
             <string>/// Draw the player
 
-// Variables for leg positions, yOffset and Angle
-var legLX, legLY, legRX, legRY, legLYOff, legRYOff, legLA, legRA;
-// Variables for calculating the position of the legs
-var xOff, yOff, legBX, legBY, length, dir;
+draw_outline_player(m_playerId, 1)
 
-// Set the right values for if the player is facing left
-if(m_imageDirection == 1) // Player faces right, nothing changes
-{
-    legLYOff = m_legLOffsetY;
-    legRYOff = m_legROffsetY;
-
-}
-else // Player faces left, values need to be flipped
-{
-    legLYOff = m_legROffsetY;
-    legRYOff = m_legLOffsetY;
-}
-
-legLA = m_legLAngle + m_bodyAngle;
-legRA = m_legRAngle + m_bodyAngle;
-
-// Calculate leg positions based on bodyAngle using lengthdir
-xoff = 8; 
-yoff = 4;
-
-// Calculate the vertical offset
-legBX = x + lengthdir_x(12, m_bodyAngle - 90);
-legBY = y + lengthdir_y(12, m_bodyAngle - 90);
-
-// Add the horizontal offset
-legRX = legBX + lengthdir_x(8, m_bodyAngle - 180);
-legRY = legBY + lengthdir_y(8, m_bodyAngle - 180);
-
-legLX = legBX + lengthdir_x(8, m_bodyAngle);
-legLY = legBY + lengthdir_y(8, m_bodyAngle);
-
-
-
-// Draw the legs
+// Draw the player
 // Left leg
-draw_sprite_ext(m_legSprite, 0, legRX, legRY + legLYOff, 
-    m_imageDirection, 1, legRA, c_white, 1);
+draw_sprite_ext(m_legSprite, 0, m_legRX, m_legRY + m_legLYOff, 
+    m_imageDirection, 1, m_legRA, c_white, 1);
     
 // Right leg
-draw_sprite_ext(m_legSprite, 0, legLX, legLY + legRYOff, 
-    m_imageDirection, 1, legLA, c_white, 1);
+draw_sprite_ext(m_legSprite, 0, m_legLX, m_legLY + m_legRYOff, 
+    m_imageDirection, 1, m_legLA, c_white, 1);
 
 // Draw the body
 draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY,

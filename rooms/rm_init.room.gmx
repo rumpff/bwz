@@ -24,6 +24,9 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.playerHat[i] = 0;
     global.playerColor[i] = 0;
     global.playerName[i] = 0;
+    
+    global.surfacehole[i] = 0;
+    global.surfaceoutline[i] = 0;
 }
 
 

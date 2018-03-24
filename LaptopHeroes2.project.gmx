@@ -87,6 +87,7 @@
     </sprites>
     <sprite>sprites\msk_player</sprite>
     <sprite>sprites\spr_bloodParticles</sprite>
+    <sprite>sprites\spr_outlineTexture</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -148,6 +149,7 @@
     <script>scripts\hat_sprite.gml</script>
     <script>scripts\gamepad_rumble.gml</script>
     <script>scripts\play_sound.gml</script>
+    <script>scripts\draw_outline_player.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
