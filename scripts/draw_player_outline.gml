@@ -14,10 +14,10 @@ draw_set_blend_mode(bm_subtract); // dont draw image but remove the inverse from
 draw_clear(c_black); // clear anything from the previous frame in case the image is being animated 
 
 // draw all the sprites on with a little offset to make a border
-for (i = 0; i < 8; i++)
+for (i = 0; i < 16; i++)
 {   
-    var xOff = lengthdir_x(distance, i*45);
-    var yOff = lengthdir_y(distance, i*45);
+    var xOff = lengthdir_x(distance, i*(45/2));
+    var yOff = lengthdir_y(distance, i*(45/2));
     
     // Draw the player
     // Left leg
@@ -31,6 +31,9 @@ for (i = 0; i < 8; i++)
     // Draw the body
     draw_sprite_ext(m_headSprite, 0, x + xOff, y + m_bodyOffsetY + yOff,
         m_imageDirection, 1, m_bodyAngle, c_black, 1);
+        
+    // Draw the hat
+    draw_player_hat(xOff, yOff, c_black);
 
 }
 

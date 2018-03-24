@@ -1034,6 +1034,13 @@ m_legBY = 0;
 m_length = 0; 
 m_dir = 0;
 
+// And for the hat
+m_hatBX = 0;
+m_hatBY = 0;
+
+m_hatX = 0;
+m_hatY = 0;
+
 // Controller
 m_controllerId = 0;
 m_controllerDeadzone = 0.3;
@@ -1231,7 +1238,7 @@ draw_text_debug(27, "timeScale: " + string(global.timeScale));
             <kind>1</kind>
             <string>/// Draw the player
 
-draw_outline_player(m_playerId, 1)
+draw_player_outline(m_playerId, 1)
 
 // Draw the player
 // Left leg
@@ -1246,6 +1253,8 @@ draw_sprite_ext(m_legSprite, 0, m_legLX, m_legLY + m_legRYOff,
 draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY,
     m_imageDirection, 1, m_bodyAngle, c_white, 1);
 
+// Draw the hat
+draw_player_hat(0, 0, c_white);
 </string>
           </argument>
         </arguments>
@@ -1322,7 +1331,7 @@ if(m_arrowActive)
           <argument>
             <kind>1</kind>
             <string>/// Draw the hat
-
+/*
 var ypos;
 
 if(m_vsp &gt; 0) { ypos = yprevious; }
@@ -1331,21 +1340,18 @@ else { ypos = y; }
 var xdir = m_imageDirection;
 
 // Calculate the vertical offset
-hatBX = x + lengthdir_x(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
-hatBY = ypos + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
+m_hatBX = x + lengthdir_x(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
+m_hatBY = ypos + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
 
 // Add the horizontal offset
 var val = 0;
 if(xdir == 1) { val = 180; }
 
-hatX = hatBX + lengthdir_x(8, m_bodyAngle - val);
-hatY = hatBY + lengthdir_y(8, m_bodyAngle - val);
+m_hatX = hatBX + lengthdir_x(8, m_bodyAngle - val);
+m_hatY = hatBY + lengthdir_y(8, m_bodyAngle - val);
 
 draw_sprite_ext(m_spriteHat, 0, hatX, hatY,
 xdir, 1, (12 * xdir) + m_bodyAngle, c_white, 1);
-
-//draw_sprite_ext(m_spriteHat, 0, x - (8 * xdir), ypos - m_hatHeight + m_bodyOffsetY,
-//xdir, 1, (12 * xdir) + m_bodyAngle, c_white, 1);
 </string>
           </argument>
         </arguments>

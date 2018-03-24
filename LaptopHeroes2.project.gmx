@@ -129,6 +129,10 @@
       <script>scripts\ease_out_sine.gml</script>
       <script>scripts\ease_linear.gml</script>
     </scripts>
+    <scripts name="Draw player">
+      <script>scripts\draw_player_outline.gml</script>
+      <script>scripts\draw_player_hat.gml</script>
+    </scripts>
     <script>scripts\death.gml</script>
     <script>scripts\collision_line_multiple.gml</script>
     <script>scripts\draw_text_debug.gml</script>
@@ -149,7 +153,6 @@
     <script>scripts\hat_sprite.gml</script>
     <script>scripts\gamepad_rumble.gml</script>
     <script>scripts\play_sound.gml</script>
-    <script>scripts\draw_outline_player.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
