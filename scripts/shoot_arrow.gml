@@ -1,10 +1,20 @@
 /// shoot_arrow(x, y, angle, force, playerId, arrowType)
 
-arrow = instance_create(argument0, argument1, obj_arrow);
-arrow.m_angle = argument2;
-arrow.m_force = argument3;
-arrow.m_id = argument4;
-arrow.m_arrowType = argument5;
+var angle = argument2;
+var force = argument3;
+var pId = argument4;
+var type = argument5;
+
+var xspwn, yspwn;
+
+xspwn = argument0 - lengthdir_x(ARROW_LENGTH/2, angle);
+yspwn = argument1 - lengthdir_y(ARROW_LENGTH/2, angle);
+
+arrow = instance_create(xspwn, yspwn, obj_arrow);
+arrow.m_angle = angle;
+arrow.m_force = force;
+arrow.m_id = pId;
+arrow.m_arrowType = type;
 with (arrow) 
 { event_user(0); }
 

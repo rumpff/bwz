@@ -48,6 +48,61 @@ m_drawAngle = point_direction(0, 0, m_moveX, m_moveY);
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Update movement
+if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
+{
+    m_moveY += (global.grav * global.timeScale);
+    
+    image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
+    
+    if (place_meeting(x + (m_moveX * global.timeScale), y + (m_moveY * global.timeScale), obj_collider))
+    {
+        var verticalSpeed = (m_moveY * global.timeScale);
+        for (i = 0; i &lt; abs(verticalSpeed); i++)
+        {
+            if (!place_meeting(x, y + sign(verticalSpeed), obj_collider))
+            {
+                y += sign(verticalSpeed);
+            } else break;
+        };
+        
+        var horizontalSpeed = (m_moveX * global.timeScale);
+        for (i = 0; i &lt; abs(horizontalSpeed); i++)
+        {
+            if (!place_meeting(x + sign(horizontalSpeed), y, obj_collider))
+            {
+                x += sign(horizontalSpeed);
+            } else break;
+        };
+        
+        m_wallHit = true;
+    }
+    else
+    {
+        x += (m_moveX * global.timeScale);
+        y += (m_moveY * global.timeScale);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Check for collision with the player
 
 if(!m_wallHit)
@@ -70,61 +125,6 @@ if(!m_wallHit)
 }
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update movement
-if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
-{
-    m_moveY += (global.grav * global.timeScale);
-    
-    image_angle = point_direction(x, y, x + m_moveX, y + m_moveY);
-    
-    if (place_meeting(x + (m_moveX * global.timeScale), y + (m_moveY * global.timeScale), obj_collider))
-    {
-        var horizontalSpeed = (m_moveX * global.timeScale);
-        for (i = 0; i &lt; abs(horizontalSpeed); i++)
-        {
-            if (!place_meeting(x + sign(horizontalSpeed), y, obj_collider))
-            {
-                x += sign(horizontalSpeed);
-            } else break;
-        };
-        
-        var verticalSpeed = (m_moveY * global.timeScale);
-        for (i = 0; i &lt; abs(verticalSpeed); i++)
-        {
-            if (!place_meeting(x, y + sign(verticalSpeed), obj_collider))
-            {
-                y += sign(verticalSpeed);
-            } else break;
-        };
-        
-        m_wallHit = true;
-    }
-    else
-    {
-        x += (m_moveX * global.timeScale);
-        y += (m_moveY * global.timeScale);
-    }
-}
 </string>
           </argument>
         </arguments>
