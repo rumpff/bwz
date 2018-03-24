@@ -6,11 +6,17 @@ var x2 = argument2;
 var y2 = argument3;
 var width = argument4;
 
-
-for (i = width/2-(width/2); i < width/2; i++)
+for (d = 0; d < width; d++)
 {
-    draw_roundrect(x1 - i, y1, x2, y2, true);
-    draw_roundrect(x1, y1 - i, x2, y2, true);
-    draw_roundrect(x1, y1, x2 + i, y2, true);
-    draw_roundrect(x1, y1, x2, y2 + i, true);
+    for (i = 0; i < 16; i++)
+    {
+        var dist = d + 1;
+        
+        var xOff = lengthdir_x(dist, i*(45/2));
+        var yOff = lengthdir_y(dist, i*(45/2));
+        
+        draw_roundrect(x1 + xOff, y1 + yOff, x2 + xOff, y2 + yOff, true);
+    }
 }
+
+//draw_roundrect(x1, y1, x2, y2, true);

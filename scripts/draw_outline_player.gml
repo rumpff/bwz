@@ -15,10 +15,7 @@ draw_clear(c_black); // clear anything from the previous frame in case the image
 
 // draw all the sprites on with a little offset to make a border
 for (i = 0; i < 8; i++)
-{
-    var dist = distance;
-    //if(i mod 2 == 0) { dist = distance * 1.4; }
-    
+{   
     var xOff = lengthdir_x(distance, i*45);
     var yOff = lengthdir_y(distance, i*45);
     
