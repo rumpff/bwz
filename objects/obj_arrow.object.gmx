@@ -119,7 +119,7 @@ if(!m_wallHit)
             if(playerObject.m_playerId == m_id &amp;&amp; m_initialCooldown &gt; 0)
             { } // Prevent player from walking in its own arrow
             else
-            { death(playerObject, m_id); } // Kill that sucker
+            { death(playerObject, m_id, id); } // Kill that sucker
         }
     }
 }

@@ -25,48 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ControllerID = noone;
-WhoAmI = noone;
+            <string>m_xSpeed = random_range(-25, 25);
+m_ySpeed = -10//random_range(-25, 25);
 
-image_speed = 0;
+split_sprite_1 = noone;
+split_sprite_2 = noone;
 
-KeyLeft = 0;
-KeyRight = 0;
-KeyUp = 0;
-KeyDown = 0;
-
-Speed = 200;
-
-// Geometry
-dx = sprite_get_width(sprite_index) / 2;
-dy = sprite_get_height(sprite_index) / 2;
-
-// Physics
-var Fixture = physics_fixture_create(),
-    Group = 0,
-    Density = 0.1,
-    Restitution = 0.2,
-    Friction = 20,
-    LinearDamp = 4,
-    AngularDamp = 0;
-    
-physics_fixture_set_circle_shape(Fixture, dx);
-
-physics_fixture_set_collision_group(Fixture, Group);
-physics_fixture_set_density(Fixture, Density);
-physics_fixture_set_restitution(Fixture, Restitution);
-physics_fixture_set_friction(Fixture, Friction);
-physics_fixture_set_linear_damping(Fixture, LinearDamp);
-physics_fixture_set_angular_damping(Fixture, AngularDamp);
-
-physics_fixture_bind(Fixture, id);
-physics_fixture_delete(Fixture);
+ds_sprites = ds_list_create();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,24 +54,88 @@ physics_fixture_delete(Fixture);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var destX, destY;
+            <string>/// Clean up resources
+ds_list_destroy(ds_sprites);
 
-if (instance_exists(obj_gameManager.m_playerArray[WhoAmI]))
+if(split_sprite_1 &gt; 0)
+    sprite_delete(split_sprite_1);
+if(split_sprite_2 &gt; 0)
+    sprite_delete(split_sprite_2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*
+image_angle = point_direction(0, 0, m_xSpeed, m_ySpeed);
+
+m_ySpeed += (0.8 * global.timeScale);
+
+x += (m_xSpeed * global.timeScale);
+y += (m_ySpeed * global.timeScale);
+
+if(y &gt; room_height)
 {
-    destX = obj_gameManager.m_playerArray[WhoAmI].x;
-    destY = obj_gameManager.m_playerArray[WhoAmI].y;
+    instance_destroy();
 }
-else
-{
-    destX = obj_camera.x_COM;
-    destY = obj_camera.y_COM;
+*/
+
+x += random_range(-3, 3) * global.timeScale;
+y += random_range(-3, 3) * global.timeScale;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Obtain sprites
+
+var result = sprite_split(m_sprite, ds_sprites, m_x0, m_y0, m_x0 - 64, m_y0, m_x0 + 64, m_y0, false, false);
+
+if(result) {
+    // Script was successful
+    // Delete existing sprites, if any
+    if(split_sprite_1 &gt; 0)
+        sprite_delete(split_sprite_1);
+    if(split_sprite_2 &gt; 0)
+        sprite_delete(split_sprite_2);
+    // Get the two sprites from the ds_list we sent through the script
+    split_sprite_1 = ds_list_find_value(ds_sprites, 0);
+    split_sprite_2 = ds_list_find_value(ds_sprites, 1);
 }
-
-phy_position_x = destX;
-phy_position_y = destY;
-
-phy_angular_velocity = 0;
-phy_rotation = 0;
 </string>
           </argument>
         </arguments>
@@ -123,7 +158,11 @@ phy_rotation = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw nothing
+            <string>if(split_sprite_1 &gt; 0 &amp;&amp; m_id == 0)
+    draw_sprite(split_sprite_1, 0, x, y);
+    
+if(split_sprite_2 &gt; 0 &amp;&amp; m_id == 1)
+    draw_sprite(split_sprite_2, 0, x, y);
 </string>
           </argument>
         </arguments>

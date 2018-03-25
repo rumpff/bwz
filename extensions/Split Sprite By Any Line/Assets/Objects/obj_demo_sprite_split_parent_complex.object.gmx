@@ -25,48 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ControllerID = noone;
-WhoAmI = noone;
+            <string>/// Set up demo
+mouse_click = false;
+mx = 0;
+my = 0;
 
-image_speed = 0;
+split_sprite_1 = noone;
+split_sprite_2 = noone;
 
-KeyLeft = 0;
-KeyRight = 0;
-KeyUp = 0;
-KeyDown = 0;
-
-Speed = 200;
-
-// Geometry
-dx = sprite_get_width(sprite_index) / 2;
-dy = sprite_get_height(sprite_index) / 2;
-
-// Physics
-var Fixture = physics_fixture_create(),
-    Group = 0,
-    Density = 0.1,
-    Restitution = 0.2,
-    Friction = 20,
-    LinearDamp = 4,
-    AngularDamp = 0;
-    
-physics_fixture_set_circle_shape(Fixture, dx);
-
-physics_fixture_set_collision_group(Fixture, Group);
-physics_fixture_set_density(Fixture, Density);
-physics_fixture_set_restitution(Fixture, Restitution);
-physics_fixture_set_friction(Fixture, Friction);
-physics_fixture_set_linear_damping(Fixture, LinearDamp);
-physics_fixture_set_angular_damping(Fixture, AngularDamp);
-
-physics_fixture_bind(Fixture, id);
-physics_fixture_delete(Fixture);
+ds_sprites = ds_list_create();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,24 +56,59 @@ physics_fixture_delete(Fixture);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var destX, destY;
+            <string>/// Clean up resources
+ds_list_destroy(ds_sprites);
 
-if (instance_exists(obj_gameManager.m_playerArray[WhoAmI]))
-{
-    destX = obj_gameManager.m_playerArray[WhoAmI].x;
-    destY = obj_gameManager.m_playerArray[WhoAmI].y;
+if(split_sprite_1 &gt; 0)
+    sprite_delete(split_sprite_1);
+if(split_sprite_2 &gt; 0)
+    sprite_delete(split_sprite_2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Mouse input
+if(mouse_check_button_pressed(mb_left)) {
+    mouse_click = true;
+    mx = mouse_x;
+    my = mouse_y;
 }
-else
-{
-    destX = obj_camera.x_COM;
-    destY = obj_camera.y_COM;
+else if(mouse_click) {
+    if(mouse_check_button_released(mb_left)) {
+        mouse_click = false;
+        // Split sprite
+        var result = sprite_split(sprite_index, ds_sprites, x, y, mx, my, mouse_x, mouse_y, true, true);
+        if(result) {
+            // Script was successful
+            // Delete existing sprites, if any
+            if(split_sprite_1 &gt; 0)
+                sprite_delete(split_sprite_1);
+            if(split_sprite_2 &gt; 0)
+                sprite_delete(split_sprite_2);
+            // Get the two sprites from the ds_list we sent through the script
+            split_sprite_1 = ds_list_find_value(ds_sprites, 0);
+            split_sprite_2 = ds_list_find_value(ds_sprites, 1);
+        }
+    }
 }
-
-phy_position_x = destX;
-phy_position_y = destY;
-
-phy_angular_velocity = 0;
-phy_rotation = 0;
 </string>
           </argument>
         </arguments>
@@ -123,7 +131,22 @@ phy_rotation = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw nothing
+            <string>/// Draw demo
+draw_self();
+
+if(split_sprite_1 &gt; 0)
+    draw_sprite(split_sprite_1, 0, x + sprite_width + 50, y);
+if(split_sprite_2 &gt; 0)
+    draw_sprite(split_sprite_2, 0, x + sprite_width * 2 + 100, y);
+    
+draw_rectangle(x - 5, y - 5, x + sprite_width * 3 + 100 + 5, y + sprite_height + 5, 1);
+    
+if(mouse_click)
+    draw_line(mx, my, mouse_x, mouse_y);
+    
+/// Label
+draw_set_font(font_default_bold);
+draw_text(x, y - 30, "This uses the COMPLEX algorithm.");
 </string>
           </argument>
         </arguments>
@@ -141,5 +164,8 @@ phy_rotation = 0;
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>256,256</point>
+  </PhysicsShapePoints>
 </object>

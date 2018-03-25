@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-5</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,48 +25,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ControllerID = noone;
-WhoAmI = noone;
+            <string>// variables
 
-image_speed = 0;
+outl_w=1
+outl_scale=1
+outl_texture=s_outl_texture 
+outl_r_texture=s_outl_r_texture 
 
-KeyLeft = 0;
-KeyRight = 0;
-KeyUp = 0;
-KeyDown = 0;
+outl_color=c_orange
 
-Speed = 200;
+// shader
+size=shader_get_uniform(sh_outl, 'size')
+colour=shader_get_uniform(sh_outl, 'colour')
+tex=shader_get_sampler_index(sh_outl, 'tex')
+tex_size=shader_get_uniform(sh_outl, 'tex_size')
 
-// Geometry
-dx = sprite_get_width(sprite_index) / 2;
-dy = sprite_get_height(sprite_index) / 2;
 
-// Physics
-var Fixture = physics_fixture_create(),
-    Group = 0,
-    Density = 0.1,
-    Restitution = 0.2,
-    Friction = 20,
-    LinearDamp = 4,
-    AngularDamp = 0;
-    
-physics_fixture_set_circle_shape(Fixture, dx);
-
-physics_fixture_set_collision_group(Fixture, Group);
-physics_fixture_set_density(Fixture, Density);
-physics_fixture_set_restitution(Fixture, Restitution);
-physics_fixture_set_friction(Fixture, Friction);
-physics_fixture_set_linear_damping(Fixture, LinearDamp);
-physics_fixture_set_angular_damping(Fixture, AngularDamp);
-
-physics_fixture_bind(Fixture, id);
-physics_fixture_delete(Fixture);
+global.outl=surface_create(view_wview*outl_scale, view_hview*outl_scale)
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,24 +64,32 @@ physics_fixture_delete(Fixture);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var destX, destY;
-
-if (instance_exists(obj_gameManager.m_playerArray[WhoAmI]))
-{
-    destX = obj_gameManager.m_playerArray[WhoAmI].x;
-    destY = obj_gameManager.m_playerArray[WhoAmI].y;
-}
-else
-{
-    destX = obj_camera.x_COM;
-    destY = obj_camera.y_COM;
-}
-
-phy_position_x = destX;
-phy_position_y = destY;
-
-phy_angular_velocity = 0;
-phy_rotation = 0;
+            <string>surface_set_target(global.outl)
+draw_clear_alpha(c_black, 1)
+surface_reset_target()
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_create(mouse_x, mouse_y, o_item)
 </string>
           </argument>
         </arguments>
@@ -123,7 +112,28 @@ phy_rotation = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw nothing
+            <string>surface_set_target(global.outl)
+draw_set_blend_mode(bm_add)
+
+draw_sprite_ext(outl_r_texture, 0, mouse_x, mouse_y, 2.5, 2.5, 0, c_white, 1) // green - alpha
+
+draw_set_blend_mode(bm_normal)
+surface_reset_target()
+
+
+shader_set(sh_outl)
+shader_set_uniform_f(size, outl_w/view_wview, outl_w/view_hview)
+shader_set_uniform_f(colour, colour_get_red(outl_color)/256, colour_get_green(outl_color)/256, colour_get_blue(outl_color)/256)
+shader_set_uniform_f(tex_size, surface_get_width(global.outl)/sprite_get_width(outl_texture), surface_get_height(global.outl)/sprite_get_height(outl_texture))
+texture_set_stage(tex, sprite_get_texture(outl_texture, 0))
+
+draw_surface_ext(global.outl, 0, 0, 1/outl_scale, 1/outl_scale, 0, c_white, 1)
+draw_surface_ext(global.outl, 300, 0, 0.2, 0.2, 0, c_white, 1) // debug
+
+shader_reset()
+
+draw_surface_ext(global.outl, 0, 0, 0.2, 0.2, 0, c_white, 1) // debug
+
 </string>
           </argument>
         </arguments>

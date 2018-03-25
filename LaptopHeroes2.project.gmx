@@ -6,6 +6,8 @@
   <NewExtensions>
     <extension index="0">extensions\Easing and Tweening</extension>
     <extension index="1">extensions\Eight-bit chillout Shader</extension>
+    <extension index="2">extensions\Highlighting objects</extension>
+    <extension index="3">extensions\Split Sprite By Any Line</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Arrow">
@@ -88,6 +90,7 @@
     <sprite>sprites\msk_player</sprite>
     <sprite>sprites\spr_bloodParticles</sprite>
     <sprite>sprites\spr_outlineTexture</sprite>
+    <sprite>sprites\spr_chicken</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -133,6 +136,10 @@
       <script>scripts\draw_player_outline.gml</script>
       <script>scripts\draw_player_hat.gml</script>
     </scripts>
+    <scripts name="Split Sprite">
+      <script>scripts\sprite_split.gml</script>
+      <script>scripts\sprite_split_real_dimensions.gml</script>
+    </scripts>
     <script>scripts\death.gml</script>
     <script>scripts\collision_line_multiple.gml</script>
     <script>scripts\draw_text_debug.gml</script>
@@ -153,6 +160,7 @@
     <script>scripts\hat_sprite.gml</script>
     <script>scripts\gamepad_rumble.gml</script>
     <script>scripts\play_sound.gml</script>
+    <script>scripts\collision_line_point.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
@@ -162,6 +170,7 @@
   </fonts>
   <objects name="objects">
     <object>objects\obj_player</object>
+    <object>objects\obj_playerPart</object>
     <object>objects\obj_collider</object>
     <object>objects\obj_gameManager</object>
     <object>objects\obj_camera</object>
@@ -173,6 +182,7 @@
     <object>objects\obj_blood</object>
     <object>objects\obj_scoreEffect</object>
     <object>objects\obj_rumble</object>
+    <object>objects\obj_chicken</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

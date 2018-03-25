@@ -14,7 +14,7 @@ draw_set_blend_mode(bm_subtract); // dont draw image but remove the inverse from
 draw_clear(c_black); // clear anything from the previous frame in case the image is being animated 
 
 // draw all the sprites on with a little offset to make a border
-for (i = 0; i < 16; i++)
+for (i = 0; i < 360; i++)
 {   
     var xOff = lengthdir_x(distance, i*(45/2));
     var yOff = lengthdir_y(distance, i*(45/2));
