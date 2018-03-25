@@ -83,60 +83,19 @@ physics_fixture_delete(Fixture);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>player1 = obj_gameManager.m_playerArray[0];
-player2 = obj_gameManager.m_playerArray[1];
-player3 = obj_gameManager.m_playerArray[2];
-player4 = obj_gameManager.m_playerArray[3];
+            <string>player = obj_gameManager.m_playerArray[WhoAmI];
 
 var destX, destY;
 
-switch (WhoAmI)
+if (instance_exists(player))
 {
-   case "P1":
-   {
-      if (instance_exists(player1))
-      {
-         destX = player1.x;
-         destY = player1.y;
-         break;
-      }
-   }
-   
-   case "P2":
-   {
-      if (instance_exists(player2))
-      {
-         destX = player2.x;
-         destY = player2.y;
-         break;
-      }
-   }
-   
-   case "P3":
-   {
-      if (instance_exists(player3))
-      {
-         destX = player3.x;
-         destY = player3.y;
-         break;
-      }
-   }
-   
-   case "P4":
-   {
-      if (instance_exists(player4))
-      {
-         destX = player4.x;
-         destY = player4.y;
-         break;
-      }
-   }
-   default:
-   {
-      destX = obj_camera.x_COM
-      destY = obj_camera.y_COM
-      break;
-   }
+   destX = player.x;
+   destY = player.y;
+}
+else
+{
+  destX = obj_camera.x_COM
+  destY = obj_camera.y_COM
 }
 
 phy_position_x = destX;

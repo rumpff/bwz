@@ -187,7 +187,7 @@ for (var i = 0; i &lt; Players; i++)
     PlayerID[i] = instance_create(x_Center - (dx_Spawn * (Players - 1) / 2) + (dx_Spawn * i), y_Center, obj_camTracker);
     
     PlayerID[i].ControllerID = id;
-    PlayerID[i].WhoAmI = "P" + string(i + 1);
+    PlayerID[i].WhoAmI = i;
     PlayerID[i].image_index = i;
     
     // If using physics
