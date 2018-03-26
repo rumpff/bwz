@@ -56,7 +56,7 @@ if(arrow != -1)
         p.m_y2 = y2;
         
         p.m_id = i;
-        p.m_sprite = headSpr
+        p.sprite_index = headSpr
         
         with(p) { event_user(0); }
     }

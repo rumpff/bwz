@@ -123,7 +123,7 @@ y += random_range(-3, 3) * global.timeScale;
             <kind>1</kind>
             <string>/// Obtain sprites
 
-var result = sprite_split(m_sprite, ds_sprites, m_x0, m_y0, m_x0 - 64, m_y0, m_x0 + 64, m_y0, false, false);
+var result = sprite_split(sprite_index, ds_sprites, m_x0, m_y0, m_x0 - 64, m_y0, m_x0 + 64, m_y0, false, false);
 
 if(result) {
     // Script was successful
