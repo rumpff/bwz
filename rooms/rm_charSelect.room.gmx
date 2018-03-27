@@ -16,8 +16,8 @@
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1936</w>
-    <h>1066</h>
+    <w>1165</w>
+    <h>602</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -27,8 +27,8 @@
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
     <page>2</page>
-    <xoffset>-140</xoffset>
-    <yoffset>-158</yoffset>
+    <xoffset>-26</xoffset>
+    <yoffset>-54</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="2" vspeed="2" stretch="0"/>
@@ -54,52 +54,7 @@
     <instance objName="obj_charSelectManager" x="160" y="160" name="inst_A9CA8A18" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_drawRays" x="192" y="160" name="inst_7BD9521D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
-  <tiles>
-    <tile bgName="bg_cloudTiles" x="0" y="0" w="128" h="128" xo="0" yo="0" id="10000155" name="inst_1BF60CE7" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="960" w="128" h="128" xo="0" yo="256" id="10000158" name="inst_040E0FBB" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="0" w="128" h="128" xo="256" yo="0" id="10000159" name="inst_B321FF70" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="960" w="128" h="128" xo="256" yo="256" id="10000160" name="inst_BB2F7DF4" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="128" y="960" w="128" h="128" xo="128" yo="256" id="10000162" name="inst_02645A40" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="256" y="960" w="128" h="128" xo="128" yo="256" id="10000163" name="inst_31876669" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="384" y="960" w="128" h="128" xo="128" yo="256" id="10000164" name="inst_520B304C" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="512" y="960" w="128" h="128" xo="128" yo="256" id="10000165" name="inst_66356CF4" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="640" y="960" w="128" h="128" xo="128" yo="256" id="10000166" name="inst_0FA98FC0" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="768" y="960" w="128" h="128" xo="128" yo="256" id="10000167" name="inst_826CAC68" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="896" y="960" w="128" h="128" xo="128" yo="256" id="10000168" name="inst_CC299BAA" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1024" y="960" w="128" h="128" xo="128" yo="256" id="10000169" name="inst_9FDB9B3E" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1152" y="960" w="128" h="128" xo="128" yo="256" id="10000170" name="inst_0441879C" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1280" y="960" w="128" h="128" xo="128" yo="256" id="10000171" name="inst_A23DB869" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1408" y="960" w="128" h="128" xo="128" yo="256" id="10000172" name="inst_0FC608E6" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1536" y="960" w="128" h="128" xo="128" yo="256" id="10000173" name="inst_FD01E1CC" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1664" y="960" w="128" h="128" xo="128" yo="256" id="10000174" name="inst_4645C72B" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="128" y="0" w="128" h="128" xo="128" yo="0" id="10000175" name="inst_ECA020DB" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="256" y="0" w="128" h="128" xo="128" yo="0" id="10000176" name="inst_8A74580B" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="384" y="0" w="128" h="128" xo="128" yo="0" id="10000177" name="inst_6DF3447A" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="512" y="0" w="128" h="128" xo="128" yo="0" id="10000178" name="inst_FC4E1F14" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="640" y="0" w="128" h="128" xo="128" yo="0" id="10000179" name="inst_2EBA71F2" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="768" y="0" w="128" h="128" xo="128" yo="0" id="10000180" name="inst_86FDC83F" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="896" y="0" w="128" h="128" xo="128" yo="0" id="10000181" name="inst_6DA01B68" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1024" y="0" w="128" h="128" xo="128" yo="0" id="10000182" name="inst_9A959C84" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1152" y="0" w="128" h="128" xo="128" yo="0" id="10000183" name="inst_77DE56D2" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1280" y="0" w="128" h="128" xo="128" yo="0" id="10000184" name="inst_67103251" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1408" y="0" w="128" h="128" xo="128" yo="0" id="10000185" name="inst_D8B867FD" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1536" y="0" w="128" h="128" xo="128" yo="0" id="10000186" name="inst_48E2ABE8" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1664" y="0" w="128" h="128" xo="128" yo="0" id="10000187" name="inst_9CFFBE8E" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="128" w="128" h="128" xo="0" yo="128" id="10000188" name="inst_C22B24FF" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="256" w="128" h="128" xo="0" yo="128" id="10000189" name="inst_63A13BBD" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="384" w="128" h="128" xo="0" yo="128" id="10000190" name="inst_43FFAD6E" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="512" w="128" h="128" xo="0" yo="128" id="10000191" name="inst_6DC11856" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="640" w="128" h="128" xo="0" yo="128" id="10000192" name="inst_9FD25780" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="768" w="128" h="128" xo="0" yo="128" id="10000193" name="inst_89A70640" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="0" y="896" w="128" h="128" xo="0" yo="128" id="10000194" name="inst_1AC42FD7" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="128" w="128" h="128" xo="256" yo="128" id="10000195" name="inst_DD4BD387" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="256" w="128" h="128" xo="256" yo="128" id="10000196" name="inst_5CEE9409" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="384" w="128" h="128" xo="256" yo="128" id="10000197" name="inst_BEE1E3F4" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="512" w="128" h="128" xo="256" yo="128" id="10000198" name="inst_B468B38A" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="640" w="128" h="128" xo="256" yo="128" id="10000199" name="inst_0ED80A3C" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="768" w="128" h="128" xo="256" yo="128" id="10000200" name="inst_1E38CC3B" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_cloudTiles" x="1792" y="896" w="128" h="128" xo="256" yo="128" id="10000201" name="inst_84009329" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-  </tiles>
+  <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>
   <PhysicsWorldLeft>0</PhysicsWorldLeft>
