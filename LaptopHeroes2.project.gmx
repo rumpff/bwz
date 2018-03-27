@@ -74,7 +74,8 @@
     <sprites name="Hats">
       <sprite>sprites\spr_hat1</sprite>
       <sprite>sprites\spr_hat2</sprite>
-      <sprite>sprites\spr_hat5</sprite>
+      <sprite>sprites\spr_hat3</sprite>
+      <sprite>sprites\spr_hat4</sprite>
     </sprites>
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_wall</sprite>
@@ -181,6 +182,7 @@
     <object>objects\obj_charSelectManager</object>
     <object>objects\obj_blood</object>
     <object>objects\obj_scoreEffect</object>
+    <object>objects\obj_drawRays</object>
     <object>objects\obj_rumble</object>
     <object>objects\obj_chicken</object>
   </objects>

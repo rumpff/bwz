@@ -117,7 +117,7 @@ m_keyJumpHeld = (m_rTrigger &gt; m_controllerDeadzone);
           <argument>
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
-if (m_playerId == 0)
+if (m_playerId == 9999999)
 {
    if(!gamepad_is_connected(0))
    {

@@ -76,6 +76,7 @@ if(!m_wallHit &amp;&amp; (m_bounces &gt; 0 || m_arrowType != 1))
         };
         
         m_wallHit = true;
+        m_wiggle = m_wiggleMax;
     }
     else
     {
@@ -235,6 +236,9 @@ if (y &gt; room_height)
 
 if(m_initialCooldown &gt; 0)
 { m_initialCooldown -= global.timeScale; }
+
+if((m_wallHit) &amp;&amp; m_wiggle &gt; 0)
+{ m_wiggle--; }
 </string>
           </argument>
         </arguments>
@@ -288,6 +292,8 @@ m_moveSpeed = ARROW_SPEED * m_force;
 m_length = ARROW_LENGTH;
 m_wallHit = false;
 m_drawAngle = m_angle;
+m_wiggle = 0;
+m_wiggleMax = 20;
 
 m_initialCooldown = 10; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 
@@ -346,8 +352,11 @@ m_bounces = 2;
 
 draw_set_color(c_white);
 
-var x2 = x + lengthdir_x(m_length, m_drawAngle);
-var y2 = y + lengthdir_y(m_length, m_drawAngle);
+var wiggleoff = 0; 
+//if(m_wallHit) { wiggleoff = ease_out_elastic(m_wiggle, m_wiggleMax, -m_wiggleMax, m_wiggleMax); }
+
+var x2 = x + lengthdir_x(m_length, m_drawAngle+wiggleoff);
+var y2 = y + lengthdir_y(m_length, m_drawAngle+wiggleoff);
 
 draw_line_width(x, y, x2, y2, ARROW_WIDTH);
 </string>

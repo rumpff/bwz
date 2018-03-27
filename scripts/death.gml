@@ -25,13 +25,16 @@ if(killerId != player.m_playerId && killerId != -1)
     }
 }
 
-gamepad_rumble(argument0.m_playerId, 1, 20);
+gamepad_rumble(argument0.m_playerId, 1, 10);
 
 var parAmount = 100;
 
 repeat(parAmount)
-{ var bld = instance_create(player.x, player.y, obj_blood); }
+{ 
+    var bld = instance_create(player.x, player.y, obj_blood); 
+}
 
+/*
 if(arrow != -1)
 {
     var headSpr = head_sprite(global.playerHead[player.m_playerId])
@@ -62,6 +65,7 @@ if(arrow != -1)
     }
 
 }
+*/
 
 instance_destroy(player);
 play_sound(snd_playerDeath1);

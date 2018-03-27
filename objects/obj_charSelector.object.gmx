@@ -199,6 +199,7 @@ if((m_inputBack) &amp;&amp; (m_currentState &gt; 0))
 {
     m_currentState--;
     audio_play_sound(snd_charReturn, 1, 0);
+    obj_drawRays.m_multiplier -= 5;
 }
 
 m_sinCounter += 0.03;
@@ -387,6 +388,7 @@ if(m_currentState == 2)
             m_currentState++;
             audio_play_sound(snd_swordSlice, 1, 0);
             m_uwahTimer = 0;
+            obj_drawRays.m_multiplier += 10;
         }
         else
         {
@@ -642,6 +644,7 @@ if(m_currentState == 1)
                 {
                     m_currentState++;
                     audio_play_sound(snd_charNext, 1, 0);
+                    obj_drawRays.m_multiplier += 5;
                 }
                 break;
                 
@@ -734,8 +737,12 @@ if(m_currentState == 0)
     m_contWidth = 400;
     
     // Check for input
-    if (m_inputSelect)
-    { audio_play_sound(snd_pressedA, 1, 0); m_currentState++; } // Go to the next state
+    if (m_inputSelect) // Go to the next state
+    { 
+        audio_play_sound(snd_pressedA, 1, 0); 
+        m_currentState++; 
+        obj_drawRays.m_multiplier += 5;
+    } 
     
     m_topText = "";
     m_bottomText = "";
@@ -1170,7 +1177,7 @@ if(m_currentState == 2)
                     x + bSize, y - (h/4) + bSize, false);
                      
     // Draw ready
-    draw_text(x, y + (h/2.5), m_readyText)
+    draw_text_outline(x, y + (h/2.5), m_readyText, 1, c_black, 20);
     
 }
 </string>
