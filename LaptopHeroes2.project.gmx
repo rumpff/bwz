@@ -162,6 +162,9 @@
     <script>scripts\gamepad_rumble.gml</script>
     <script>scripts\play_sound.gml</script>
     <script>scripts\collision_line_point.gml</script>
+    <script>scripts\draw_paralellogram.gml</script>
+    <script>scripts\draw_sprite_outlined.gml</script>
+    <script>scripts\generate_player_splices.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>

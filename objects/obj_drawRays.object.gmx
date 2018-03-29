@@ -82,7 +82,7 @@ m_multiplier = lerp(m_multiplier, 1, 0.1);
             <kind>1</kind>
             <string>for (i = 0; i &lt; rayAmount; i++)
 {
-    color = make_colour_hsv(i *  (255 / (360 / rayAmount)), 255, 255); // 17
+    color = make_colour_hsv(i *  (255 / (360 / rayAmount)), 150, 150); // 17
     draw_set_color(color);
     
     x2 = x + cos(i * (pi * 2) / rayAmount + angle) * length;

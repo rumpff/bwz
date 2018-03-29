@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(m_id == 0)
+if(m_id == 1)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -374,7 +374,7 @@ if(m_currentState == 2)
     
     m_charSLOffset = lerp(m_charSLOffset, 0, 0.2);
     m_charSROffset = lerp(m_charSROffset, 0, 0.2);
-    
+
     // Set the ready text
     if(m_charCurrent == 4)
     {  m_readyText = "READY?"; }
@@ -392,7 +392,9 @@ if(m_currentState == 2)
         }
         else
         {
-            m_charCurrent = 4;
+            m_charCurrent++; 
+            var snd = audio_play_sound(snd_sweep, 1, 0);
+            audio_sound_pitch(snd, 1 + (m_charCurrent * 0.1));
         }
     }
     
@@ -415,26 +417,39 @@ if(m_currentState == 2)
         switch(m_charCurrent)
         {
             case 0:
-                if(m_currentColor &lt;= 0)
-                { m_currentColor = 255; }
+                if(m_currentColor &gt;= 255)
+                { m_currentColor = 0; }
                 
-                m_currentColor -= 17;
+                m_currentColor += m_colorAmount;
+
                 valid = true;
                 break;
                 
             case 1:
                 if (m_currentHat &gt; 0) 
-                { m_currentHat--; valid = true;}
+                { 
+                    m_currentHat--; 
+                    m_hatXOffset -= 16; 
+                    valid = true;
+                }
                 break;
                 
             case 2:
                 if (m_currentHead &gt; 0) 
-                { m_currentHead--; valid = true;}
+                { 
+                    m_currentHead--; 
+                    m_headXOffset -= 16;
+                    valid = true;
+                }
                 break;
                 
             case 3:
                 if (m_currentLeg &gt; 0) 
-                { m_currentLeg--; valid = true;}
+                { 
+                    m_currentLeg--; 
+                    m_legXOffset -= 16;
+                    valid = true;
+                }
                 break;
         }
         
@@ -449,26 +464,38 @@ if(m_currentState == 2)
         switch(m_charCurrent)
         {
             case 0:
-                if(m_currentColor &gt;= 255)
-                { m_currentColor = 0; }
+                if(m_currentColor &lt;= 0)
+                { m_currentColor = 255; }
                 
-                m_currentColor += 17;
+                m_currentColor -= m_colorAmount;
                 valid = true;
                 break;
                 
             case 1:
                 if (m_currentHat &lt; (sprite_get_number(spr_hats) - 1)) 
-                { m_currentHat++; valid = true;}
+                { 
+                    m_currentHat++; 
+                    m_hatXOffset += 16; 
+                    valid = true;
+                }
                 break;
                 
             case 2:
                 if (m_currentHead &lt; HEAD_AMOUNT-1) 
-                { m_currentHead++; valid = true;}
+                { 
+                    m_currentHead++; 
+                    m_headXOffset += 16;
+                    valid = true;
+                }
                 break;
                 
             case 3:
                 if (m_currentLeg &lt; LEG_AMOUNT-1) 
-                { m_currentLeg++; valid = true;}
+                { 
+                    m_currentLeg++; 
+                    m_legXOffset += 16;
+                    valid = true;
+                }
                 break;
         }
         
@@ -476,6 +503,26 @@ if(m_currentState == 2)
         { m_charSROffset = 16; audio_play_sound(snd_sweep, 1, 0); }
     }
     
+    // Lerp thumbs    
+    m_hatThumbOffset = lerp(m_hatThumbOffset, (m_charCurrent == 1), 0.2);
+    m_headThumbOffset = lerp(m_headThumbOffset, (m_charCurrent == 2), 0.2);
+    m_legThumbOffset = lerp(m_legThumbOffset, (m_charCurrent == 3), 0.2);
+            
+    m_hatXOffset = lerp(m_hatXOffset, 0, 0.35);
+    m_headXOffset = lerp(m_headXOffset, 0, 0.35);
+    m_legXOffset = lerp(m_legXOffset, 0, 0.35);
+    
+    
+    // Animate the color wheel
+    for (i = 0; i &lt; m_colorAmount; i++)
+    { 
+        var dest;
+        
+        if((m_currentColor / 17) mod (255 / m_colorAmount) == i)
+        { dest = 12; } else { dest = 0; }
+        
+        m_colDist[i] = lerp(m_colDist[i], dest, 0.1); 
+    }
     
     // Set selector cordinates
     if(m_charSelectNormal)
@@ -608,15 +655,23 @@ if(m_currentState == 1)
         }    
     }
     
-    // Scale the letters
+    // Animate the letters
     for (i = 0; i &lt; array_length_1d(m_letterBoxX); i++)
     {
         if ((array_length_1d(m_letterRot) - 1) &lt; i)
-        { m_letterRot[i] = 0; m_letterSat[i] = 0; }
+        { 
+            m_letterRot[i] = 0; 
+            m_letterSat[i] = 0; 
+            m_letterXOff[i] = 0;
+            m_letterYOff[i] = 0;
+        }
         else
-        { m_letterRot[i] = lerp(m_letterRot[i], 0, 0.1); 
-        m_letterSat[i] = lerp(m_letterSat[i], 0, 0.2); }
-        
+        { 
+            m_letterRot[i] = lerp(m_letterRot[i], 0, 0.1); 
+            m_letterSat[i] = lerp(m_letterSat[i], 0, 0.2);
+            m_letterXOff[i] = lerp(m_letterXOff[i], 0, 0.1);
+            m_letterYOff[i] = lerp(m_letterYOff[i], 0, 0.1); 
+        }
     }
     
     
@@ -673,32 +728,33 @@ if(m_currentState == 1)
     }
     
     // Move the selection
-    var moved = false;
+    var addAmount = 0;
     
     if(m_inputUp &amp;&amp; (m_selectorPos - m_xRows) &gt;= 0)
     {
-        m_selectorPos -= m_xRows;
-        moved = true;
+        m_letterYOff[m_selectorPos] -= 8;
+        addAmount -= m_xRows;
     }
     if(m_inputDown &amp;&amp; (m_selectorPos + m_xRows) &lt; array_length_1d(m_letterBoxX))
     {
-        m_selectorPos += m_xRows;
-        moved = true;
+        m_letterYOff[m_selectorPos] += 8;
+        addAmount += m_xRows;
     }
     
     if(m_inputLeft &amp;&amp; ((m_selectorPos-1+m_xRows) mod m_xRows) != m_xRows-1)
     {
-        m_selectorPos--;
-        moved = true;
+        m_letterXOff[m_selectorPos] -= 8;
+        addAmount--;
     }
     if(m_inputRight &amp;&amp; ((m_selectorPos+1+m_xRows) mod m_xRows) != 0 &amp;&amp; m_selectorPos+1 &lt; array_length_1d(m_letterBoxX))
     {
-        m_selectorPos++;
-        moved = true;
+        m_letterXOff[m_selectorPos] += 8;
+        addAmount++;
     }
     
-    if(moved) 
+    if(addAmount != 0) 
     { 
+        m_selectorPos += addAmount;
         m_selectorDist =  (m_selectorMaxDistance * .8); 
         audio_play_sound(snd_cursorMove, 1, 0);
     }
@@ -894,6 +950,8 @@ m_letterBoxX[0] = 0;
 m_letterBoxY[0] = 0;
 m_letterRot[0] = 0;
 m_letterSat[0] = 0;
+m_letterXOff[0] = 0;
+m_letterYOff[0] = 0;
 
 m_xRows = 4;
 m_yRows = 8;
@@ -933,9 +991,22 @@ m_currentLeg = 0;
 m_currentHat = 0;
 m_currentColor = 0;
 
-m_charCurrent = 2;
+m_colorAmount = 17;
+for (i = 0; i &lt; m_colorAmount; i++)
+{ m_colDist[i] = 0; }
+
+
+m_charCurrent = 0;
 m_charSelectPos = y;
 m_charSelectNormal = true;
+
+m_headThumbOffset = 0;
+m_legThumbOffset = 0;
+m_hatThumbOffset = 0;
+
+m_headXOffset = 0;
+m_legXOffset = 0;
+m_hatXOffset = 0;
 
 m_readyText = "READY"
 
@@ -1106,8 +1177,8 @@ if(m_currentState == 1)
     
     for (i = 0; i &lt; array_length_1d(m_letterBoxX); i++)
     {
-        var xCenter = m_letterBoxX[i] + (bwidth / 2);
-        var yCenter = m_letterBoxY[i] + (bheight / 2);
+        var xCenter = m_letterBoxX[i] + (bwidth / 2) + m_letterXOff[i];
+        var yCenter = m_letterBoxY[i] + (bheight / 2) + m_letterYOff[i];
         
         var letter = string_copy(m_alphabet, i + 1, 1);
         draw_set_color(make_color_hsv(i * 255 / array_length_1d(m_letterBoxX), m_letterSat[i], 255));
@@ -1160,23 +1231,85 @@ if(m_currentState == 2)
     draw_line(m_RBX1 - offset, m_RBY1, m_RBX2 - offset, m_RBY2);
     
     // Draw the hat
-    draw_sprite_ext(spr_hats, m_currentHat, x, y, 2.5, 2.5, 0, c_white, 1);
+    if(m_currentHat+1 &lt; sprite_get_number(spr_hats))
+    { draw_sprite_ext(spr_hats, m_currentHat+1, x + (64 * m_hatThumbOffset) + m_hatXOffset, y, 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
+    if(m_currentHat-1 &gt;= 0)
+    { draw_sprite_ext(spr_hats, m_currentHat-1, x - (64 * m_hatThumbOffset) + m_hatXOffset, y, 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
+    
+    if(m_currentHat+2 &lt; sprite_get_number(spr_hats))
+    { draw_sprite_ext(spr_hats, m_currentHat+2, x + (96 * m_hatThumbOffset) + m_hatXOffset, y, 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
+    if(m_currentHat-2 &gt;= 0)
+    { draw_sprite_ext(spr_hats, m_currentHat-2, x - (96 * m_hatThumbOffset) + m_hatXOffset, y, 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
+    
+    draw_sprite_ext(spr_hats, m_currentHat, x + m_hatXOffset, y, 2.5, 2.5, 0, c_white, 1);
+    
     
     // Legs
-    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x - (8 * 2.5), y + (h/4) + (12*2.5) , 2.5, 2.5, 0, c_white, 1)
-    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x + (8 * 2.5), y + (h/4) + (12*2.5) , 2.5, 2.5, 0, c_white, 1)
+    if(m_currentLeg+1 &lt; LEG_AMOUNT)
+    { draw_sprite_ext(leg_sprite(m_currentLeg+1), 0, x - (8) + (64 * m_legThumbOffset) + m_legXOffset, y + (h/4) + (12*2.5), 1 * m_legThumbOffset, 1 * m_legThumbOffset, 0, c_white, 0.5); 
+        draw_sprite_ext(leg_sprite(m_currentLeg+1), 0, x + (8) + (64 * m_legThumbOffset) + m_legXOffset, y + (h/4) + (12*2.5), 1 * m_legThumbOffset, 1 * m_legThumbOffset, 0, c_white, 0.5); }
+        
+    if(m_currentLeg-1 &gt;= 0)
+    { draw_sprite_ext(leg_sprite(m_currentLeg-1), 0, x - (8) - (64 * m_legThumbOffset) + m_legXOffset, y + (h / 4) + (12 * 2.5), 1 * m_legThumbOffset, 1 * m_legThumbOffset, 0, c_white, 0.5); 
+        draw_sprite_ext(leg_sprite(m_currentLeg-1), 0, x + (8) - (64 * m_legThumbOffset) + m_legXOffset, y + (h / 4) + (12 * 2.5), 1 * m_legThumbOffset, 1 * m_legThumbOffset, 0, c_white, 0.5); }
+    
+    if(m_currentLeg+2 &lt; LEG_AMOUNT)
+    { draw_sprite_ext(leg_sprite(m_currentLeg+2), 0, x - (8 * 0.5) + (96 * m_legThumbOffset) + m_legXOffset, y + (h / 4) + (12 * 2.5), 0.5 * m_legThumbOffset, 0.5 * m_legThumbOffset, 0, c_white, 0.5); 
+       draw_sprite_ext(leg_sprite(m_currentLeg+2), 0, x + (8 * 0.5) + (96 * m_legThumbOffset) + m_legXOffset, y + (h / 4) + (12 * 2.5), 0.5 * m_legThumbOffset, 0.5 * m_legThumbOffset, 0, c_white, 0.5);}
+    
+    if(m_currentLeg-2 &gt;= 0)
+    { draw_sprite_ext(leg_sprite(m_currentLeg-2), 0, x - (8 * 0.5) - (96 * m_legThumbOffset) + m_legXOffset, y + (h/4) + (12 * 2.5), 0.5 * m_legThumbOffset, 0.5 * m_legThumbOffset, 0, c_white, 0.5); 
+       draw_sprite_ext(leg_sprite(m_currentLeg-2), 0, x + (8 * 0.5) - (96 * m_legThumbOffset) + m_legXOffset, y + (h/4) + (12 * 2.5), 0.5 * m_legThumbOffset, 0.5 * m_legThumbOffset, 0, c_white, 0.5);}
+    
+    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x - (8 * 2.5) + m_legXOffset, y + (h / 4) + (12 * 2.5) , 2.5, 2.5, 0, c_white, 1)
+    draw_sprite_ext(leg_sprite(m_currentLeg), 0, x + (8 * 2.5) + m_legXOffset, y + (h / 4) + (12 * 2.5) , 2.5, 2.5, 0, c_white, 1)
     
     // Head
-    draw_sprite_ext(head_sprite(m_currentHead), 0, x, y + (h/4), 2.5, 2.5, 0, c_white, 1);
+    if(m_currentHead+1 &lt; HEAD_AMOUNT)
+    { draw_sprite_ext(head_sprite(m_currentHead+1), 0, x + (64 * m_headThumbOffset) + m_headXOffset, y + (h/4), 1 * m_headThumbOffset, 1 * m_headThumbOffset, 0, c_white, 0.5); }
+    if(m_currentHead-1 &gt;= 0)
+    { draw_sprite_ext(head_sprite(m_currentHead-1), 0, x - (64 * m_headThumbOffset) + m_headXOffset, y + (h/4), 1 * m_headThumbOffset, 1 * m_headThumbOffset, 0, c_white, 0.5); }
+    
+    if(m_currentHead+2 &lt; HEAD_AMOUNT)
+    { draw_sprite_ext(head_sprite(m_currentHead+2), 0, x + (96 * m_headThumbOffset) + m_headXOffset, y + (h/4), 0.5 * m_headThumbOffset, 0.5 * m_headThumbOffset, 0, c_white, 0.5); }
+    if(m_currentHead-2 &gt;= 0)
+    { draw_sprite_ext(head_sprite(m_currentHead-2), 0, x - (96 * m_headThumbOffset) + m_headXOffset, y + (h/4), 0.5 * m_headThumbOffset, 0.5 * m_headThumbOffset, 0, c_white, 0.5); }
+      
+    draw_sprite_ext(head_sprite(m_currentHead), 0, x + m_headXOffset, y + (h/4), 2.5, 2.5, 0, c_white, 1);
     
     // Color block
     draw_set_color(make_color_hsv(m_currentColor, 255, 255));
-    
-    var bSize = 32;
-    draw_rectangle(x - bSize, y - (h/4) - bSize,
-                    x + bSize, y - (h/4) + bSize, false);
+                    
+    // Color circle
+    for (i = 0; i &lt; (255 / m_colorAmount); i++)
+    {
+        var colorAmount = (255 / m_colorAmount);
+        
+        var sizeTop = 64 + m_colDist[i];
+        var sizeBottom = 32 + m_colDist[i];
+        
+        var x1 = x + lengthdir_x(sizeTop, i * (360 / colorAmount));
+        var y1 = y - (h/4) + lengthdir_y(sizeTop, i * (360 / colorAmount));
+        
+        var x2 = x + lengthdir_x(sizeTop, (i+1) * (360 / colorAmount));
+        var y2 = y - (h/4) + lengthdir_y(sizeTop, (i+1) * (360 / colorAmount));
+        
+        var x3 = x + lengthdir_x(sizeBottom, i * (360 / colorAmount));
+        var y3 = y - (h/4) + lengthdir_y(sizeBottom, i * (360 / colorAmount));
+        
+        var x4 = x + lengthdir_x(sizeBottom, (i+1) * (360 / colorAmount));
+        var y4 = y - (h/4) + lengthdir_y(sizeBottom, (i+1) * (360 / colorAmount));
+        
+        draw_set_color(make_color_hsv(i * m_colorAmount, 255, 255));        
+        draw_paralellogram(x1, y1, x2, y2, x3, y3, x4, y4, false);
+        
+        draw_set_color(c_black);
+        draw_paralellogram(x1, y1, x2, y2, x3, y3, x4, y4, true);
+        
+    }
                      
     // Draw ready
+    draw_set_color(make_color_hsv(m_currentColor, 255, 255));
     draw_text_outline(x, y + (h/2.5), m_readyText, 1, c_black, 20);
     
 }

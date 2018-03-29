@@ -29,43 +29,49 @@ gamepad_rumble(argument0.m_playerId, 1, 10);
 
 var parAmount = 100;
 
-repeat(parAmount)
-{ 
-    var bld = instance_create(player.x, player.y, obj_blood); 
-}
-
-/*
 if(arrow != -1)
 {
-    var headSpr = head_sprite(global.playerHead[player.m_playerId])
-
+    // Spawn player splices
     var x1 = arrow.x;
     var y1 = arrow.y;
     
     var x2 = arrow.x + arrow.m_moveX;
     var y2 = arrow.y + arrow.m_moveY;
     
+    var angle = point_direction(x1, y1, x2, y2);
+    var sped = random_range(10, 25);
+    
     for (i = 0; i < 2; i++)
     {
         var p = instance_create(player.x, player.y, obj_playerPart);
-        
-        p.m_x0 = player.x;
-        p.m_y0 = player.y;
-        
-        p.m_x1 = x1;
-        p.m_y1 = y1;
-        
-        p.m_x2 = x2;
-        p.m_y2 = y2;
-        
-        p.m_id = i;
-        p.sprite_index = headSpr
-        
+
+        p.m_angle = angle;
+        p.m_id = player.m_playerId;
+        p.m_spriteId = i;
+        p.sped = sped;
+            
         with(p) { event_user(0); }
     }
-
+    
+    // Spawn blood with arrow's angle
+    repeat(parAmount)
+    {   
+        var bld = instance_create(player.x, player.y, obj_blood); 
+        bld.m_arrowAngle = angle;
+        
+        with(bld) { event_user(0); }
+    }
 }
-*/
-
+else
+{
+    // Spawn blood withouy
+    repeat(parAmount)
+    {   
+        var bld = instance_create(player.x, player.y, obj_blood);
+        bld.m_arrowAngle = 11037;
+        
+        with(bld) { event_user(0); }
+    }
+}
 instance_destroy(player);
 play_sound(snd_playerDeath1);

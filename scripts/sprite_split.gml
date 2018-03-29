@@ -1,4 +1,4 @@
-/// sprite_split(spr,ds_list,spr_x,spr_y,x1,y1,x2,y2,mustintersect,complex)
+/// sprite_split(spr, ds_listA, ds_listB, spr_x, spr_y, x1, y1, x2, y2, mustintersect, complex)
 /*
     Separates a sprite into 2 sprites by cutting a line through the original sprite
     If you require the sprites to have accurate dimensions, see sprite_split_real_dimensions()
@@ -27,15 +27,16 @@
 */
 
 var spr = argument0;
-var list = argument1;
-var spr_x = argument2, spr_y = argument3;
-var x1 = argument4, y1 = argument5;
-var x2 = argument6, y2 = argument7;
-var mustintersect = argument8;
-var complex = argument9;
+var listA = argument1;
+var listB = argument2;
+var spr_x = argument3, spr_y = argument4;
+var x1 = argument5, y1 = argument6;
+var x2 = argument7, y2 = argument8;
+var mustintersect = argument9;
+var complex = argument10;
 
-// Clear list
-ds_list_clear(list);
+// Clear list * rumpf edit: don't
+//ds_list_clear(list);
 
 if(x1 == x2 && y1 == y2) {
     // 1 point does not make a line
@@ -201,8 +202,9 @@ sprite_delete(spr_alpha_map_2);
 // So we destroy that as well
 surface_free(alpha_map);
 
-// Add sprites to the out parameter ds_list
-ds_list_add(list, new_spr_1, new_spr_2);
+// Add sprites to the out parameter ds_list * rumpf edit: add them to 2 seperate lists
+ds_list_add(listA, new_spr_1);
+ds_list_add(listB, new_spr_2);
 
 // Re-apply original draw state
 draw_set_color(draw_color);

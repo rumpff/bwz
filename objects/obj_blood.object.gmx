@@ -8,33 +8,6 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>m_xSpeed = random_range(-32, 32);
-m_ySpeed = random_range(-32, 32);
-
-image_index = random_range(0, image_number-1);
-image_speed = 0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -63,6 +36,45 @@ if(y &gt; room_height)
 {
     instance_destroy();
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>m_xSpeed = random_range(-10, 10);
+m_ySpeed = random_range(-10, 10);
+
+if(m_arrowAngle != 11037)
+{   
+    var angle = point_direction(0, 0, m_xSpeed, m_ySpeed);
+    var diff = angle_difference(angle, m_arrowAngle)
+    
+    if(diff &lt; 30 || diff &gt; 150)
+    {
+        m_xSpeed *= 3;
+        m_ySpeed *= 3;
+    }
+}
+
+image_index = random_range(0, image_number-1);
+image_speed = 0;
 </string>
           </argument>
         </arguments>

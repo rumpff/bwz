@@ -1,5 +1,4 @@
 ///hat_sprite(id)
-
 switch(argument0)
 {
     case 0:
