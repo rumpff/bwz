@@ -66,11 +66,17 @@ if(m_arrowAngle != 11037)
     var angle = point_direction(0, 0, m_xSpeed, m_ySpeed);
     var diff = angle_difference(angle, m_arrowAngle)
     
-    if(diff &lt; 30 || diff &gt; 150)
+    var spd = random_range(0, 30);
+    var angleNew = random_range((m_arrowAngle*1000) - 30*1000, (m_arrowAngle*1000) + 30*1000);
+    angleNew *= 0.001;
+    
+    if(random(1))
     {
-        m_xSpeed *= 3;
-        m_ySpeed *= 3;
+        angleNew += 180;
     }
+    
+    m_xSpeed = lengthdir_x(spd, angleNew);
+    m_ySpeed = lengthdir_y(spd, angleNew) - random_range(0, 10);
 }
 
 image_index = random_range(0, image_number-1);

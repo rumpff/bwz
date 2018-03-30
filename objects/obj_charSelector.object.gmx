@@ -521,7 +521,7 @@ if(m_currentState == 2)
         if((m_currentColor / 17) mod (255 / m_colorAmount) == i)
         { dest = 12; } else { dest = 0; }
         
-        m_colDist[i] = lerp(m_colDist[i], dest, 0.1); 
+        m_colDist[i] = lerp(m_colDist[i], dest, 0.4); 
     }
     
     // Set selector cordinates
@@ -1284,21 +1284,22 @@ if(m_currentState == 2)
     for (i = 0; i &lt; (255 / m_colorAmount); i++)
     {
         var colorAmount = (255 / m_colorAmount);
+        var angleOff = 0;
         
         var sizeTop = 64 + m_colDist[i];
         var sizeBottom = 32 + m_colDist[i];
         
-        var x1 = x + lengthdir_x(sizeTop, i * (360 / colorAmount));
-        var y1 = y - (h/4) + lengthdir_y(sizeTop, i * (360 / colorAmount));
+        var x1 = x + lengthdir_x(sizeTop, i * (360 / colorAmount) + angleOff);
+        var y1 = y - (h/4) + lengthdir_y(sizeTop, i * (360 / colorAmount) + angleOff);
         
-        var x2 = x + lengthdir_x(sizeTop, (i+1) * (360 / colorAmount));
-        var y2 = y - (h/4) + lengthdir_y(sizeTop, (i+1) * (360 / colorAmount));
+        var x2 = x + lengthdir_x(sizeTop, (i+1) * (360 / colorAmount) + angleOff);
+        var y2 = y - (h/4) + lengthdir_y(sizeTop, (i+1) * (360 / colorAmount) + angleOff);
         
-        var x3 = x + lengthdir_x(sizeBottom, i * (360 / colorAmount));
-        var y3 = y - (h/4) + lengthdir_y(sizeBottom, i * (360 / colorAmount));
+        var x3 = x + lengthdir_x(sizeBottom, i * (360 / colorAmount) + angleOff);
+        var y3 = y - (h/4) + lengthdir_y(sizeBottom, i * (360 / colorAmount) + angleOff);
         
-        var x4 = x + lengthdir_x(sizeBottom, (i+1) * (360 / colorAmount));
-        var y4 = y - (h/4) + lengthdir_y(sizeBottom, (i+1) * (360 / colorAmount));
+        var x4 = x + lengthdir_x(sizeBottom, (i+1) * (360 / colorAmount) + angleOff);
+        var y4 = y - (h/4) + lengthdir_y(sizeBottom, (i+1) * (360 / colorAmount) + angleOff);
         
         draw_set_color(make_color_hsv(i * m_colorAmount, 255, 255));        
         draw_paralellogram(x1, y1, x2, y2, x3, y3, x4, y4, false);

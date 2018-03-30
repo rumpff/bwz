@@ -39,7 +39,7 @@ if(arrow != -1)
     var y2 = arrow.y + arrow.m_moveY;
     
     var angle = point_direction(x1, y1, x2, y2);
-    var sped = random_range(10, 25);
+    var sped = random_range(5, 15);
     
     for (i = 0; i < 2; i++)
     {
