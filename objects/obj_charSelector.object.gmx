@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(m_id == 1)
+if(m_id == 0)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);

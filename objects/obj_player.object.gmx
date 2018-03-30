@@ -161,8 +161,6 @@ if (place_meeting(x,y+1,obj_collider))
         // Set squishy landing
         m_imageXScale = 1.4;
         m_imageYScale = 0.7;
-        
-        m_bodyOffsetY += 12;
     }
     m_againstWall = false;
     m_onGround = true;
@@ -496,6 +494,7 @@ if (place_meeting(x, y + (m_vsp * global.timeScale), obj_collider))
     {
         y += sign(m_vsp);
     }
+    if(!m_onGround) { m_bodyLandOffset += m_vsp; }
     m_vsp = 0;
 }
 
@@ -813,6 +812,7 @@ else // Player is in the air
 // Clamp the lerps!!
 m_legRAngle = clamp(m_legRAngle, -90, 90);
 m_legLAngle = clamp(m_legLAngle, -90, 90);
+m_bodyLandOffset = lerp(m_bodyLandOffset, 0, 0.3);
 </string>
           </argument>
         </arguments>
@@ -1000,6 +1000,7 @@ m_spriteLeg = noone;
 
 m_bodyOffsetY = 0;
 m_bodyAngle = 0;
+m_bodyLandOffset = 0;
 
 m_legLOffsetY = 0;
 m_legROffsetY = 0;
@@ -1213,6 +1214,8 @@ draw_text_debug(24, "player x: " + string(x));
 draw_text_debug(25, "player y: " + string(y));
 draw_text_debug(26, "bodyAngle: " + string(m_bodyAngle));
 draw_text_debug(27, "timeScale: " + string(global.timeScale));
+draw_text_debug(28, "bodyLandOffset: " + string(m_bodyLandOffset));
+
 
 </string>
           </argument>
@@ -1250,7 +1253,7 @@ draw_sprite_ext(m_legSprite, 0, m_legLX, m_legLY + m_legRYOff,
     m_imageDirection, 1, m_legLA, c_white, 1);
 
 // Draw the body
-draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY,
+draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY + m_bodyLandOffset,
     m_imageDirection, 1, m_bodyAngle, c_white, 1);
 
 // Draw the hat

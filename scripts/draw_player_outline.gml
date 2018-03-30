@@ -29,7 +29,7 @@ for (i = 0; i < 360; i++)
         m_imageDirection, 1, m_legLA, c_black, 1);
     
     // Draw the body
-    draw_sprite_ext(m_headSprite, 0, x + xOff, y + m_bodyOffsetY + yOff,
+    draw_sprite_ext(m_headSprite, 0, x + xOff, y + m_bodyOffsetY + m_bodyLandOffset + yOff,
         m_imageDirection, 1, m_bodyAngle, c_black, 1);
         
     // Draw the hat

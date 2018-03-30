@@ -16,6 +16,14 @@ switch(playerIndex)
         return 10;
         break;
         
+    case 3:
+        return 2;
+        break;
+        
+    case 4:
+        return 14;
+        break;
+        
     default:
         return 0;
         break;
