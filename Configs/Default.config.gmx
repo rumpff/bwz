@@ -204,7 +204,7 @@
     <option_androidtv_use_test_ads>false</option_androidtv_use_test_ads>
     <option_argumenterrors>True</option_argumenterrors>
     <option_audioGroupCount>1</option_audioGroupCount>
-    <option_author></option_author>
+    <option_author>Kaj Rumpff</option_author>
     <option_backimage>nil</option_backimage>
     <option_borderless>False</option_borderless>
     <option_changed>false</option_changed>
@@ -686,13 +686,14 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="6">
+    <constants number="7">
       <constant name="ARROW_LENGTH">48</constant>
       <constant name="ARROW_SPEED">46</constant>
       <constant name="ARROW_WIDTH">8</constant>
       <constant name="BODY_OFFSET">8</constant>
-      <constant name="LEG_AMOUNT">3</constant>
+      <constant name="BOW_AMOUNT">1</constant>
       <constant name="HEAD_AMOUNT">5</constant>
+      <constant name="LEG_AMOUNT">6</constant>
     </constants>
   </ConfigConstants>
 </Config>

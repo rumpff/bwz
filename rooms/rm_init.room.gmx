@@ -23,9 +23,12 @@ for (i = 0; i &lt; global.maxPlayers; i++)
 {
     global.playerHead[i] = 0;
     global.playerLeg[i] = 0;
+    global.playerBow[i] = 0;
     global.playerHat[i] = 0;
-    global.playerColor[i] = 0;
+    global.playerColor[i] = c_fuchsia;
     global.playerName[i] = 0;
+    
+    global.playerAbility[i] = 0;
     
     global.playerPartA[i] = ds_list_create();
     global.playerPartB[i] = ds_list_create();
@@ -43,8 +46,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>988</w>
-    <h>618</h>
+    <w>1004</w>
+    <h>610</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>

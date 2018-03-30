@@ -32,6 +32,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
     m_playerScore[i] = 0;
+    m_abilityDrawValue[i] = 0;
 }
 
 m_sfxList = ds_list_create();
@@ -179,6 +180,37 @@ for (i = 0; i &lt; ds_list_size(m_sfxList); i++)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Give players ability timer shit euhh
+
+for (i = 0; i &lt; global.playerAmount; i++)
+{
+   if(instance_exists(m_playerArray[i]))
+   {
+        global.playerAbility[i] += 0.01;
+   }
+    
+   m_abilityDrawValue[i] = lerp(m_abilityDrawValue[i], global.playerAbility[i], 0.3);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="6" enumb="61">
       <action>
@@ -302,8 +334,11 @@ for (i = 0; i &lt; pAmount; i++)
     draw_sprite_part_ext(head_sprite(global.playerHead[i]), 0, 8, 8, 24, 24, xP - 64, yP,
     4, 4, c_white, 1);
     
-    // Draw upgrade healthbar
-    draw_healthbar(xP - 96, yP ,xP - 80, yP + (24*4), 76, c_black, playerCol, playerCol, 3, true, true)
+    // Draw ability healthbar
+    var hbCol
+    if(m_abilityDrawValue[i] &lt; 100) { hbCol = playerCol; }
+    else { hbCol = c_white; }
+    draw_healthbar(xP - 96, yP ,xP - 80, yP + (24*4), m_abilityDrawValue[i], c_black, hbCol, hbCol, 3, true, true)
     
     
     // Draw player name

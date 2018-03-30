@@ -70,6 +70,9 @@
         <sprite>sprites\spr_leg1</sprite>
         <sprite>sprites\spr_leg2</sprite>
         <sprite>sprites\spr_leg3</sprite>
+        <sprite>sprites\spr_leg4</sprite>
+        <sprite>sprites\spr_leg5</sprite>
+        <sprite>sprites\spr_leg6</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">

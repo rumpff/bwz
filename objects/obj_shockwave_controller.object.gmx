@@ -3,12 +3,12 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-3</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="3" enumb="0">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,23 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//image_angle = point_direction(0, 0, m_xSpeed, m_ySpeed);
+            <string>
+//get shader uniforms and sampler index
+one_div_screen_res = shader_get_uniform(shader_shockwave,"one_div_screen_res");
+screen_pos = shader_get_uniform(shader_shockwave,"screen_pos");
+shock_magnitude = shader_get_uniform(shader_shockwave,"shock_magnitude");
+sampler = shader_get_sampler_index(shader_shockwave,"tex_back");
 
-m_ySpeed += (0.8 * global.timeScale);
+//surface that will hold copy of the application surface
+surf = -1;
 
-x += (m_xSpeed * global.timeScale);
-y += (m_ySpeed * global.timeScale);
+//set off some shockwaves (for demonstration)
+alarm[0] = 60;
 
-if(y &gt; room_height)
-{
-    instance_destroy();
-}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="10">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,65 +60,20 @@ if(y &gt; room_height)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Obtain sprites
-
-switch(m_spriteId)
+            <string>//create shockwaves at random positions within the screen
+with instance_create(mouse_x, mouse_y, obj_shockwave)
 {
-    case 0:
-        sprite_index = ds_list_find_value(global.playerPartA[m_id], floor(m_angle));
-        break;
-        
-    case 1:
-        sprite_index = ds_list_find_value(global.playerPartB[m_id], floor(m_angle));
-        break;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Assign speed
-
-var angl
-
-if(m_spriteId = 0)
-{
-    angl = m_angle + 90;
-}
-if(m_spriteId = 1)
-{
-     angl = m_angle - 90;
+    //set magnitude of displacement (could also use shock_magnitude to alter how quickly the shockwave fades)
+    shock_magnitude = random_range(20,80);
 }
 
-m_xSpeed = lengthdir_x(sped, angl);
-m_ySpeed = lengthdir_y(sped, angl);
-
-
-if(m_angle &gt; 270)
-{
-    m_ySpeed *= -1;
-}
+alarm[0] = 60;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -133,7 +90,51 @@ if(m_angle &gt; 270)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>//create surface to copy application_surface to
+if !surface_exists(surf) { surf = surface_create(view_wport[0],view_hport[0]); }
+
+//if there are any shockwaves
+if ( instance_number(obj_shockwave) &gt; 0)
+{
+    //copy application surface and get its texture
+    surface_copy(surf, 0, 0, application_surface);
+    var texture = surface_get_texture(surf);
+    
+    //set shader
+    shader_set(shader_shockwave);
+    
+    //get size of view and divide it into one (must be recomputed if size of view changes).
+    var i_view_w = 1/view_wview[0];
+    var i_view_h = 1/view_hview[0];
+    
+    //set shader uniforms and set texture stage
+    shader_set_uniform_f(one_div_screen_res,i_view_w,i_view_h);
+    shader_set_uniform_f(screen_pos,view_xview[0],view_yview[0]);
+    texture_set_stage(sampler,texture);
+    
+    //draw each shockwave
+    with (obj_shockwave) 
+    { 
+        shader_set_uniform_f(other.shock_magnitude,shock_magnitude);
+        draw_sprite_ext(spr_shockwave,0,x,y,image_xscale,image_yscale,0,c_white,image_alpha); 
+    }
+    
+    //reset shader
+    shader_reset();
+}
+
+
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
 </string>
           </argument>
         </arguments>

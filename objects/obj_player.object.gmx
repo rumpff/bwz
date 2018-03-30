@@ -117,9 +117,9 @@ m_keyJumpHeld = (m_rTrigger &gt; m_controllerDeadzone);
           <argument>
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
-if (m_playerId == 0)
+if (m_playerId == 1)
 {
-   if(!gamepad_is_connected(0))
+   if(!gamepad_is_connected(1))
    {
       m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
       m_keyJump = keyboard_check_pressed(vk_up);
@@ -866,6 +866,74 @@ m_legLY = m_legBY + lengthdir_y(8, m_bodyAngle);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Save positions for the trail
+
+// Insert the new values
+m_imageDirectionT[0] = m_imageDirection;
+
+// Left leg
+m_legRXT[0] = m_legRX;
+m_legRYT[0] = m_legRY;
+m_legLYOffT[0] = m_legLYOff;
+m_legRAT[0] = m_legRA;
+
+// Right leg
+m_legLXT[0] = m_legLX;
+m_legLYT[0] = m_legLY;
+m_legRYOffT[0] = m_legRYOff;
+m_legLAT[0] = m_legLA;
+
+// Body
+m_xT[0] = x;
+m_yT[0] = y;
+m_bodyOffsetYT[0] = m_bodyOffsetY;
+m_bodyLandOffsetT[0] = m_bodyLandOffset;
+m_bodyAngleT[0] = m_bodyAngle;
+
+// Shift the values
+for (i = m_trailArrayLength; i &gt; 0; i--)
+{
+    m_imageDirectionT[i] = m_imageDirectionT[i-1];
+    
+    // Left leg
+    m_legRXT[i] = m_legRXT[i-1];
+    m_legRYT[i] = m_legRYT[i-1];
+    m_legLYOffT[i] = m_legLYOffT[i-1];
+    m_legRAT[i] = m_legRAT[i-1];
+    
+    // Right leg
+    m_legLXT[i] = m_legLXT[i-1];
+    m_legLYT[i] = m_legLYT[i-1];
+    m_legRYOffT[i] = m_legRYOffT[i-1];
+    m_legLAT[i] = m_legLAT[i-1];
+    
+    // Body
+    m_xT[i] = m_xT[i-1];
+    m_yT[i] = m_yT[i-1];
+    m_bodyOffsetYT[i] = m_bodyOffsetYT[i-1];
+    m_bodyLandOffsetT[i] = m_bodyLandOffsetT[i-1];
+    m_bodyAngleT[i] = m_bodyAngleT[i-1];
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -905,6 +973,8 @@ m_legLY = m_legBY + lengthdir_y(8, m_bodyAngle);
           <argument>
             <kind>1</kind>
             <string>/// Initialize variables
+
+//m_playerId
 
 // Player's states
 m_playerState = m_playerStates.normal;
@@ -1041,6 +1111,33 @@ m_hatBY = 0;
 
 m_hatX = 0;
 m_hatY = 0;
+
+// Arrays for the trail
+m_trailArrayLength = 10;
+
+for (i = 0; i &lt; m_trailArrayLength; i++)
+{
+    m_imageDirectionT[i] = 0;
+    
+    // Left leg
+    m_legRXT[i] = 0;
+    m_legRYT[i] = 0;
+    m_legLYOffT[i] = 0;
+    m_legRAT[i] = 0;
+    
+    // Right leg
+    m_legLXT[i] = 0;
+    m_legLYT[i] = 0;
+    m_legRYOffT[i] = 0;
+    m_legLAT[i] = 0;
+    
+    // Body
+    m_xT[i] = 0;
+    m_yT[i] = 0;
+    m_bodyOffsetYT[i] = 0;
+    m_bodyLandOffsetT[i] = 0;
+    m_bodyAngleT[i] = 0;
+}
 
 // Controller
 m_controllerId = 0;
@@ -1239,9 +1336,47 @@ draw_text_debug(28, "bodyLandOffset: " + string(m_bodyLandOffset));
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Draw the player trail
+
+var col =  global.playerColor[m_playerId]
+
+for (i = m_trailArrayLength-1; i &gt;= 0; i -= 1)
+{
+    // Left leg
+    draw_sprite_ext(m_legSprite, 0, m_legRXT[i], m_legRYT[i] + m_legLYOffT[i], 
+    m_imageDirection, 1, m_legRA, col, 0.5);
+    
+    // Right leg
+    draw_sprite_ext(m_legSprite, 0, m_legLXT[i], m_legLYT[i] + m_legRYOffT[i], 
+        m_imageDirectionT[i], 1, m_legLAT[i], col, 0.5);
+    
+    // Draw the body
+    draw_sprite_ext(m_headSprite, 0, m_xT[i], m_yT[i] + m_bodyOffsetYT[i] + m_bodyLandOffsetT[i],
+        m_imageDirectionT[i], 1, m_bodyAngleT[i], col, 0.5);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Draw the player
 
-draw_player_outline(m_playerId, 1)
+//draw_player_outline(m_playerId, 1)
 
 // Draw the player
 // Left leg

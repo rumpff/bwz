@@ -18,6 +18,7 @@ obj_gameManager.m_playerDeathTimers[player.m_playerId] = global.deathCooldown;
 if(killerId != player.m_playerId && killerId != -1)
 {
     obj_gameManager.m_playerScore[killerId] += 1;
+    global.playerAbility[killerId] += 10;
     
     with(instance_create(x, y, obj_scoreEffect))
     {
