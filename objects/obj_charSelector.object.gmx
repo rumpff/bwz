@@ -352,7 +352,7 @@ if(m_currentState == 2)
             break;
             
         case 1:
-            m_charSelectPos = lerp(m_charSelectPos, y, 1);
+            m_charSelectPos = lerp(m_charSelectPos, y + (h/6), 1);
             m_charSelectNormal = true;
             break;
         
@@ -1232,16 +1232,16 @@ if(m_currentState == 2)
     
     // Draw the hat
     if(m_currentHat+1 &lt; sprite_get_number(spr_hats))
-    { draw_sprite_ext(spr_hats, m_currentHat+1, x + (64 * m_hatThumbOffset) + m_hatXOffset, y, 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
+    { draw_sprite_ext(spr_hats, m_currentHat+1, x + (64 * m_hatThumbOffset) + m_hatXOffset, y + (h/6), 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
     if(m_currentHat-1 &gt;= 0)
-    { draw_sprite_ext(spr_hats, m_currentHat-1, x - (64 * m_hatThumbOffset) + m_hatXOffset, y, 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
+    { draw_sprite_ext(spr_hats, m_currentHat-1, x - (64 * m_hatThumbOffset) + m_hatXOffset, y + (h/6), 1 * m_hatThumbOffset, 1 * m_hatThumbOffset, 0, c_white, 0.5); }
     
     if(m_currentHat+2 &lt; sprite_get_number(spr_hats))
-    { draw_sprite_ext(spr_hats, m_currentHat+2, x + (96 * m_hatThumbOffset) + m_hatXOffset, y, 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
+    { draw_sprite_ext(spr_hats, m_currentHat+2, x + (96 * m_hatThumbOffset) + m_hatXOffset, y + (h/6), 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
     if(m_currentHat-2 &gt;= 0)
-    { draw_sprite_ext(spr_hats, m_currentHat-2, x - (96 * m_hatThumbOffset) + m_hatXOffset, y, 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
+    { draw_sprite_ext(spr_hats, m_currentHat-2, x - (96 * m_hatThumbOffset) + m_hatXOffset, y + (h/6), 0.5 * m_hatThumbOffset, 0.5 * m_hatThumbOffset, 0, c_white, 0.5); }
     
-    draw_sprite_ext(spr_hats, m_currentHat, x + m_hatXOffset, y, 2.5, 2.5, 0, c_white, 1);
+    draw_sprite_ext(spr_hats, m_currentHat, x + m_hatXOffset, y + (h/6), 2.5, 2.5, 0, c_white, 1);
     
     
     // Legs
