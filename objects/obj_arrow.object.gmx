@@ -146,9 +146,9 @@ if(!m_wallHit)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Type 2
+            <string>/// Type 3
 
-if(!m_wallHit &amp;&amp; m_arrowType == 2)
+if(!m_wallHit &amp;&amp; m_arrowType == 3)
 {
     m_moveY += (global.grav * global.timeScale);
     

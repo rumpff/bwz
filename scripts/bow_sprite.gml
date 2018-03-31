@@ -9,4 +9,8 @@ switch(argument0)
     case 1:
         return spr_bow2;
         break;
+        
+    case 2:
+        return spr_bow3;
+        break;
 }

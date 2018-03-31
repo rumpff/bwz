@@ -324,7 +324,7 @@ if(m_currentState == 2)
             break;
             
         case 1:
-            m_topText = "Choose your bow";
+            m_topText = "Choose your weapon";
             m_bottomText = "";
             break;
             

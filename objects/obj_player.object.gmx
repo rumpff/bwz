@@ -1350,6 +1350,7 @@ draw_text_debug(26, "bodyAngle: " + string(m_bodyAngle));
 draw_text_debug(27, "timeScale: " + string(global.timeScale));
 draw_text_debug(28, "bodyLandOffset: " + string(m_bodyLandOffset));
 draw_text_debug(29, "playerAbility: " + string(global.playerAbility[0]));
+draw_text_debug(30, "bowAngle: " + string(m_bowAngle));
 
 </string>
           </argument>
@@ -1477,12 +1478,14 @@ draw_player_hat(0, 0, c_white);
 // Calculate string positions
 var x1, y1, x2, y2, x3, y3;
 var height = sprite_get_height(m_spriteBow) / 2 - m_stringPixelOffset;
+var flip = 1
+if(within(m_bowAngle mod 360, 90, 270)) { flip = -1; }
 
-x1 = m_bowX + lengthdir_x(height , m_bowAngle - 90);
-y1 = m_bowY + lengthdir_y(height , m_bowAngle - 90);
+x1 = m_bowX + lengthdir_x(height ,m_bowAngle - 90);
+y1 = m_bowY + lengthdir_y(height ,m_bowAngle - 90);
 
-x2 = m_bowX + lengthdir_x(height , m_bowAngle + 90);
-y2 = m_bowY + lengthdir_y(height , m_bowAngle + 90);
+x2 = m_bowX + lengthdir_x(height ,m_bowAngle + 90);
+y2 = m_bowY + lengthdir_y(height ,m_bowAngle + 90);
 
 x3 = m_bowX + lengthdir_x(m_stringDistance, m_bowAngle + 180);
 y3 = m_bowY + lengthdir_y(m_stringDistance, m_bowAngle + 180);
@@ -1493,7 +1496,7 @@ draw_set_color(c_white);
 middle = draw_bezier(x1, y1, x3, y3, x2, y2);
 
 // Draw the bow sprite
-draw_sprite_ext(m_spriteBow, 0, m_bowX, m_bowY, 1, 1, m_bowAngle, c_white, 1);
+draw_sprite_ext(m_spriteBow, 0, m_bowX, m_bowY, 1, flip, m_bowAngle, c_white, 1);
 
 // Draw a 'fake' arrow, but only if the arrow isn't shot
 if(m_arrowActive)

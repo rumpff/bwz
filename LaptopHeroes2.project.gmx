@@ -8,6 +8,7 @@
     <extension index="1">extensions\Eight-bit chillout Shader</extension>
     <extension index="2">extensions\Highlighting objects</extension>
     <extension index="3">extensions\Split Sprite By Any Line</extension>
+    <extension index="4">extensions\Chromatic Aberration Shader</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Arrow">
@@ -81,6 +82,7 @@
       <sprites name="Bows">
         <sprite>sprites\spr_bow1</sprite>
         <sprite>sprites\spr_bow2</sprite>
+        <sprite>sprites\spr_bow3</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">
@@ -107,8 +109,10 @@
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
-    <background>background\bg_cloudTiles</background>
+    <background>background\ts_cloudTilesBlue</background>
+    <background>background\ts_cloudTilesPink</background>
     <background>background\bg_green</background>
+    <background>background\bg_night</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -178,7 +182,11 @@
     <script>scripts\draw_paralellogram.gml</script>
     <script>scripts\draw_sprite_outlined.gml</script>
     <script>scripts\generate_player_splices.gml</script>
+    <script>scripts\within.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
     <font>fonts\fnt_score</font>
