@@ -57,11 +57,11 @@ else
     {
         x = m_player.x;
         y = m_player.y - 
-        ease_out_back(m_easeTimer, 0, 96, 30);
+        ease_out_back(clamp(m_easeTimer, 0, 30), 0, 96, 30);
         
         m_easeTimer += global.timeScale;
     }
-    if(m_easeTimer &gt; 30)
+    if(m_easeTimer &gt; 45)
     {
         instance_destroy();
     }

@@ -367,7 +367,12 @@ for (i = 0; i &lt; pAmount; i++)
     draw_text_outline(xP-5+42, yP-5, m_playerScore[i], 1, c_black, 50);
        
     // Draw player sprite
-    draw_sprite_part_ext(head_sprite(global.playerHead[i]), 0, 8, 8, 24, 24, xP - 64, yP,
+    
+    var headSprite = head_sprite(global.playerHead[i]);
+    var sprW = sprite_get_width(headSprite);
+    var sprH = sprite_get_height(headSprite)
+    
+    draw_sprite_part_ext(headSprite, 0, 8, 8, 24, 24, xP - 64, yP,
     4, 4, c_white, 1);
     
     // Draw ability healthbar

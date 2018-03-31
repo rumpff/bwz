@@ -68,6 +68,8 @@
         <sprite>sprites\spr_head3</sprite>
         <sprite>sprites\spr_head4</sprite>
         <sprite>sprites\spr_head5</sprite>
+        <sprite>sprites\spr_head6</sprite>
+        <sprite>sprites\spr_head7</sprite>
       </sprites>
       <sprites name="Legs">
         <sprite>sprites\spr_leg1</sprite>
@@ -78,11 +80,13 @@
         <sprite>sprites\spr_leg6</sprite>
         <sprite>sprites\spr_leg7</sprite>
         <sprite>sprites\spr_leg8</sprite>
+        <sprite>sprites\spr_leg9</sprite>
       </sprites>
       <sprites name="Bows">
         <sprite>sprites\spr_bow1</sprite>
         <sprite>sprites\spr_bow2</sprite>
         <sprite>sprites\spr_bow3</sprite>
+        <sprite>sprites\spr_bow4</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">
@@ -91,16 +95,16 @@
       <sprite>sprites\spr_hat3</sprite>
       <sprite>sprites\spr_hat4</sprite>
     </sprites>
-    <sprite>sprites\spr_player</sprite>
-    <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_spwn</sprite>
-    <sprite>sprites\spr_arrowMask</sprite>
     <sprites name="Menu">
       <sprites name="Character Select">
         <sprite>sprites\spr_players</sprite>
         <sprite>sprites\spr_hats</sprite>
       </sprites>
     </sprites>
+    <sprite>sprites\spr_player</sprite>
+    <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_spwn</sprite>
+    <sprite>sprites\spr_arrowMask</sprite>
     <sprite>sprites\msk_player</sprite>
     <sprite>sprites\spr_bloodParticles</sprite>
     <sprite>sprites\spr_outlineTexture</sprite>

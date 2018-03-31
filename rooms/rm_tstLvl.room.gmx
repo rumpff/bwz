@@ -16,8 +16,8 @@
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1004</w>
-    <h>610</h>
+    <w>1936</w>
+    <h>1176</h>
     <showGrid>0</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -26,9 +26,9 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>0</deleteUnderlyingTiles>
-    <page>3</page>
-    <xoffset>-27</xoffset>
-    <yoffset>81</yoffset>
+    <page>0</page>
+    <xoffset>103</xoffset>
+    <yoffset>-1</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="-1" foreground="0" name="bg_night" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -59,7 +59,7 @@
     <instance objName="obj_collider" x="32" y="1728" name="inst_0A25C641" locked="0" code="" scaleX="21" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_collider" x="1120" y="1728" name="inst_9BAB1A32" locked="0" code="" scaleX="22" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_collider" x="768" y="448" name="inst_32566125" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_collider" x="768" y="1184" name="inst_D86BDC05" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_collider" x="736" y="1184" name="inst_D86BDC05" locked="0" code="" scaleX="11" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_collider" x="544" y="704" name="inst_BEF6A396" locked="0" code="" scaleX="1.02999997138977" scaleY="9" colour="4294967295" rotation="0"/>
     <instance objName="obj_collider" x="1248" y="704" name="inst_6D197566" locked="0" code="" scaleX="1.02999997138977" scaleY="9" colour="4294967295" rotation="0"/>
     <instance objName="obj_collider" x="224" y="224" name="inst_B222E3B1" locked="0" code="" scaleX="3" scaleY="8" colour="4294967295" rotation="0"/>
@@ -90,136 +90,7 @@
     <instance objName="obj_spawnLocation" x="272" y="160" name="inst_6A850D89" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_chicken" x="928" y="864" name="inst_681FDEEE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
-  <tiles>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="-32" w="128" h="128" xo="0" yo="0" id="10000003" name="inst_0514805D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="96" y="-32" w="128" h="128" xo="128" yo="0" id="10000004" name="inst_802D062B" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="224" y="-32" w="128" h="128" xo="128" yo="0" id="10000005" name="inst_06C12B21" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="352" y="-32" w="128" h="128" xo="128" yo="0" id="10000006" name="inst_857A2E49" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="480" y="-32" w="128" h="128" xo="128" yo="0" id="10000007" name="inst_9A337DBD" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="608" y="-32" w="128" h="128" xo="128" yo="0" id="10000008" name="inst_5F87ED5C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="736" y="-32" w="128" h="128" xo="128" yo="0" id="10000009" name="inst_05F28347" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="864" y="-32" w="128" h="128" xo="128" yo="0" id="10000010" name="inst_84E48C5F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="992" y="-32" w="128" h="128" xo="128" yo="0" id="10000011" name="inst_BCB3660C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1120" y="-32" w="128" h="128" xo="128" yo="0" id="10000012" name="inst_18F3BBA0" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1248" y="-32" w="128" h="128" xo="128" yo="0" id="10000013" name="inst_CC9CDB42" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1376" y="-32" w="128" h="128" xo="128" yo="0" id="10000014" name="inst_79874785" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1504" y="-32" w="128" h="128" xo="128" yo="0" id="10000015" name="inst_32CFE3F0" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1632" y="-32" w="128" h="128" xo="128" yo="0" id="10000016" name="inst_C5075898" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="-32" w="128" h="128" xo="256" yo="0" id="10000017" name="inst_29E11213" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="96" w="128" h="128" xo="0" yo="128" id="10000018" name="inst_FE1495D5" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="224" w="128" h="128" xo="0" yo="128" id="10000019" name="inst_B293855B" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="352" w="128" h="128" xo="0" yo="128" id="10000020" name="inst_0D47158E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="480" w="128" h="128" xo="0" yo="128" id="10000021" name="inst_7F40576E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="608" w="128" h="128" xo="0" yo="128" id="10000022" name="inst_C9C9A188" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="736" w="128" h="128" xo="0" yo="128" id="10000023" name="inst_F2936837" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="864" w="128" h="128" xo="0" yo="128" id="10000024" name="inst_CF54758D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="992" w="128" h="128" xo="0" yo="128" id="10000025" name="inst_E8B30771" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1120" w="128" h="128" xo="0" yo="128" id="10000026" name="inst_A6992204" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1248" w="128" h="128" xo="0" yo="128" id="10000029" name="inst_D62A8B92" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1376" w="128" h="128" xo="0" yo="128" id="10000030" name="inst_CA2D6275" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1504" w="128" h="128" xo="0" yo="128" id="10000032" name="inst_E228E4BD" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1632" w="128" h="128" xo="0" yo="256" id="10000035" name="inst_E295DD1D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="96" y="1632" w="128" h="128" xo="128" yo="256" id="10000036" name="inst_6AE36E5D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="224" y="1632" w="128" h="128" xo="128" yo="256" id="10000037" name="inst_A68FC40B" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="352" y="1632" w="128" h="128" xo="128" yo="256" id="10000038" name="inst_8BF754C6" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="480" y="1632" w="128" h="128" xo="128" yo="256" id="10000039" name="inst_E5647AF1" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="608" y="1632" w="128" h="128" xo="128" yo="256" id="10000040" name="inst_4C01D4A3" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="736" y="1632" w="128" h="128" xo="128" yo="256" id="10000041" name="inst_F9CDCB82" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="864" y="1632" w="128" h="128" xo="128" yo="256" id="10000042" name="inst_2F0B1217" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="992" y="1632" w="128" h="128" xo="128" yo="256" id="10000043" name="inst_9E951281" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1120" y="1632" w="128" h="128" xo="128" yo="256" id="10000044" name="inst_A59E5B63" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1248" y="1632" w="128" h="128" xo="128" yo="256" id="10000045" name="inst_A321B1CC" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1376" y="1632" w="128" h="128" xo="128" yo="256" id="10000046" name="inst_8382491F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1504" y="1632" w="128" h="128" xo="128" yo="256" id="10000047" name="inst_63E5FC1E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1632" y="1632" w="128" h="128" xo="128" yo="256" id="10000048" name="inst_EC26E5EA" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="1632" w="128" h="128" xo="256" yo="256" id="10000050" name="inst_F78032F3" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="1504" w="128" h="128" xo="256" yo="128" id="10000051" name="inst_AC40E121" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="1376" w="128" h="128" xo="256" yo="128" id="10000052" name="inst_CD30462C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="96" w="128" h="128" xo="256" yo="128" id="10000053" name="inst_48F7928B" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="224" w="128" h="128" xo="256" yo="128" id="10000054" name="inst_4BC5ED7A" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="352" w="128" h="128" xo="256" yo="128" id="10000055" name="inst_8ED2DA9E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="480" w="128" h="128" xo="256" yo="128" id="10000056" name="inst_7EDE00D4" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="608" w="128" h="128" xo="256" yo="128" id="10000057" name="inst_26C60ADE" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="736" w="128" h="128" xo="256" yo="128" id="10000058" name="inst_91E9FA54" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="864" w="128" h="128" xo="256" yo="128" id="10000059" name="inst_2C93EF9C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="992" w="128" h="128" xo="256" yo="128" id="10000060" name="inst_265F9620" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="1120" w="128" h="128" xo="256" yo="128" id="10000061" name="inst_5600D6B0" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="1248" w="128" h="128" xo="256" yo="128" id="10000062" name="inst_A91421DE" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="-160" w="128" h="128" xo="128" yo="128" id="10000064" name="inst_B8CE8BE1" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="96" y="-160" w="128" h="128" xo="128" yo="128" id="10000065" name="inst_FCB70391" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="224" y="-160" w="128" h="128" xo="128" yo="128" id="10000066" name="inst_AC55C287" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="352" y="-160" w="128" h="128" xo="128" yo="128" id="10000067" name="inst_8C6B4670" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="480" y="-160" w="128" h="128" xo="128" yo="128" id="10000068" name="inst_E514F4FD" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="608" y="-160" w="128" h="128" xo="128" yo="128" id="10000069" name="inst_39338C87" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="736" y="-160" w="128" h="128" xo="128" yo="128" id="10000070" name="inst_F0F9C298" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="864" y="-160" w="128" h="128" xo="128" yo="128" id="10000071" name="inst_16AC8195" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="992" y="-160" w="128" h="128" xo="128" yo="128" id="10000072" name="inst_194FFD74" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1120" y="-160" w="128" h="128" xo="128" yo="128" id="10000073" name="inst_3DEFD72F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1248" y="-160" w="128" h="128" xo="128" yo="128" id="10000074" name="inst_C3B78400" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1376" y="-160" w="128" h="128" xo="128" yo="128" id="10000075" name="inst_25E2FAD1" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1504" y="-160" w="128" h="128" xo="128" yo="128" id="10000076" name="inst_7F19B5F8" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1632" y="-160" w="128" h="128" xo="128" yo="128" id="10000077" name="inst_8AD50C3B" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1760" y="-160" w="128" h="128" xo="128" yo="128" id="10000078" name="inst_42B15339" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="-160" w="128" h="128" xo="128" yo="128" id="10000079" name="inst_CC2B55DF" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="-32" w="128" h="128" xo="128" yo="128" id="10000080" name="inst_175C1849" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="96" w="128" h="128" xo="128" yo="128" id="10000081" name="inst_C919CC77" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="224" w="128" h="128" xo="128" yo="128" id="10000083" name="inst_AD128718" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="352" w="128" h="128" xo="128" yo="128" id="10000084" name="inst_281078B5" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="480" w="128" h="128" xo="128" yo="128" id="10000085" name="inst_F22A48D7" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="608" w="128" h="128" xo="128" yo="128" id="10000086" name="inst_802DAF91" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="736" w="128" h="128" xo="128" yo="128" id="10000087" name="inst_14ED6B43" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="864" w="128" h="128" xo="128" yo="128" id="10000088" name="inst_26CEAD0D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="992" w="128" h="128" xo="128" yo="128" id="10000089" name="inst_32633638" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1120" w="128" h="128" xo="128" yo="128" id="10000090" name="inst_C4A4DF45" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1248" w="128" h="128" xo="128" yo="128" id="10000091" name="inst_6CAC3693" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1376" w="128" h="128" xo="128" yo="128" id="10000092" name="inst_3ABF341C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1504" w="128" h="128" xo="128" yo="128" id="10000093" name="inst_84BFCA83" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1632" w="128" h="128" xo="128" yo="128" id="10000094" name="inst_972C39B2" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1888" y="1760" w="128" h="128" xo="128" yo="128" id="10000095" name="inst_D25CA9DB" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1856" y="1760" w="128" h="128" xo="128" yo="128" id="10000096" name="inst_C8E6CBC0" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1728" y="1760" w="128" h="128" xo="128" yo="128" id="10000102" name="inst_DA1670C3" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-32" y="1760" w="128" h="128" xo="128" yo="128" id="10000103" name="inst_C76EA08F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="96" y="1760" w="128" h="128" xo="128" yo="128" id="10000104" name="inst_7303D5DF" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="224" y="1760" w="128" h="128" xo="128" yo="128" id="10000105" name="inst_93AF4F7F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="352" y="1760" w="128" h="128" xo="128" yo="128" id="10000106" name="inst_E37104AF" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="480" y="1760" w="128" h="128" xo="128" yo="128" id="10000110" name="inst_F1BF764A" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="608" y="1760" w="128" h="128" xo="128" yo="128" id="10000111" name="inst_9C79AE1A" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="736" y="1760" w="128" h="128" xo="128" yo="128" id="10000112" name="inst_3505955D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="864" y="1760" w="128" h="128" xo="128" yo="128" id="10000113" name="inst_0448C0E1" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="992" y="1760" w="128" h="128" xo="128" yo="128" id="10000114" name="inst_8002B05C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1120" y="1760" w="128" h="128" xo="128" yo="128" id="10000115" name="inst_6D13554C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1248" y="1760" w="128" h="128" xo="128" yo="128" id="10000116" name="inst_A51FFA0D" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1376" y="1760" w="128" h="128" xo="128" yo="128" id="10000117" name="inst_ABAE051F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1504" y="1760" w="128" h="128" xo="128" yo="128" id="10000118" name="inst_71C47F4A" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="1632" y="1760" w="128" h="128" xo="128" yo="128" id="10000119" name="inst_9AE1AB76" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="-160" w="128" h="128" xo="128" yo="128" id="10000120" name="inst_7FCC30DC" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="-32" w="128" h="128" xo="128" yo="128" id="10000121" name="inst_5D9DE7AB" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="96" w="128" h="128" xo="128" yo="128" id="10000122" name="inst_F9970D5F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="224" w="128" h="128" xo="128" yo="128" id="10000123" name="inst_717E2587" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="352" w="128" h="128" xo="128" yo="128" id="10000124" name="inst_175491AE" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="480" w="128" h="128" xo="128" yo="128" id="10000125" name="inst_F16911A1" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="608" w="128" h="128" xo="128" yo="128" id="10000126" name="inst_C1172956" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="736" w="128" h="128" xo="128" yo="128" id="10000127" name="inst_D87E82EE" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="864" w="128" h="128" xo="128" yo="128" id="10000128" name="inst_B0510F4F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="992" w="128" h="128" xo="128" yo="128" id="10000129" name="inst_B22E7055" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1120" w="128" h="128" xo="128" yo="128" id="10000130" name="inst_A3933F89" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1248" w="128" h="128" xo="128" yo="128" id="10000131" name="inst_6B42E1C8" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1376" w="128" h="128" xo="128" yo="128" id="10000132" name="inst_51E5F141" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1504" w="128" h="128" xo="128" yo="128" id="10000133" name="inst_4886C412" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1632" w="128" h="128" xo="128" yo="128" id="10000134" name="inst_EBBD313C" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1760" w="128" h="128" xo="128" yo="128" id="10000135" name="inst_94D8965E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="-288" w="128" h="128" xo="128" yo="128" id="10000138" name="inst_13080289" depth="-10" locked="0" colour="4294967295" scaleX="17" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="2016" y="-288" w="128" h="128" xo="128" yo="128" id="10000139" name="inst_24F4C9D5" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="18"/>
-    <tile bgName="ts_cloudTilesBlue" x="-160" y="1888" w="128" h="128" xo="128" yo="128" id="10000143" name="inst_EBB6F0AA" depth="-10" locked="0" colour="4294967295" scaleX="18" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-288" y="-288" w="128" h="128" xo="128" yo="128" id="10000144" name="inst_621B822F" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="18"/>
-    <tile bgName="ts_cloudTilesBlue" x="-288" y="-416" w="128" h="128" xo="128" yo="128" id="10000145" name="inst_4E59694B" depth="-10" locked="0" colour="4294967295" scaleX="19" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="2144" y="-416" w="128" h="128" xo="128" yo="128" id="10000146" name="inst_466A6506" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="19"/>
-    <tile bgName="ts_cloudTilesBlue" x="-416" y="-416" w="128" h="128" xo="128" yo="128" id="10000147" name="inst_2F5A0D5A" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="19"/>
-    <tile bgName="ts_cloudTilesBlue" x="-416" y="2016" w="128" h="128" xo="128" yo="128" id="10000148" name="inst_2C54FC1D" depth="-10" locked="0" colour="4294967295" scaleX="20" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="2144" y="2016" w="128" h="128" xo="128" yo="128" id="10000149" name="inst_47A32EFC" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="ts_cloudTilesBlue" x="-1696" y="-416" w="128" h="128" xo="128" yo="128" id="10000151" name="inst_5FC37A33" depth="-10" locked="0" colour="4294967295" scaleX="10" scaleY="20"/>
-    <tile bgName="ts_cloudTilesBlue" x="2272" y="-416" w="128" h="128" xo="128" yo="128" id="10000152" name="inst_1DA186C7" depth="-10" locked="0" colour="4294967295" scaleX="10" scaleY="20"/>
-  </tiles>
+  <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>
   <PhysicsWorldLeft>0</PhysicsWorldLeft>

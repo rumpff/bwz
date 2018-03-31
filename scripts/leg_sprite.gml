@@ -33,4 +33,8 @@ switch(argument0)
     case 7:
         return spr_leg8;
         break;
+        
+    case 8:
+        return spr_leg9;
+        break;
 }

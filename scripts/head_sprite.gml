@@ -17,7 +17,16 @@ switch(argument0)
     case 3:
         return spr_head4;
         break;
+        
     case 4:
         return spr_head5;
+        break;
+        
+    case 5:
+        return spr_head6;
+        break;
+
+    case 6:
+        return spr_head7;
         break;
 }

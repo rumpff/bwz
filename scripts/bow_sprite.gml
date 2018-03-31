@@ -13,4 +13,8 @@ switch(argument0)
     case 2:
         return spr_bow3;
         break;
+        
+    case 3:
+        return spr_bow4;
+        break;
 }
