@@ -883,52 +883,54 @@ m_legLY = m_legBY + lengthdir_y(8, m_bodyAngle);
           <argument>
             <kind>1</kind>
             <string>/// Save positions for the trail
-
-// Insert the new values
-m_imageDirectionT[0] = m_imageDirection;
-
-// Left leg
-m_legRXT[0] = m_legRX;
-m_legRYT[0] = m_legRY;
-m_legLYOffT[0] = m_legLYOff;
-m_legRAT[0] = m_legRA;
-
-// Right leg
-m_legLXT[0] = m_legLX;
-m_legLYT[0] = m_legLY;
-m_legRYOffT[0] = m_legRYOff;
-m_legLAT[0] = m_legLA;
-
-// Body
-m_xT[0] = x;
-m_yT[0] = y;
-m_bodyOffsetYT[0] = m_bodyOffsetY;
-m_bodyLandOffsetT[0] = m_bodyLandOffset;
-m_bodyAngleT[0] = m_bodyAngle;
-
-// Shift the values
-for (i = m_trailArrayLength; i &gt; 0; i--)
+if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
 {
-    m_imageDirectionT[i] = m_imageDirectionT[i-1];
+    // Insert the new values
+    m_imageDirectionT[0] = m_imageDirection;
     
     // Left leg
-    m_legRXT[i] = m_legRXT[i-1];
-    m_legRYT[i] = m_legRYT[i-1];
-    m_legLYOffT[i] = m_legLYOffT[i-1];
-    m_legRAT[i] = m_legRAT[i-1];
+    m_legRXT[0] = m_legRX;
+    m_legRYT[0] = m_legRY;
+    m_legLYOffT[0] = m_legLYOff;
+    m_legRAT[0] = m_legRA;
     
     // Right leg
-    m_legLXT[i] = m_legLXT[i-1];
-    m_legLYT[i] = m_legLYT[i-1];
-    m_legRYOffT[i] = m_legRYOffT[i-1];
-    m_legLAT[i] = m_legLAT[i-1];
+    m_legLXT[0] = m_legLX;
+    m_legLYT[0] = m_legLY;
+    m_legRYOffT[0] = m_legRYOff;
+    m_legLAT[0] = m_legLA;
     
     // Body
-    m_xT[i] = m_xT[i-1];
-    m_yT[i] = m_yT[i-1];
-    m_bodyOffsetYT[i] = m_bodyOffsetYT[i-1];
-    m_bodyLandOffsetT[i] = m_bodyLandOffsetT[i-1];
-    m_bodyAngleT[i] = m_bodyAngleT[i-1];
+    m_xT[0] = x;
+    m_yT[0] = y;
+    m_bodyOffsetYT[0] = m_bodyOffsetY;
+    m_bodyLandOffsetT[0] = m_bodyLandOffset;
+    m_bodyAngleT[0] = m_bodyAngle;
+    
+    // Shift the values
+    for (i = m_trailArrayLength; i &gt; 0; i--)
+    {
+        m_imageDirectionT[i] = m_imageDirectionT[i-1];
+        
+        // Left leg
+        m_legRXT[i] = m_legRXT[i-1];
+        m_legRYT[i] = m_legRYT[i-1];
+        m_legLYOffT[i] = m_legLYOffT[i-1];
+        m_legRAT[i] = m_legRAT[i-1];
+        
+        // Right leg
+        m_legLXT[i] = m_legLXT[i-1];
+        m_legLYT[i] = m_legLYT[i-1];
+        m_legRYOffT[i] = m_legRYOffT[i-1];
+        m_legLAT[i] = m_legLAT[i-1];
+        
+        // Body
+        m_xT[i] = m_xT[i-1];
+        m_yT[i] = m_yT[i-1];
+        m_bodyOffsetYT[i] = m_bodyOffsetYT[i-1];
+        m_bodyLandOffsetT[i] = m_bodyLandOffsetT[i-1];
+        m_bodyAngleT[i] = m_bodyAngleT[i-1];
+    }
 }
 </string>
           </argument>
@@ -1337,22 +1339,24 @@ draw_text_debug(28, "bodyLandOffset: " + string(m_bodyLandOffset));
           <argument>
             <kind>1</kind>
             <string>/// Draw the player trail
-
-var col =  global.playerColor[m_playerId]
-
-for (i = m_trailArrayLength-1; i &gt;= 0; i -= 1)
+if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
 {
-    // Left leg
-    draw_sprite_ext(m_legSprite, 0, m_legRXT[i], m_legRYT[i] + m_legLYOffT[i], 
-    m_imageDirection, 1, m_legRA, col, 0.5);
+    var col =  global.playerColor[m_playerId]
     
-    // Right leg
-    draw_sprite_ext(m_legSprite, 0, m_legLXT[i], m_legLYT[i] + m_legRYOffT[i], 
-        m_imageDirectionT[i], 1, m_legLAT[i], col, 0.5);
-    
-    // Draw the body
-    draw_sprite_ext(m_headSprite, 0, m_xT[i], m_yT[i] + m_bodyOffsetYT[i] + m_bodyLandOffsetT[i],
-        m_imageDirectionT[i], 1, m_bodyAngleT[i], col, 0.5);
+    for (i = m_trailArrayLength-1; i &gt;= 0; i -= 1)
+    {
+        // Left leg
+        draw_sprite_ext(m_legSprite, 0, m_legRXT[i], m_legRYT[i] + m_legLYOffT[i], 
+        m_imageDirection, 1, m_legRA, col, 0.5);
+        
+        // Right leg
+        draw_sprite_ext(m_legSprite, 0, m_legLXT[i], m_legLYT[i] + m_legRYOffT[i], 
+            m_imageDirectionT[i], 1, m_legLAT[i], col, 0.5);
+        
+        // Draw the body
+        draw_sprite_ext(m_headSprite, 0, m_xT[i], m_yT[i] + m_bodyOffsetYT[i] + m_bodyLandOffsetT[i],
+            m_imageDirectionT[i], 1, m_bodyAngleT[i], col, 0.5);
+    }
 }
 </string>
           </argument>

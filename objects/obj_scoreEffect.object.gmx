@@ -59,7 +59,14 @@ m_active = false;
 else
 {
     m_player = obj_gameManager.m_playerArray[m_playerId];
-    if(m_startTimer &lt;= 0 &amp;&amp; !m_active)
+    if(m_startTimer &gt; 0)
+    {
+        m_startTimer -= global.timeScale;
+        
+        x = m_player.x;
+        y = m_player.y;
+    }
+    else if(m_startTimer &lt;= 0 &amp;&amp; !m_active)
     {
         play_sound(snd_score);
         
@@ -80,8 +87,6 @@ else
     {
         instance_destroy();
     }
-    
-    m_startTimer -= global.timeScale;
 }
 </string>
           </argument>
@@ -112,7 +117,8 @@ else
     draw_set_valign(fa_center);
     draw_set_font(fnt_gui);
     
-    draw_text(x, y, "+1")
+    var streak = obj_gameManager.m_playerKillStreak[m_playerId]
+    draw_text_outline(x, y, streak, 2, global.playerColor[m_playerId], 30);
 }
 </string>
           </argument>

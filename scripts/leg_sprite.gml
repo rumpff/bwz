@@ -25,4 +25,12 @@ switch(argument0)
     case 5:
         return spr_leg6;
         break;
+        
+    case 6:
+        return spr_leg7;
+        break;
+        
+    case 7:
+        return spr_leg8;
+        break;
 }

@@ -12,12 +12,15 @@ split_sprite_2 = noone;
 ds_sprites = ds_list_create();
 
 screenshake(100); // Add some screenshake
-obj_gameManager.m_playerDeathTimers[player.m_playerId] = global.deathCooldown;
-
 
 if(killerId != player.m_playerId && killerId != -1)
 {
-    obj_gameManager.m_playerScore[killerId] += 1;
+    var scoreAmount = 1;
+    if(obj_gameManager.m_playerKillStreak[player.m_playerId] > BOUNTY_THRESHOLD) 
+    { scoreAmount = 2; }
+    
+    obj_gameManager.m_playerScore[killerId] += scoreAmount;
+    obj_gameManager.m_playerKillStreak[killerId]++;
     global.playerAbility[killerId] += 10;
     
     with(instance_create(x, y, obj_scoreEffect))
@@ -25,6 +28,9 @@ if(killerId != player.m_playerId && killerId != -1)
        m_playerId = argument1
     }
 }
+
+obj_gameManager.m_playerDeathTimers[player.m_playerId] = global.deathCooldown;
+obj_gameManager.m_playerKillStreak[player.m_playerId] = 0;
 
 gamepad_rumble(argument0.m_playerId, 1, 10);
 

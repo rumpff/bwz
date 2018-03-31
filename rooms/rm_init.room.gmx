@@ -46,8 +46,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1004</w>
-    <h>610</h>
+    <w>1016</w>
+    <h>604</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>

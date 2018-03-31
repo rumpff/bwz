@@ -32,6 +32,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
     m_playerScore[i] = 0;
+    m_playerKillStreak[i] = 0;
     m_abilityDrawValue[i] = 0;
 }
 
