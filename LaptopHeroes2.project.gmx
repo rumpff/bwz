@@ -76,6 +76,10 @@
         <sprite>sprites\spr_leg7</sprite>
         <sprite>sprites\spr_leg8</sprite>
       </sprites>
+      <sprites name="Bows">
+        <sprite>sprites\spr_bow1</sprite>
+        <sprite>sprites\spr_bow2</sprite>
+      </sprites>
     </sprites>
     <sprites name="Hats">
       <sprite>sprites\spr_hat1</sprite>
@@ -86,7 +90,6 @@
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_spwn</sprite>
-    <sprite>sprites\spr_bow</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
     <sprites name="Menu">
       <sprites name="Character Select">
@@ -164,6 +167,7 @@
     <script>scripts\get_hat_height.gml</script>
     <script>scripts\draw_roundrect_width.gml</script>
     <script>scripts\head_sprite.gml</script>
+    <script>scripts\bow_sprite.gml</script>
     <script>scripts\leg_sprite.gml</script>
     <script>scripts\hat_sprite.gml</script>
     <script>scripts\gamepad_rumble.gml</script>

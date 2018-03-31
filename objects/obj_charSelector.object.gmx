@@ -247,6 +247,7 @@ if(m_currentState == 3)
     
     global.playerHead[m_id] = m_currentHead;
     global.playerLeg[m_id] = m_currentLeg;
+    global.playerBow[m_id] = m_currentBow;
     global.playerHat[m_id] = m_currentHat;
     global.playerColor[m_id] = make_color_hsv(m_currentColor, 255, 255);
     global.playerName[m_id] = m_name;
@@ -323,21 +324,26 @@ if(m_currentState == 2)
             break;
             
         case 1:
+            m_topText = "Choose your bow";
+            m_bottomText = "";
+            break;
+            
+        case 2:
             m_topText = "Choose a hat";
             m_bottomText = "";
             break;
         
-        case 2:
-            m_topText = "Pick your head";
+        case 3:
+            m_topText = "Choose your head";
             m_bottomText = "";          
             break;
             
-        case 3:
+        case 4:
             m_topText = "Choose your legs";
             m_bottomText = "";     
             break;
             
-        case 4:
+        case 5:
             m_topText = "";
             m_bottomText = "";
             break;
@@ -352,21 +358,26 @@ if(m_currentState == 2)
             break;
             
         case 1:
+            m_charSelectPos = lerp(m_charSelectPos, y, 1);
+            m_charSelectNormal = true;
+            break;
+            
+        case 2:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/6), 1);
             m_charSelectNormal = true;
             break;
         
-        case 2:
+        case 3:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4), 1);
             m_charSelectNormal = true;          
             break;
             
-        case 3:
+        case 4:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4) + (12*2.5) , 1);
             m_charSelectNormal = true;          
             break;
             
-        case 4:
+        case 5:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/2.5), 1);
             m_charSelectNormal = false;
             break;
@@ -376,14 +387,14 @@ if(m_currentState == 2)
     m_charSROffset = lerp(m_charSROffset, 0, 0.2);
 
     // Set the ready text
-    if(m_charCurrent == 4)
+    if(m_charCurrent == 5)
     {  m_readyText = "READY?"; }
     else { m_readyText = "READY"; }
     
     // Check the inputs    
     if(m_inputSelect)
     {
-        if(m_charCurrent == 4)
+        if(m_charCurrent == 5)
         {
             m_currentState++;
             audio_play_sound(snd_swordSlice, 1, 0);
@@ -406,7 +417,7 @@ if(m_currentState == 2)
     
     if (m_inputDown)
     {
-        if(m_charCurrent &lt; 4)
+        if(m_charCurrent &lt; 5)
         { m_charCurrent++; audio_play_sound(snd_cursorMove, 1, 0); }
     }
     
@@ -425,7 +436,16 @@ if(m_currentState == 2)
                 valid = true;
                 break;
                 
-            case 1:
+           case 1:
+                if (m_currentBow &gt; 0) 
+                { 
+                    m_currentBow--; 
+                    m_bowXOffset -= 16; 
+                    valid = true;
+                }
+                break;
+                
+            case 2:
                 if (m_currentHat &gt; 0) 
                 { 
                     m_currentHat--; 
@@ -434,7 +454,7 @@ if(m_currentState == 2)
                 }
                 break;
                 
-            case 2:
+            case 3:
                 if (m_currentHead &gt; 0) 
                 { 
                     m_currentHead--; 
@@ -443,7 +463,7 @@ if(m_currentState == 2)
                 }
                 break;
                 
-            case 3:
+            case 4:
                 if (m_currentLeg &gt; 0) 
                 { 
                     m_currentLeg--; 
@@ -472,6 +492,15 @@ if(m_currentState == 2)
                 break;
                 
             case 1:
+                if (m_currentBow &lt; BOW_AMOUNT-1) 
+                { 
+                    m_currentBow++; 
+                    m_bowXOffset += 16;
+                    valid = true;
+                }
+                break;
+                
+            case 2:
                 if (m_currentHat &lt; (sprite_get_number(spr_hats) - 1)) 
                 { 
                     m_currentHat++; 
@@ -480,7 +509,7 @@ if(m_currentState == 2)
                 }
                 break;
                 
-            case 2:
+            case 3:
                 if (m_currentHead &lt; HEAD_AMOUNT-1) 
                 { 
                     m_currentHead++; 
@@ -489,7 +518,7 @@ if(m_currentState == 2)
                 }
                 break;
                 
-            case 3:
+            case 4:
                 if (m_currentLeg &lt; LEG_AMOUNT-1) 
                 { 
                     m_currentLeg++; 
@@ -504,10 +533,12 @@ if(m_currentState == 2)
     }
     
     // Lerp thumbs    
-    m_hatThumbOffset = lerp(m_hatThumbOffset, (m_charCurrent == 1), 0.2);
-    m_headThumbOffset = lerp(m_headThumbOffset, (m_charCurrent == 2), 0.2);
-    m_legThumbOffset = lerp(m_legThumbOffset, (m_charCurrent == 3), 0.2);
-            
+    m_bowThumbOffset = lerp(m_bowThumbOffset, (m_charCurrent == 1), 0.2);
+    m_hatThumbOffset = lerp(m_hatThumbOffset, (m_charCurrent == 2), 0.2);
+    m_headThumbOffset = lerp(m_headThumbOffset, (m_charCurrent == 3), 0.2);
+    m_legThumbOffset = lerp(m_legThumbOffset, (m_charCurrent == 4), 0.2);
+     
+    m_bowXOffset = lerp(m_bowXOffset, 0, 0.35);       
     m_hatXOffset = lerp(m_hatXOffset, 0, 0.35);
     m_headXOffset = lerp(m_headXOffset, 0, 0.35);
     m_legXOffset = lerp(m_legXOffset, 0, 0.35);
@@ -986,6 +1017,7 @@ m_maxNameLength = 10;
             <kind>1</kind>
             <string>/// State 2 specifics
 
+m_currentBow = 0;
 m_currentHead = 0;
 m_currentLeg = 0;
 m_currentHat = 0;
@@ -995,15 +1027,16 @@ m_colorAmount = 17;
 for (i = 0; i &lt; m_colorAmount; i++)
 { m_colDist[i] = 0; }
 
-
 m_charCurrent = 0;
 m_charSelectPos = y;
 m_charSelectNormal = true;
 
+m_bowThumbOffset = 0;
 m_headThumbOffset = 0;
 m_legThumbOffset = 0;
 m_hatThumbOffset = 0;
 
+m_bowXOffset = 0;
 m_headXOffset = 0;
 m_legXOffset = 0;
 m_hatXOffset = 0;
@@ -1229,6 +1262,19 @@ if(m_currentState == 2)
     // Right arm
     draw_line(m_RUX1 - offset, m_RUY1, m_RUX2 - offset, m_RUY2);
     draw_line(m_RBX1 - offset, m_RBY1, m_RBX2 - offset, m_RBY2);
+    
+    // Draw the bow
+    if(m_currentBow+1 &lt; BOW_AMOUNT)
+    { draw_sprite_ext(bow_sprite(m_currentBow+1), 0, x + (64 * m_bowThumbOffset) + m_bowXOffset, y, 1 * m_bowThumbOffset, 1 * m_bowThumbOffset, 0, c_white, 0.5); }
+    if(m_currentBow-1 &gt;= 0)
+    { draw_sprite_ext(bow_sprite(m_currentBow-1), 0, x - (64 * m_bowThumbOffset) + m_bowXOffset, y, 1 * m_bowThumbOffset, 1 * m_bowThumbOffset, 0, c_white, 0.5); }
+    
+    if(m_currentBow+2 &lt; BOW_AMOUNT)
+    { draw_sprite_ext(bow_sprite(m_currentBow+2), 0, x + (96 * m_bowThumbOffset) + m_bowXOffset, y, 0.5 * m_bowThumbOffset, 0.5 * m_bowThumbOffset, 0, c_white, 0.5); }
+    if(m_currentBow-2 &gt;= 0)
+    { draw_sprite_ext(bow_sprite(m_currentBow-2), 0, x - (96 * m_bowThumbOffset) + m_bowXOffset, y, 0.5 * m_bowThumbOffset, 0.5 * m_bowThumbOffset, 0, c_white, 0.5); }
+    
+    draw_sprite_ext(bow_sprite(m_currentBow), 0, x + m_bowXOffset, y, 2.5, 2.5, 0, c_white, 1);
     
     // Draw the hat
     if(m_currentHat+1 &lt; sprite_get_number(spr_hats))
