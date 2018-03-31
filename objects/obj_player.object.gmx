@@ -96,6 +96,7 @@ m_buttonYPressed = gamepad_button_check_pressed(m_controllerId, gp_face4);
 
 m_keyJump = (m_rTrigger &gt; m_controllerDeadzone &amp;&amp; !m_keyJumpPrev);
 m_keyJumpHeld = (m_rTrigger &gt; m_controllerDeadzone);
+m_keyAbility = m_buttonXPressed;
 </string>
           </argument>
         </arguments>
@@ -124,6 +125,7 @@ if (m_playerId == 1)
       m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
       m_keyJump = keyboard_check_pressed(vk_up);
       m_keyJumpHeld = keyboard_check(vk_up);
+      m_keyAbility = keyboard_check_pressed(vk_lcontrol);
       
       m_rStickH = (-keyboard_check(ord("A")) + keyboard_check(ord("D")));
       m_rStickV = (-keyboard_check(ord("W")) + keyboard_check(ord("S")));
@@ -519,6 +521,39 @@ y += (m_vsp * global.timeScale);
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Activate ability
+
+if(m_keyAbility)
+{
+    if(obj_gameManager.m_playerAbilityActive[m_playerId] == false)
+    {
+        if(global.playerAbility[m_playerId] == 100)
+        {
+            obj_gameManager.m_playerAbilityActive[m_playerId] = true;
+            play_sound(snd_abilityActivate);
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Control bow
 
 var largStick = max(abs(m_rStickH), abs(m_rStickV))
@@ -599,7 +634,7 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
 {
     if(m_holdTimer &gt; m_holdTimerMax &amp;&amp; m_bowShoot)
     {
-        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_arrowForce, m_playerId, 0);
+        shoot_arrow(m_bowX, m_bowY, m_bowAngle, m_arrowForce, m_playerId);
         m_arrowActive = false;
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;
@@ -1065,6 +1100,7 @@ m_WallSlideSound = 0;
 m_keyJump = false;
 m_keyJumpPrev = false;
 m_keyJumpHeld = false;
+m_keyAbility = false;
 
 // Animation
 m_spriteBody = noone;
@@ -1313,7 +1349,7 @@ draw_text_debug(25, "player y: " + string(y));
 draw_text_debug(26, "bodyAngle: " + string(m_bodyAngle));
 draw_text_debug(27, "timeScale: " + string(global.timeScale));
 draw_text_debug(28, "bodyLandOffset: " + string(m_bodyLandOffset));
-
+draw_text_debug(29, "playerAbility: " + string(global.playerAbility[0]));
 
 </string>
           </argument>
@@ -1385,6 +1421,15 @@ if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
 
 //draw_player_outline(m_playerId, 1)
 
+// make inversed if ability is active
+var invrs = obj_gameManager.m_playerAbilityActive[m_playerId];
+if(invrs)
+{
+    draw_set_blend_mode_ext(bm_inv_dest_colour, bm_zero);
+    draw_rectangle_colour(x-48/2, y-48/2, x+48/2, y+48/2, c_white,c_white,c_white,c_white,false);
+    draw_set_blend_mode(bm_normal); 
+}
+
 // Draw the player
 // Left leg
 draw_sprite_ext(m_legSprite, 0, m_legRX, m_legRY + m_legLYOff, 
@@ -1398,6 +1443,13 @@ draw_sprite_ext(m_legSprite, 0, m_legLX, m_legLY + m_legRYOff,
 draw_sprite_ext(m_headSprite, 0, x, y + m_bodyOffsetY + m_bodyLandOffset,
     m_imageDirection, 1, m_bodyAngle, c_white, 1);
 
+if(invrs)
+{
+    draw_set_blend_mode_ext(bm_inv_dest_colour, bm_zero);
+    draw_rectangle_colour(x-48/2, y-48/2, x+48/2, y+48/2, c_white,c_white,c_white,c_white,false);
+    draw_set_blend_mode(bm_normal);
+}
+    
 // Draw the hat
 draw_player_hat(0, 0, c_white);
 </string>
@@ -1455,48 +1507,6 @@ if(m_arrowActive)
     
     draw_line_width(x1, y1, x2, y2, ARROW_WIDTH);
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw the hat
-/*
-var ypos;
-
-if(m_vsp &gt; 0) { ypos = yprevious; }
-else { ypos = y; }
-
-var xdir = m_imageDirection;
-
-// Calculate the vertical offset
-m_hatBX = x + lengthdir_x(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
-m_hatBY = ypos + lengthdir_y(m_hatHeight - m_bodyOffsetY, m_bodyAngle + 90);
-
-// Add the horizontal offset
-var val = 0;
-if(xdir == 1) { val = 180; }
-
-m_hatX = hatBX + lengthdir_x(8, m_bodyAngle - val);
-m_hatY = hatBY + lengthdir_y(8, m_bodyAngle - val);
-
-draw_sprite_ext(m_spriteHat, 0, hatX, hatY,
-xdir, 1, (12 * xdir) + m_bodyAngle, c_white, 1);
 </string>
           </argument>
         </arguments>

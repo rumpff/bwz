@@ -16,12 +16,13 @@ screenshake(100); // Add some screenshake
 if(killerId != player.m_playerId && killerId != -1)
 {
     var scoreAmount = 1;
+    var abilityAmount = 10;
     if(obj_gameManager.m_playerKillStreak[player.m_playerId] > BOUNTY_THRESHOLD) 
-    { scoreAmount = 2; }
+    { scoreAmount = 2; abilityAmount = 20;}
     
     obj_gameManager.m_playerScore[killerId] += scoreAmount;
     obj_gameManager.m_playerKillStreak[killerId]++;
-    global.playerAbility[killerId] += 10;
+    global.playerAbility[killerId] += abilityAmount;
     
     with(instance_create(x, y, obj_scoreEffect))
     {

@@ -48,6 +48,7 @@
         <sound>sound\snd_uwah4</sound>
       </sounds>
     </sounds>
+    <sound>sound\snd_abilityActivate</sound>
     <sound>sound\snd_score</sound>
   </sounds>
   <sprites name="sprites">

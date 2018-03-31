@@ -31,6 +31,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
 {
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
+    m_playerAbilityActive[i] = false;
     m_playerScore[i] = 0;
     m_playerKillStreak[i] = 0;
     m_abilityDrawValue[i] = 0;
@@ -201,12 +202,23 @@ for (i = 0; i &lt; ds_list_size(m_sfxList); i++)
 
 for (i = 0; i &lt; global.playerAmount; i++)
 {
-   if(instance_exists(m_playerArray[i]))
-   {
+    if(m_playerAbilityActive[i])
+    {
+        global.playerAbility[i] -= 0.1;
+        
+        if(global.playerAbility[i] &lt; 0)
+        {
+            m_playerAbilityActive[i] = false;
+        }
+    }
+    else if(instance_exists(m_playerArray[i]))
+    {
         global.playerAbility[i] += 0.01;
-   }
-    
-   m_abilityDrawValue[i] = lerp(m_abilityDrawValue[i], global.playerAbility[i], 0.3);
+         
+        global.playerAbility[i] = clamp(global.playerAbility[i], 0, 100);
+    }
+     
+    m_abilityDrawValue[i] = lerp(m_abilityDrawValue[i], global.playerAbility[i], 0.3);
 }
 </string>
           </argument>
