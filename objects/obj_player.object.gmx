@@ -1343,6 +1343,8 @@ if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
 {
     var col =  global.playerColor[m_playerId]
     
+    d3d_set_fog(true, col, 0, 0)
+    
     for (i = m_trailArrayLength-1; i &gt;= 0; i -= 1)
     {
         // Left leg
@@ -1357,6 +1359,8 @@ if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
         draw_sprite_ext(m_headSprite, 0, m_xT[i], m_yT[i] + m_bodyOffsetYT[i] + m_bodyLandOffsetT[i],
             m_imageDirectionT[i], 1, m_bodyAngleT[i], col, 0.5);
     }
+    
+    d3d_set_fog(0, 0, 0, 0)
 }
 </string>
           </argument>
