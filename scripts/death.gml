@@ -27,6 +27,7 @@ if(killerId != player.m_playerId && killerId != -1)
     with(instance_create(x, y, obj_scoreEffect))
     {
        m_playerId = argument1
+       event_user(0);
     }
 }
 

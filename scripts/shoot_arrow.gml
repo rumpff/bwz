@@ -1,4 +1,4 @@
-/// shoot_arrow(x, y, angle, force, playerId, arrowType)
+/// shoot_arrow(x, y, angle, force, playerId)
 
 var angle = argument2;
 var force = argument3;
@@ -11,6 +11,19 @@ if(obj_gameManager.m_playerAbilityActive[pId] == true)
 
 xspwn = argument0 - lengthdir_x(ARROW_LENGTH/2, angle);
 yspwn = argument1 - lengthdir_y(ARROW_LENGTH/2, angle);
+
+if(type == 1)
+{
+    arrow = instance_create(xspwn, yspwn, obj_arrow);
+    arrow.m_angle = angle - 10;
+    arrow.m_force = force;
+    arrow.m_id = pId;
+    arrow.m_arrowType = type;
+    with (arrow) 
+    { event_user(0); }
+    
+    angle += 10;
+}
 
 arrow = instance_create(xspwn, yspwn, obj_arrow);
 arrow.m_angle = angle;

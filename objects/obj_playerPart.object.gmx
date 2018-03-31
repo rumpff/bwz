@@ -133,7 +133,23 @@ if(m_angle &gt; 270)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>var invrs = obj_gameManager.m_playerAbilityActive[m_id];
+
+if(invrs)
+{
+    draw_set_blend_mode_ext(bm_inv_dest_colour, bm_zero);
+    draw_rectangle_colour(x-48/2, y-48/2, x+48/2, y+48/2, c_white,c_white,c_white,c_white,false);
+    draw_set_blend_mode(bm_normal); 
+}
+
+draw_self();
+
+if(invrs)
+{
+    draw_set_blend_mode_ext(bm_inv_dest_colour, bm_zero);
+    draw_rectangle_colour(x-48/2, y-48/2, x+48/2, y+48/2, c_white,c_white,c_white,c_white,false);
+    draw_set_blend_mode(bm_normal);
+}
 </string>
           </argument>
         </arguments>

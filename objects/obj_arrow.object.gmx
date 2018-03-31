@@ -146,9 +146,9 @@ if(!m_wallHit)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Type 1
+            <string>/// Type 2
 
-if(!m_wallHit &amp;&amp; m_arrowType == 1)
+if(!m_wallHit &amp;&amp; m_arrowType == 2)
 {
     m_moveY += (global.grav * global.timeScale);
     
@@ -301,12 +301,6 @@ m_wiggle = 0;
 m_wiggleMax = 20;
 
 m_initialCooldown = 2; // Gives the player who shot the arrow x frames of invincibility for that this arrow
-
-m_moveX = lengthdir_x(m_moveSpeed, m_angle);
-m_moveY = lengthdir_y(m_moveSpeed, m_angle);
-
-image_xscale = m_moveSpeed / 100;
-image_yscale = m_moveSpeed / 100;
 </string>
           </argument>
         </arguments>
@@ -329,8 +323,36 @@ image_yscale = m_moveSpeed / 100;
             <kind>1</kind>
             <string>/// Type Specials
 
-// type 1 (bounce)
+if(m_arrowType == 1) { m_arrowType = 0; }
+// type 2 (bounce)
 m_bounces = 2;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// calculate movement speeds and such
+
+m_moveX = lengthdir_x(m_moveSpeed, m_angle);
+m_moveY = lengthdir_y(m_moveSpeed, m_angle);
+
+image_xscale = m_moveSpeed / 100;
+image_yscale = m_moveSpeed / 100;
 </string>
           </argument>
         </arguments>
