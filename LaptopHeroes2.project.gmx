@@ -87,6 +87,7 @@
         <sprite>sprites\spr_bow2</sprite>
         <sprite>sprites\spr_bow3</sprite>
         <sprite>sprites\spr_bow4</sprite>
+        <sprite>sprites\spr_bow5</sprite>
       </sprites>
     </sprites>
     <sprites name="Hats">
@@ -94,6 +95,7 @@
       <sprite>sprites\spr_hat2</sprite>
       <sprite>sprites\spr_hat3</sprite>
       <sprite>sprites\spr_hat4</sprite>
+      <sprite>sprites\sprite41_stock-vector-pixel-mobile-phone-and-old-phone-152605502</sprite>
     </sprites>
     <sprites name="Menu">
       <sprites name="Character Select">

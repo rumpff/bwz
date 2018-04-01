@@ -49,7 +49,7 @@ m_drawAngle = point_direction(0, 0, m_moveX, m_moveY);
           <argument>
             <kind>1</kind>
             <string>/// Update movement
-if(!m_wallHit &amp;&amp; m_arrowType == 0)
+if(!m_wallHit &amp;&amp; (m_arrowType == 0 || m_arrowType == 1))
 {
     m_moveY += (global.grav * global.timeScale);
     
@@ -323,8 +323,7 @@ m_initialCooldown = 2; // Gives the player who shot the arrow x frames of invinc
             <kind>1</kind>
             <string>/// Type Specials
 
-if(m_arrowType == 1) { m_arrowType = 0; }
-// type 2 (bounce)
+// type 3 (bounce)
 m_bounces = 2;
 </string>
           </argument>
