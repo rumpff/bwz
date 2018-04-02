@@ -319,33 +319,33 @@ if(m_currentState == 2)
     switch(m_charCurrent)
     {
         case 0:
-            m_topText = "Pick a color";
-            m_bottomText = "";
+            m_topText = string_to_array("Pick a color", m_infoTextSize);
+            m_bottomText = string_to_array("", m_infoTextSize);
             break;
             
         case 1:
-            m_topText = "Choose your weapon";
-            m_bottomText = "";
+            m_topText = string_to_array("Choose your weapon", m_infoTextSize);
+            m_bottomText = string_to_array("Ability: " + get_ability(m_currentBow), m_infoTextSize);
             break;
             
         case 2:
-            m_topText = "Choose a hat";
-            m_bottomText = "";
+            m_topText = string_to_array("Choose a hat", m_infoTextSize);
+            m_bottomText = string_to_array("", m_infoTextSize);
             break;
         
         case 3:
-            m_topText = "Choose your head";
-            m_bottomText = "";          
+            m_topText = string_to_array("Choose your head", m_infoTextSize);
+            m_bottomText = string_to_array("", m_infoTextSize);       
             break;
             
         case 4:
-            m_topText = "Choose your legs";
-            m_bottomText = "";     
+            m_topText = string_to_array("Choose your legs", m_infoTextSize);
+            m_bottomText = string_to_array("", m_infoTextSize);  
             break;
             
         case 5:
-            m_topText = "";
-            m_bottomText = "";
+            m_topText = string_to_array("", m_infoTextSize);
+            m_bottomText = string_to_array("", m_infoTextSize);
             break;
     }
     
@@ -645,10 +645,12 @@ if(m_currentState == 1)
     else { m_alphabet = string_lower(m_alphabet) }
     
     // set the container to the right size
-    m_contHeight = 600;    
-    if(m_drawHeight &gt; 590)
+ 
+    m_contWidth = 300;   
+    m_contHeight = 350;
+    if(m_drawWidth &gt; m_contWidth - 10)
     {
-        m_contWidth = 300; 
+        m_contHeight = 600; 
     }
     
     // Animate selecor
@@ -656,8 +658,8 @@ if(m_currentState == 1)
     m_selectorAngleOff = lerp(m_selectorAngleOff, 0, 0.17);
     
     // Set the name
-    m_topText = "Enter your name";
-    m_bottomText = "";
+    m_topText = string_to_array("Enter your name", m_infoTextSize);
+    m_bottomText = string_to_array("", m_infoTextSize);
     
     // Set all the positions for the letters
     m_letterBoxX[0] = 0;
@@ -820,8 +822,8 @@ if(m_currentState == 1)
 if(m_currentState == 0)
 {
     // set the box to the right size
-    m_contHeight = 100;
-    m_contWidth = 400;
+    m_contHeight = 150;
+    m_contWidth = 200;
     
     // Check for input
     if (m_inputSelect) // Go to the next state
@@ -831,8 +833,47 @@ if(m_currentState == 0)
         obj_drawRays.m_multiplier += 5;
     } 
     
-    m_topText = "";
-    m_bottomText = "";
+    m_topText = string_to_array("Press A to join!", m_infoTextSize);
+    m_bottomText = string_to_array("", m_infoTextSize);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Animate the text
+
+for (i = 0; i &lt; m_infoTextSize; i++)
+{
+    if(m_topTextDraw[i] != m_topText[i])
+    {
+        m_topTextDraw[i] = m_topText[i];
+        break;
+    }
+}
+
+for (i = 0; i &lt; m_infoTextSize; i++)
+{
+    if(m_bottomTextDraw[i] != m_bottomText[i])
+    {
+        m_bottomTextDraw[i] = m_bottomText[i];
+        break;
+    }
 }
 </string>
           </argument>
@@ -902,8 +943,12 @@ m_containterSin = (m_id / 4);
 
 m_uwahTimer = 0;
 
-m_topText = "top text";
-m_bottomText = "bottom text";
+m_infoTextSize = 32;
+
+m_topText = string_to_array("", m_infoTextSize);
+m_bottomText = string_to_array("", m_infoTextSize);
+m_topTextDraw = string_to_array("", m_infoTextSize);
+m_bottomTextDraw = string_to_array("", m_infoTextSize);
 
 /// Input
 m_controllerId = m_id; // Which controller controlls this selector
@@ -1112,10 +1157,10 @@ draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
 draw_set_halign(fa_center)
 
 draw_set_valign(fa_bottom);
-draw_text(x, y-h, m_topText);
+draw_text(x, y-h-4, array_to_string(m_topTextDraw));
 
 draw_set_valign(fa_top);
-draw_text(x, y+h, m_bottomText);
+draw_text(x, y+h+4, array_to_string(m_bottomTextDraw));
 
 draw_set_valign(fa_center);
 </string>
@@ -1141,12 +1186,19 @@ draw_set_valign(fa_center);
             <string>/// Draw exclusively for state 0
 if(m_currentState == 0)
 {
+    var w = m_drawWidth;
+    var h = m_drawHeight;
+    
+    var sW = sprite_get_width(spr_controller);
+    var sH = sprite_get_height(spr_controller);
+    
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_center);
     draw_set_font(fnt_letters);
     
-    draw_text(x, y, "Press A to join")
+    
+    draw_sprite_ext(spr_controller, 0, x, y, 1, 1, sin(m_sinCounter + (m_id / 4) * 2) * 20, c_white, 1);
 }
 </string>
           </argument>

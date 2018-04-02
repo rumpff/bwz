@@ -115,6 +115,7 @@
     <sprite>sprites\spr_outlineTexture</sprite>
     <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_bloodSplat</sprite>
+    <sprite>sprites\spr_controller</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -197,6 +198,9 @@
     <script>scripts\generate_player_splices.gml</script>
     <script>scripts\within.gml</script>
     <script>scripts\draw_circle_width.gml</script>
+    <script>scripts\string_to_array.gml</script>
+    <script>scripts\array_to_string.gml</script>
+    <script>scripts\get_ability.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>

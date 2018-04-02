@@ -25,10 +25,10 @@
     <showForegrounds>-1</showForegrounds>
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
-    <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
+    <deleteUnderlyingTiles>0</deleteUnderlyingTiles>
     <page>2</page>
-    <xoffset>134</xoffset>
-    <yoffset>1156</yoffset>
+    <xoffset>80</xoffset>
+    <yoffset>404</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="-1" foreground="0" name="bg_cloudSunset" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -88,7 +88,7 @@
   </instances>
   <tiles>
     <tile bgName="bg_sunsetSky" x="-32" y="-32" w="1952" h="1856" xo="0" yo="0" id="10000074" name="inst_94BCE9C9" depth="1000001" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_sun" x="656" y="1312" w="512" h="512" xo="0" yo="0" id="10000002" name="inst_AEB8E7F7" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_sun" x="640" y="1408" w="512" h="512" xo="0" yo="0" id="10000002" name="inst_AEB8E7F7" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="768" y="416" w="32" h="32" xo="32" yo="64" id="10000159" name="inst_208EB1EB" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="736" y="448" w="32" h="32" xo="64" yo="32" id="10000160" name="inst_EC9B128E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="1056" y="448" w="32" h="32" xo="0" yo="32" id="10000161" name="inst_1182CCCA" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -641,6 +641,11 @@
     <tile bgName="ts_cloudTilesSunset" x="-64" y="1248" w="128" h="128" xo="0" yo="128" id="10000086" name="inst_91DCBE14" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="ts_cloudTilesSunset" x="-64" y="1376" w="128" h="128" xo="0" yo="128" id="10000087" name="inst_96AE0095" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="ts_cloudTilesSunset" x="-64" y="448" w="128" h="128" xo="0" yo="128" id="10000088" name="inst_1967AC2B" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="ts_cloudTilesSunset" x="608" y="1824" w="128" h="128" xo="128" yo="128" id="10000744" name="inst_1EE310D7" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="ts_cloudTilesSunset" x="736" y="1824" w="128" h="128" xo="128" yo="128" id="10000745" name="inst_1F64BBF6" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="ts_cloudTilesSunset" x="864" y="1824" w="128" h="128" xo="128" yo="128" id="10000746" name="inst_856AA027" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="ts_cloudTilesSunset" x="992" y="1824" w="128" h="128" xo="128" yo="128" id="10000747" name="inst_5A5DAAE7" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="ts_cloudTilesSunset" x="1120" y="1824" w="128" h="128" xo="128" yo="128" id="10000748" name="inst_352BD875" depth="-50" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>
