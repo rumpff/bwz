@@ -427,14 +427,14 @@ if (m_onGround) // Check if the player is on the ground
             <kind>1</kind>
             <string>/// Warp room borders
 
-if (x &lt; 0)
-    { x += room_width; } 
-if (x &gt; room_width)
-    { x -= room_width; }
-if (y &lt; 0)
-    { y += room_height; }
-if (y &gt; room_height)
-    { y -= room_height; }
+if (x &lt; 0-32)
+    { x += room_width+64; } 
+if (x &gt; room_width+32)
+    { x -= room_width+64; }
+if (y &lt; 0-32)
+    { y += room_height+64; }
+if (y &gt; room_height+32)
+    { y -= room_height+64; }
 </string>
           </argument>
         </arguments>
@@ -638,8 +638,6 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
         m_arrowActive = false;
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;
-        var sound = choose(snd_arrowShoot1, snd_arrowShoot2, snd_arrowShoot3, snd_arrowShoot4);
-        snd = play_sound(sound);
     }
     
     m_holdTimer += global.timeScale;

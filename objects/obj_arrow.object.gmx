@@ -149,14 +149,17 @@ if(!m_wallHit)
             <kind>1</kind>
             <string>/// Warp room borders
 
-if (x &lt; 0)
-    { x += room_width; } 
-if (x &gt; room_width)
-    { x -= room_width; }
-if (y &lt; 0)
-    { y += room_height; }
-if (y &gt; room_height)
-    { y -= room_height; }
+if(!m_warped)
+{
+    if (x &lt; 0)
+        { x += room_width; m_warped = true; } 
+    if (x &gt; room_width)
+        { x -= room_width; m_warped = true; }
+    if (y &lt; 0)
+        { y += room_height; m_warped = true; }
+    if (y &gt; room_height)
+        { y -= room_height; m_warped = true; }
+}
 </string>
           </argument>
         </arguments>
@@ -270,8 +273,19 @@ if(m_arrowType = 5 &amp;&amp; !m_hasTeleported &amp;&amp; m_wallHit)
             dist++;
         }        
         
+        
+        var effec1 = instance_create(player.x, player.y, obj_teleportEffect);
+        effec1.m_type = 0;
+        with(effec1) { event_user(0); }
+        
+        var effec2 = instance_create(xpos, ypos, obj_teleportEffect);
+        effec2.m_type = 1;
+        with(effec2) { event_user(0); }
+        
         player.x = xpos;
         player.y = ypos
+        
+        play_sound(snd_teleport);
     }
     
     m_hasTeleported = true;
@@ -358,6 +372,7 @@ m_wallHit = false;
 m_drawAngle = m_angle;
 m_wiggle = 0;
 m_wiggleMax = 20;
+m_warped = false;
 
 m_initialCooldown = 2; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 </string>

@@ -40,4 +40,8 @@ arrow.m_arrowType = type;
 with (arrow) 
 { event_user(0); }
 
+var sound = choose(snd_arrowShoot1, snd_arrowShoot2, snd_arrowShoot3, snd_arrowShoot4);
+if(type != 0) { sound = snd_arrowShootAbility }
+play_sound(sound);
+
 return arrow;

@@ -9,6 +9,7 @@
     <extension index="2">extensions\Highlighting objects</extension>
     <extension index="3">extensions\Split Sprite By Any Line</extension>
     <extension index="4">extensions\Chromatic Aberration Shader</extension>
+    <extension index="5">extensions\Draw Circle Width</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Arrow">
@@ -23,6 +24,7 @@
         <sound>sound\snd_arrowShoot2</sound>
         <sound>sound\snd_arrowShoot3</sound>
         <sound>sound\snd_arrowShoot4</sound>
+        <sound>sound\snd_arrowShootAbility</sound>
       </sounds>
       <sound>sound\snd_StringStretch</sound>
     </sounds>
@@ -52,6 +54,7 @@
     <sound>sound\snd_abilityActivate</sound>
     <sound>sound\snd_scoreStreak</sound>
     <sound>sound\snd_score</sound>
+    <sound>sound\snd_teleport</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
@@ -115,10 +118,14 @@
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
-    <background>background\ts_cloudTilesBlue</background>
-    <background>background\ts_cloudTilesPink</background>
+    <background>background\ts_cloudTilesSunset</background>
+    <background>background\bg_cloudSunset</background>
+    <background>background\ts_cloudTilesOld</background>
     <background>background\bg_green</background>
     <background>background\bg_night</background>
+    <background>background\bg_sunsetSky</background>
+    <background>background\bg_sun</background>
+    <background>background\tl_platform1</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -189,6 +196,7 @@
     <script>scripts\draw_sprite_outlined.gml</script>
     <script>scripts\generate_player_splices.gml</script>
     <script>scripts\within.gml</script>
+    <script>scripts\draw_circle_width.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>
@@ -215,6 +223,7 @@
     <object>objects\obj_drawRays</object>
     <object>objects\obj_rumble</object>
     <object>objects\obj_chicken</object>
+    <object>objects\obj_teleportEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
