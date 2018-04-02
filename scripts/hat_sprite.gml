@@ -20,4 +20,8 @@ switch(argument0)
     case 4:
         return spr_hat4;
         break;
+        
+    case 5:
+        return spr_hat5;
+        break;
 }

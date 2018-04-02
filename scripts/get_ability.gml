@@ -13,6 +13,10 @@ switch(abID)
         output = "bounce"
         break;
 
+    case 3:
+        output = "EXUPELOSION"
+        break;        
+        
     case 4:
         output = "teleportation"
         break;
