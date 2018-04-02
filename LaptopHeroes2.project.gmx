@@ -55,6 +55,7 @@
     <sound>sound\snd_scoreStreak</sound>
     <sound>sound\snd_score</sound>
     <sound>sound\snd_teleport</sound>
+    <sound>sound\snd_explosion</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
@@ -116,6 +117,7 @@
     <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_bloodSplat</sprite>
     <sprite>sprites\spr_controller</sprite>
+    <sprite>sprites\spr_explosion</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -228,6 +230,7 @@
     <object>objects\obj_rumble</object>
     <object>objects\obj_chicken</object>
     <object>objects\obj_teleportEffect</object>
+    <object>objects\obj_explosion</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

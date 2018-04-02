@@ -73,7 +73,7 @@ if(arrow != -1)
 }
 else
 {
-    // Spawn blood withouy
+    // Spawn blood without
     repeat(parAmount)
     {   
         var bld = instance_create(player.x, player.y, obj_blood);
