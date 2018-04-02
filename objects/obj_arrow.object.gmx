@@ -49,7 +49,8 @@ m_drawAngle = point_direction(0, 0, m_moveX, m_moveY);
           <argument>
             <kind>1</kind>
             <string>/// Update movement
-if(!m_wallHit &amp;&amp; (m_arrowType == 0 || m_arrowType == 1))
+if(!m_wallHit &amp;&amp; 
+    (m_arrowType == 0 || m_arrowType == 1 || m_arrowType == 5))
 {
     m_moveY += (global.grav * global.timeScale);
     
@@ -146,7 +147,37 @@ if(!m_wallHit)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Type 3
+            <string>/// Warp room borders
+
+if (x &lt; 0)
+    { x += room_width; } 
+if (x &gt; room_width)
+    { x -= room_width; }
+if (y &lt; 0)
+    { y += room_height; }
+if (y &gt; room_height)
+    { y -= room_height; }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Type 3 (bounce)
 
 if(!m_wallHit &amp;&amp; m_arrowType == 3)
 {
@@ -207,16 +238,44 @@ if(m_bounces &lt; 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Warp room borders
+            <string>/// Type 5 (teleport)
 
-if (x &lt; 0)
-    { x += room_width; } 
-if (x &gt; room_width)
-    { x -= room_width; }
-if (y &lt; 0)
-    { y += room_height; }
-if (y &gt; room_height)
-    { y -= room_height; }
+if(m_arrowType = 5 &amp;&amp; !m_hasTeleported &amp;&amp; m_wallHit)
+{
+    var player = obj_gameManager.m_playerArray[m_id];
+    
+    if(instance_exists(player))
+    {
+        var xpos = x;
+        var ypos = y;
+        var dist = 0;
+        var collision = true;
+        
+        while(collision)
+        {
+            for(i = 0; i &lt; 8; i++)
+            {
+                var xnew = xpos + lengthdir_x(dist, i * (360 / 8));
+                var ynew = ypos + lengthdir_y(dist, i * (360 / 8));
+                
+                if(!collision_rectangle(xnew-24, ynew-24, xnew+24, ynew+24, obj_collider, false, false))
+                {
+                    xpos = xnew;
+                    ypos = ynew;
+                    collision = false;
+                    break;
+                }
+            }
+            
+            dist++;
+        }        
+        
+        player.x = xpos;
+        player.y = ypos
+    }
+    
+    m_hasTeleported = true;
+}
 </string>
           </argument>
         </arguments>
@@ -325,6 +384,9 @@ m_initialCooldown = 2; // Gives the player who shot the arrow x frames of invinc
 
 // type 3 (bounce)
 m_bounces = 2;
+
+// type 5 (teleport)
+m_hasTeleported = false;
 </string>
           </argument>
         </arguments>

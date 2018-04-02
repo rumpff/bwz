@@ -1151,7 +1151,7 @@ m_hatX = 0;
 m_hatY = 0;
 
 // Arrays for the trail
-m_trailArrayLength = 100;
+m_trailArrayLength = 10;
 
 for (i = 0; i &lt; m_trailArrayLength; i++)
 {
