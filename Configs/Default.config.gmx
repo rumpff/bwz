@@ -692,7 +692,7 @@
       <constant name="ARROW_WIDTH">8</constant>
       <constant name="BODY_OFFSET">8</constant>
       <constant name="BOW_AMOUNT">5</constant>
-      <constant name="HEAD_AMOUNT">7</constant>
+      <constant name="HEAD_AMOUNT">8</constant>
       <constant name="LEG_AMOUNT">9</constant>
       <constant name="BOUNTY_THRESHOLD">3</constant>
     </constants>

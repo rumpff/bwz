@@ -8,6 +8,10 @@ switch(abID)
     case 0:
         output = "triple shot"
         break;
+    
+    case 1:
+        output = "nothing :("
+        break;
 
     case 2:
         output = "bounce"

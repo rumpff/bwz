@@ -16,9 +16,9 @@
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1936</w>
-    <h>1176</h>
-    <showGrid>0</showGrid>
+    <w>1020</w>
+    <h>602</h>
+    <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
     <showBackgrounds>-1</showBackgrounds>
@@ -27,8 +27,8 @@
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>0</deleteUnderlyingTiles>
     <page>2</page>
-    <xoffset>80</xoffset>
-    <yoffset>404</yoffset>
+    <xoffset>-25</xoffset>
+    <yoffset>21</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="-1" foreground="0" name="bg_cloudSunset" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -88,7 +88,7 @@
   </instances>
   <tiles>
     <tile bgName="bg_sunsetSky" x="-32" y="-32" w="1952" h="1856" xo="0" yo="0" id="10000074" name="inst_94BCE9C9" depth="1000001" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="bg_sun" x="640" y="1408" w="512" h="512" xo="0" yo="0" id="10000002" name="inst_AEB8E7F7" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_sun" x="656" y="1408" w="512" h="512" xo="0" yo="0" id="10000002" name="inst_AEB8E7F7" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="768" y="416" w="32" h="32" xo="32" yo="64" id="10000159" name="inst_208EB1EB" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="736" y="448" w="32" h="32" xo="64" yo="32" id="10000160" name="inst_EC9B128E" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="tl_platform1" x="1056" y="448" w="32" h="32" xo="0" yo="32" id="10000161" name="inst_1182CCCA" depth="-10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

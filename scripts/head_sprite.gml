@@ -29,4 +29,8 @@ switch(argument0)
     case 6:
         return spr_head7;
         break;
+        
+    case 7:
+        return spr_head8;
+        break;
 }

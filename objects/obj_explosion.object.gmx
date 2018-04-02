@@ -26,16 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>var playerAmount = array_length_1d(obj_gameManager.m_playerArray);
-    
-for (i = 0; i &lt; playerAmount; i++)
+
+if(image_index &lt; 4)
 {
-    var playerObject = obj_gameManager.m_playerArray[i];
-                
-    //if (collision_line(x, y, xprevious, yprevious, playerObject, false, false))
-    if(place_meeting(x, y, playerObject))
-    {      
-        death(playerObject, m_id, -1); // Kill that sucker
-    }
+    for (i = 0; i &lt; playerAmount; i++)
+    {
+        var playerObject = obj_gameManager.m_playerArray[i];
+                    
+        //if (collision_line(x, y, xprevious, yprevious, playerObject, false, false))
+        if(place_meeting(x, y, playerObject))
+        {      
+            death(playerObject, m_id, -1); // Kill that sucker
+        }
+    }   
 }
 </string>
           </argument>
