@@ -208,6 +208,7 @@ for (i = 0; i &lt; global.playerAmount; i++)
         
         if(global.playerAbility[i] &lt; 0)
         {
+            play_sound(snd_abilityDeactivate);
             m_playerAbilityActive[i] = false;
         }
     }

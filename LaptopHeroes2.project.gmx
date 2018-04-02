@@ -52,6 +52,7 @@
       </sounds>
     </sounds>
     <sound>sound\snd_abilityActivate</sound>
+    <sound>sound\snd_abilityDeactivate</sound>
     <sound>sound\snd_scoreStreak</sound>
     <sound>sound\snd_score</sound>
     <sound>sound\snd_teleport</sound>
