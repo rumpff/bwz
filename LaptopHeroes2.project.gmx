@@ -91,16 +91,16 @@
       </sprites>
     </sprites>
     <sprites name="Hats">
+      <sprite>sprites\spr_hats</sprite>
       <sprite>sprites\spr_hat1</sprite>
       <sprite>sprites\spr_hat2</sprite>
       <sprite>sprites\spr_hat3</sprite>
       <sprite>sprites\spr_hat4</sprite>
-      <sprite>sprites\sprite41_stock-vector-pixel-mobile-phone-and-old-phone-152605502</sprite>
+      <sprite>sprites\spr_hat5</sprite>
     </sprites>
     <sprites name="Menu">
       <sprites name="Character Select">
         <sprite>sprites\spr_players</sprite>
-        <sprite>sprites\spr_hats</sprite>
       </sprites>
     </sprites>
     <sprite>sprites\spr_player</sprite>

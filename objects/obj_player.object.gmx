@@ -1151,7 +1151,7 @@ m_hatX = 0;
 m_hatY = 0;
 
 // Arrays for the trail
-m_trailArrayLength = 10;
+m_trailArrayLength = 100;
 
 for (i = 0; i &lt; m_trailArrayLength; i++)
 {
@@ -1385,7 +1385,7 @@ if(obj_gameManager.m_playerKillStreak[m_playerId] &gt; BOUNTY_THRESHOLD)
     {
         // Left leg
         draw_sprite_ext(m_legSprite, 0, m_legRXT[i], m_legRYT[i] + m_legLYOffT[i], 
-        m_imageDirection, 1, m_legRA, col, 0.5);
+        m_imageDirection, 1, m_legRAT[i], col, 0.5);
         
         // Right leg
         draw_sprite_ext(m_legSprite, 0, m_legLXT[i], m_legLYT[i] + m_legRYOffT[i], 
