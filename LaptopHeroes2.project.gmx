@@ -57,6 +57,7 @@
     <sound>sound\snd_score</sound>
     <sound>sound\snd_teleport</sound>
     <sound>sound\snd_explosion</sound>
+    <sound>sound\snd_spawn</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
@@ -232,6 +233,7 @@
     <object>objects\obj_rumble</object>
     <object>objects\obj_chicken</object>
     <object>objects\obj_teleportEffect</object>
+    <object>objects\obj_spawnEffect</object>
     <object>objects\obj_explosion</object>
   </objects>
   <rooms name="rooms">

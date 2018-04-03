@@ -148,16 +148,16 @@ if(!m_wallHit)
             <kind>1</kind>
             <string>/// Warp room borders
 
-if(!m_warped)
+if(m_warped &lt; 2)
 {
     if (x &lt; 0)
-        { x += room_width; m_warped = true; } 
+        { x += room_width; m_warped++; } 
     if (x &gt; room_width)
-        { x -= room_width; m_warped = true; }
+        { x -= room_width; m_warped++; }
     if (y &lt; 0)
-        { y += room_height; m_warped = true; }
+        { y += room_height; m_warped++; }
     if (y &gt; room_height)
-        { y -= room_height; m_warped = true; }
+        { y -= room_height; m_warped++; }
 }
 </string>
           </argument>
@@ -401,7 +401,7 @@ m_wallHit = false;
 m_drawAngle = m_angle;
 m_wiggle = 0;
 m_wiggleMax = 20;
-m_warped = false;
+m_warped = 0;
 
 m_initialCooldown = 2; // Gives the player who shot the arrow x frames of invincibility for that this arrow
 </string>

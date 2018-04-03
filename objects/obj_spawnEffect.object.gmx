@@ -3,40 +3,11 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-200</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>length = 0;
-rayAmount = 18;
-angle = 0;
-m_multiplier = 1;
-
-x = 0;
-y = room_height;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -54,16 +25,21 @@ y = room_height;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>length = room_width * 1.7;
-angle += (0.6 / 360 * m_multiplier);
+            <string>/// Animate and the rest
+m_timer += global.timeScale;
 
-m_multiplier = lerp(m_multiplier, 1, 0.1);
+if(m_timer &gt; m_duration)
+{
+    instance_destroy();
+}
+
+m_radius = ease_out_expo(m_timer, m_start, m_change, m_duration);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="72">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -80,19 +56,65 @@ m_multiplier = lerp(m_multiplier, 1, 0.1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i = 0; i &lt; rayAmount; i++)
+            <string>//m_id;
+m_start = 0;
+m_change = 1;
+
+m_timer = 0;
+m_duration = 30;
+m_radius = 0;
+
+var sound
+
+switch(m_id)
 {
-    color = make_colour_hsv(i *  (255 / (360 / rayAmount)), 255, 255); // 17
-    draw_set_color(color);
-    
-    x2 = x + cos(i * (pi * 2) / rayAmount + angle) * length;
-    y2 = y + sin(i * (pi * 2) / rayAmount + angle) * length;
-    
-    x3 = x + cos((i + 1) * (pi * 2) / rayAmount + angle) * length;
-    y3 = y + sin((i + 1) * (pi * 2) / rayAmount + angle) * length;
-    
-    draw_triangle(x, y, x2, y2, x3, y3, false);
+    case 0:
+        sound = snd_uwah1;
+        break;  
+        
+    case 1:
+        sound = snd_uwah2;
+        break;
+        
+    case 2:
+        sound = snd_uwah3;
+        break;
+        
+    case 3:
+        sound = snd_uwah4;
+        break; 
 }
+
+play_sound(snd_spawn);
+play_sound(sound);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var color;
+
+color = global.playerColor[m_id]
+
+draw_set_color(color);
+draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 50);
 </string>
           </argument>
         </arguments>

@@ -9,4 +9,8 @@ player.m_playerId = playerNumb;
 with (player) 
 { event_user(0); }
 
+var spwnEffect = instance_create(player.x, player.y, obj_spawnEffect);
+spwnEffect.m_id = argument1;
+with(spwnEffect) { event_user(0); }
+
 return player;
