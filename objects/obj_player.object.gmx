@@ -118,8 +118,8 @@ m_keyAbility = m_buttonXPressed;
           <argument>
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
-/*
-if (m_playerId == 1)
+
+if (m_playerId == 0)
 {
    if(!gamepad_is_connected(1))
    {

@@ -114,7 +114,7 @@ play_sound(sound);
 color = global.playerColor[m_id]
 
 draw_set_color(color);
-draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 50);
+draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 360);
 </string>
           </argument>
         </arguments>

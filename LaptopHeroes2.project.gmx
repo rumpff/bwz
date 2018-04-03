@@ -58,6 +58,7 @@
     <sound>sound\snd_teleport</sound>
     <sound>sound\snd_explosion</sound>
     <sound>sound\snd_spawn</sound>
+    <sound>sound\bgm_game</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Players">
