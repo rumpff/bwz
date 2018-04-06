@@ -482,14 +482,16 @@ image_yscale = m_moveSpeed / 100;
             <kind>1</kind>
             <string>/// Draw the arrow
 
-draw_set_color(c_white);
-
 var wiggleoff = 0; 
 //if(m_wallHit) { wiggleoff = ease_out_elastic(m_wiggle, m_wiggleMax, -m_wiggleMax, m_wiggleMax); }
 
 var x2 = x + lengthdir_x(m_length, m_drawAngle+wiggleoff);
 var y2 = y + lengthdir_y(m_length, m_drawAngle+wiggleoff);
 
+draw_set_color(c_black);
+draw_line_width(x, y, x2, y2, ARROW_WIDTH+2);
+
+draw_set_color(c_white);
 draw_line_width(x, y, x2, y2, ARROW_WIDTH);
 </string>
           </argument>

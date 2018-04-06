@@ -87,6 +87,7 @@ switch(m_id)
 
 play_sound(snd_spawn);
 play_sound(sound);
+screenshake(64);
 </string>
           </argument>
         </arguments>
@@ -114,7 +115,7 @@ play_sound(sound);
 color = global.playerColor[m_id]
 
 draw_set_color(color);
-draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 360);
+draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 64);
 </string>
           </argument>
         </arguments>

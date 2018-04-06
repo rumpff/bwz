@@ -84,3 +84,5 @@ else
 }
 instance_destroy(player);
 play_sound(snd_playerDeath1);
+
+obj_gameManager.m_deathSlowdown = 0;

@@ -43,6 +43,9 @@ m_guiW = 0;
 m_guiH = 0;
 
 m_indicatorAlpha = 0;
+m_deathSlowdown = 99^99;
+
+m_gameTime = 0;
 </string>
           </argument>
         </arguments>
@@ -97,7 +100,32 @@ instance_create(x, y, obj_camera);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>m_bgm = audio_play_sound(bgm_game, 1 ,0);
+            <string>m_bgm = audio_play_sound(bgm_game, 1 , 0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Time timerz
+
+m_gameTime += (delta_time / 1000000);
 </string>
           </argument>
         </arguments>
@@ -246,6 +274,60 @@ for (i = 0; i &lt; global.playerAmount; i++)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Music
+
+if(!audio_is_playing(m_bgm))
+{
+    m_bgm = audio_play_sound(bgm_game, 1 , 0);
+}
+
+audio_sound_pitch(m_bgm, global.timeScale);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Do timescale thingy
+
+var time = clamp(m_deathSlowdown, 0, 80);
+global.timeScale = ease_out_quint(time, 0.01, 0.99, 80);
+
+m_deathSlowdown++;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="6" enumb="61">
       <action>
@@ -340,6 +422,7 @@ draw_set_valign(fa_center);
 draw_set_font(fnt_gui);
 
 //draw_text(m_guiW/2, 20, "Koele kid");
+
 </string>
           </argument>
         </arguments>
@@ -367,15 +450,31 @@ var bH = 128; // box Height
 
 for (i = 0; i &lt; pAmount; i++)
 {
+    var baseAlpha = 1;
     var xP = (m_guiW / pAmount / 2) + (m_guiW / pAmount * i); // X center
     var yP = (m_guiH/2 + m_guiH/3); // Y center
-    var playerCol = global.playerColor[i]
+    var playerCol = global.playerColor[i];
+    
+    // Check if there's a player behind the ui element
+    for (ii = 0; ii &lt; pAmount; ii++)
+    {
+        if(instance_exists(m_playerArray[ii]))
+        {
+            var px = x_to_gui_x(m_playerArray[ii].x);
+            var py = y_to_gui_y(m_playerArray[ii].y);
+            
+            if((px &gt; xP - 96 &amp;&amp; px &lt; xP + 96) &amp;&amp; (py &gt; yP - (24*3) &amp;&amp; py &lt; yP + (24*3)))
+            {
+                baseAlpha = 0.3;
+            }
+        }
+    }
     
     // Draw the box
     draw_set_color(playerCol);
-    draw_set_alpha(0.4);
+    draw_set_alpha(0.4 * baseAlpha);
     draw_rectangle(xP - 64, yP, xP - 64 + (24*4), yP + (24*4), false);
-    draw_set_alpha(1);
+    draw_set_alpha(1 * baseAlpha);
     
     // Draw the score    
     draw_set_halign(fa_left);
@@ -395,7 +494,7 @@ for (i = 0; i &lt; pAmount; i++)
     var sprH = sprite_get_height(headSprite)
     
     draw_sprite_part_ext(headSprite, 0, 8, 8, 24, 24, xP - 64, yP,
-    4, 4, c_white, 1);
+    4, 4, c_white, baseAlpha);
     
     // Draw ability healthbar
     var hbCol
@@ -417,6 +516,8 @@ for (i = 0; i &lt; pAmount; i++)
     
     draw_set_color(c_white); 
     draw_text_outline(xP - 64, yP+(24*3), global.playerName[i], 1, shadowcol, 50);
+    
+    draw_set_alpha(1);
 }
 </string>
           </argument>
@@ -463,6 +564,8 @@ for (i = 0; i &lt; pAmount; i++)
         draw_text(xp, yp - 96, global.playerName[i]);
         draw_triangle(xp - 16, yp - 48, xp + 16, yp - 48, xp, yp - 32, false);
         //draw_sprite_ext(spr_indicator, i, xp, yp, 1, 1, 0, m_playerColor[i], 0.5);
+        
+        draw_set_alpha(1);
     }
 }
 </string>
@@ -485,11 +588,24 @@ for (i = 0; i &lt; pAmount; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw current leader
+            <string>/// Draw time
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-draw_text(540, 5, "texx");
+draw_set_color(c_white);
+
+var timeStr, secStr, milStr;
+
+timeStr = string(m_gameTime div 60);
+if(string_length(timeStr) &lt; 2) { timeStr = "0" + timeStr; }
+
+secStr = string(floor(m_gameTime) mod 60);
+if(string_length(secStr) &lt; 2) { secStr = "0" + secStr; }
+
+milStr = string(floor(frac(m_gameTime) * 100));
+if(string_length(milStr) &lt; 2) { milStr = "0" + milStr; }
+
+draw_text(m_guiW/2, 20, timeStr + ":"  + secStr + ":" + milStr );
 </string>
           </argument>
         </arguments>

@@ -127,7 +127,8 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
           <argument>
             <kind>1</kind>
             <string>/// Get input keyboar
-if(m_id == 0)
+
+if(m_id == 1)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -194,12 +195,14 @@ m_drawHeight = lerp(m_drawHeight, m_contHeight, 0.2) + (sin(m_containterSin) * 2
             <kind>1</kind>
             <string>/// Do tings for all states
 
+/*
 if((m_inputBack) &amp;&amp; (m_currentState &gt; 0))
 {
     m_currentState--;
     audio_play_sound(snd_charReturn, 1, 0);
     obj_drawRays.m_multiplier -= 5;
 }
+*/
 
 m_sinCounter += 0.03;
 m_containterSin -= 0.07;
@@ -243,7 +246,13 @@ if(m_currentState == 3)
     m_contWidth = 250;
     m_contHeight = 125;
 
-    
+    if(m_inputBack)
+    {
+        m_currentState--;
+        audio_play_sound(snd_charReturn, 1, 0);
+        obj_drawRays.m_multiplier -= 5;
+    }
+        
     global.playerHead[m_id] = m_currentHead;
     global.playerLeg[m_id] = m_currentLeg;
     global.playerBow[m_id] = m_currentBow;
@@ -353,32 +362,32 @@ if(m_currentState == 2)
     {
         case 0:
             m_charSelectPos = lerp(m_charSelectPos, y - (h/4), 1);
-            m_charSelectNormal = true;
+            m_charSelectState = 1;
             break;
             
         case 1:
             m_charSelectPos = lerp(m_charSelectPos, y, 1);
-            m_charSelectNormal = true;
+            m_charSelectState = 0;
             break;
             
         case 2:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/6), 1);
-            m_charSelectNormal = true;
+            m_charSelectState = 0;
             break;
         
         case 3:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4), 1);
-            m_charSelectNormal = true;          
+            m_charSelectState = 0;          
             break;
             
         case 4:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/4) + (12*2.5) , 1);
-            m_charSelectNormal = true;          
+            m_charSelectState = 0;          
             break;
             
         case 5:
             m_charSelectPos = lerp(m_charSelectPos, y + (h/2.5), 1);
-            m_charSelectNormal = false;
+            m_charSelectState = 2;
             break;
     }
     
@@ -408,33 +417,29 @@ if(m_currentState == 2)
         }
     }
     
-    if (m_inputUp)
+    if(m_inputBack)
     {
         if(m_charCurrent &gt; 0)
-        { m_charCurrent--; audio_play_sound(snd_cursorMove, 1, 0); }
+        {
+            m_charCurrent--; 
+            var snd = audio_play_sound(snd_sweep, 1, 0);
+            audio_sound_pitch(snd, 1 + (m_charCurrent * 0.1));
+        }
+        else
+        {
+            m_currentState--;
+            audio_play_sound(snd_charReturn, 1, 0);
+            obj_drawRays.m_multiplier -= 5;
+        }
     }
     
-    if (m_inputDown)
-    {
-        if(m_charCurrent &lt; 5)
-        { m_charCurrent++; audio_play_sound(snd_cursorMove, 1, 0); }
-    }
     
     if (m_inputLeft)
     {
         var valid = false;
         
         switch(m_charCurrent)
-        {
-            case 0:
-                if(m_currentColor &gt;= 255)
-                { m_currentColor = 0; }
-                
-                m_currentColor += m_colorAmount;
-
-                valid = true;
-                break;
-                
+        {       
            case 1:
                 if (m_currentBow &gt; 0) 
                 { 
@@ -481,15 +486,7 @@ if(m_currentState == 2)
         var valid = false;
         
         switch(m_charCurrent)
-        {
-            case 0:
-                if(m_currentColor &lt;= 0)
-                { m_currentColor = 255; }
-                
-                m_currentColor -= m_colorAmount;
-                valid = true;
-                break;
-                
+        {       
             case 1:
                 if (m_currentBow &lt; BOW_AMOUNT-1) 
                 { 
@@ -531,6 +528,20 @@ if(m_currentState == 2)
         { m_charSROffset = 16; audio_play_sound(snd_sweep, 1, 0); }
     }
     
+    if(m_charCurrent == 0)
+    {
+        var stickH = gamepad_axis_value(m_controllerId, gp_axislh);
+        var stickV = gamepad_axis_value(m_controllerId, gp_axislv);
+        var angle = point_direction(0, 0, stickH, stickV);
+        
+        if(max(abs(stickH), abs(stickV)) &gt; 0.3)
+        {
+            m_currentColor = floor(angle / 360 * 255);
+        }
+        
+        //m_currentColor += m_colorAmount;
+    }
+    
     // Lerp thumbs    
     m_bowThumbOffset = lerp(m_bowThumbOffset, (m_charCurrent == 1), 0.2);
     m_hatThumbOffset = lerp(m_hatThumbOffset, (m_charCurrent == 2), 0.2);
@@ -544,18 +555,26 @@ if(m_currentState == 2)
     
     
     // Animate the color wheel
-    for (i = 0; i &lt; m_colorAmount; i++)
+    for (i = 0; i &lt; 255; i++)
     { 
         var dest;
         
-        if((m_currentColor / 17) mod (255 / m_colorAmount) == i)
-        { dest = 12; } else { dest = 0; }
+        //if((m_currentColor / 17) mod (255 / m_colorAmount) == i)
+        //{ dest = 12; } else { dest = 0; }
+        
+        dest = abs(angle_difference(m_currentColor/255*360, i/255*360));
+        
+        //dest = clamp(dest, 0, 32 * (m_charCurrent == 0));
+        dest = lerp(0, dest, 2);
+        dest = clamp(dest, 0, m_colorClamp);
+        
+        dest = dest * (m_charCurrent == 0);
         
         m_colDist[i] = lerp(m_colDist[i], dest, 0.4); 
     }
     
     // Set selector cordinates
-    if(m_charSelectNormal)
+    if(m_charSelectState == 0) // normal arrows
     {
         var lerpVal = 0.33;
         
@@ -583,7 +602,36 @@ if(m_currentState == 2)
         m_RBX2 = lerp(m_RBX2, x + 96 + m_charSROffset, lerpVal);
         m_RBY2 = lerp(m_RBY2, m_charSelectPos + 32, lerpVal);
     }
-    else // Selector is on ready
+    else if(m_charSelectState == 1) // Selector is on colorWheel
+    {
+        var lerpVal = 0.33;
+        var angle = m_currentColor / 255 * 360;
+        
+        // Up
+        m_LUX1 = lerp(m_LUX1, x + lengthdir_x(m_cWheelDist, angle-90), lerpVal);
+        m_LUY1 = lerp(m_LUY1, m_charSelectPos + lengthdir_y(m_cWheelDist, angle-90), lerpVal);
+        m_LUX2 = lerp(m_LUX2, x + lengthdir_x(m_cWheelDist, angle - 5), lerpVal);
+        m_LUY2 = lerp(m_LUY2, m_charSelectPos + lengthdir_y(m_cWheelDist, angle - 5), lerpVal);
+        
+        // Left    
+        m_LBX1 = lerp(m_LBX1, x + lengthdir_x(m_cWheelDist, angle-90), lerpVal);
+        m_LBY1 = lerp(m_LBY1, m_charSelectPos + lengthdir_y(m_cWheelDist, angle-90), lerpVal);
+        m_LBX2 = lerp(m_LBX2, x + lengthdir_x(m_cWheelDist, angle+180), lerpVal);
+        m_LBY2 = lerp(m_LBY2, m_charSelectPos + lengthdir_y(m_cWheelDist, angle+180), lerpVal);
+    
+        // Right
+        m_RUX2 = lerp(m_RUX2, x + lengthdir_x(m_cWheelDist, angle+90), lerpVal);
+        m_RUY2 = lerp(m_RUY2, m_charSelectPos + lengthdir_y(m_cWheelDist, angle+90), lerpVal);
+        m_RUX1 = lerp(m_RUX1, x + lengthdir_x(m_cWheelDist, angle + 5), lerpVal);
+        m_RUY1 = lerp(m_RUY1, m_charSelectPos + lengthdir_y(m_cWheelDist, angle + 5), lerpVal);
+        
+        // Bottom 
+        m_RBX1 = lerp(m_RBX1, x + lengthdir_x(m_cWheelDist, angle+90), lerpVal);
+        m_RBY1 = lerp(m_RBY1, m_charSelectPos + lengthdir_y(m_cWheelDist, angle+90), lerpVal);
+        m_RBX2 = lerp(m_RBX2, x + lengthdir_x(m_cWheelDist, angle+180), lerpVal);
+        m_RBY2 = lerp(m_RBY2, m_charSelectPos + lengthdir_y(m_cWheelDist, angle+180), lerpVal);
+    }
+    else if(m_charSelectState == 2) // Selector is on ready
     {
         var lerpVal = 0.33;
         var tWidth = string_width(m_readyText) + 16;
@@ -759,6 +807,23 @@ if(m_currentState == 1)
         }
     }
     
+    if(m_inputBack)
+    {  
+        var nameLength = string_length(m_name);
+        if(nameLength &gt; 0) // Remove a letter 
+        {
+            m_name = string_delete(m_name, nameLength, 1);
+            audio_play_sound(snd_letterRemove, 1, 0);
+            m_selectorAngleOff = -90;
+        }
+        else
+        {
+            m_currentState--;
+            audio_play_sound(snd_charReturn, 1, 0);
+            obj_drawRays.m_multiplier -= 5;
+        }
+    }
+    
     // Move the selection
     var addAmount = 0;
     
@@ -821,8 +886,8 @@ if(m_currentState == 1)
 if(m_currentState == 0)
 {
     // set the box to the right size
-    m_contHeight = 150;
-    m_contWidth = 200;
+    m_contHeight = 170;
+    m_contWidth = 230;
     
     // Check for input
     if (m_inputSelect) // Go to the next state
@@ -1067,13 +1132,15 @@ m_currentLeg = 0;
 m_currentHat = 0;
 m_currentColor = 0;
 
+m_colorClamp = 42;
+
 m_colorAmount = 17;
-for (i = 0; i &lt; m_colorAmount; i++)
+for (i = 0; i &lt; 255; i++)
 { m_colDist[i] = 0; }
 
 m_charCurrent = 0;
 m_charSelectPos = y;
-m_charSelectNormal = true;
+m_charSelectState = 0;
 
 m_bowThumbOffset = 0;
 m_headThumbOffset = 0;
@@ -1086,6 +1153,8 @@ m_legXOffset = 0;
 m_hatXOffset = 0;
 
 m_readyText = "READY"
+
+m_cWheelDist = 32; // Distance from innner circle of the color wheel
 
 // Offset from the selectors xpos
 m_charSLOffset = 0;
@@ -1301,7 +1370,7 @@ if(m_currentState == 2)
     var w = m_drawWidth;
     var h = m_drawHeight;
     var offset = 0
-    if(m_charSelectNormal) { offset = sin(m_sinCounter) * 10; }
+    if(m_charSelectState == 0) { offset = sin(m_sinCounter) * 10; }
         
     // Draw the selector
     draw_set_color(c_white);
@@ -1313,6 +1382,19 @@ if(m_currentState == 2)
     // Right arm
     draw_line(m_RUX1 - offset, m_RUY1, m_RUX2 - offset, m_RUY2);
     draw_line(m_RBX1 - offset, m_RBY1, m_RBX2 - offset, m_RBY2);
+    
+    //if(m_charSelectState == 1) // Selector is on colorWheel
+    {
+        draw_set_color(make_color_hsv(m_currentColor, 255, 255));
+        draw_set_circle_precision(4);
+        
+        draw_circle(x, y - (h/4), 12, false);
+        draw_set_color(c_black)
+        draw_circle(x, y - (h/4), 12, true);
+        
+        // Reset the precision
+        draw_set_circle_precision(24);
+    }
     
     // Draw the bow
     if(m_currentBow+1 &lt; BOW_AMOUNT)
@@ -1378,13 +1460,13 @@ if(m_currentState == 2)
     draw_set_color(make_color_hsv(m_currentColor, 255, 255));
                     
     // Color circle
-    for (i = 0; i &lt; (255 / m_colorAmount); i++)
+    for (i = 0; i &lt; 255; i++) //(255 / m_colorAmount)
     {
-        var colorAmount = (255 / m_colorAmount);
+        var colorAmount = 255; //(255 / m_colorAmount)
         var angleOff = 0;
         
-        var sizeTop = 64 + m_colDist[i];
-        var sizeBottom = 32 + m_colDist[i];
+        var sizeTop = m_cWheelDist + 16 + m_colDist[i] + (16 * (m_charSelectState == 1));
+        var sizeBottom = m_cWheelDist + m_colDist[i];
         
         var x1 = x + lengthdir_x(sizeTop, i * (360 / colorAmount) + angleOff);
         var y1 = y - (h/4) + lengthdir_y(sizeTop, i * (360 / colorAmount) + angleOff);
@@ -1398,11 +1480,12 @@ if(m_currentState == 2)
         var x4 = x + lengthdir_x(sizeBottom, (i+1) * (360 / colorAmount) + angleOff);
         var y4 = y - (h/4) + lengthdir_y(sizeBottom, (i+1) * (360 / colorAmount) + angleOff);
         
-        draw_set_color(make_color_hsv(i * m_colorAmount, 255, 255));        
+        draw_set_color(make_color_hsv(i * m_colorAmount / 17, 255, 255));        
         draw_paralellogram(x1, y1, x2, y2, x3, y3, x4, y4, false);
         
         draw_set_color(c_black);
-        draw_paralellogram(x1, y1, x2, y2, x3, y3, x4, y4, true);
+        draw_line(x1, y1, x2, y2)
+        draw_line(x3, y3, x4, y4);
         
     }
                      
