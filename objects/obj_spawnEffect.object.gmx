@@ -87,7 +87,6 @@ switch(m_id)
 
 play_sound(snd_spawn);
 play_sound(sound);
-screenshake(64);
 </string>
           </argument>
         </arguments>

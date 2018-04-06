@@ -2,9 +2,10 @@
 objArray = argument0;
 playerNumb = argument1;
 
-var randomId = random_range(0, instance_number(obj_spawnLocation))
+var Id;
+Id = random_range(0, array_length_1d(objArray));
 
-player = instance_create(objArray[randomId].x, objArray[randomId].y, obj_player);
+player = instance_create(objArray[Id].x, objArray[Id].y, obj_player);
 player.m_playerId = playerNumb; 
 with (player) 
 { event_user(0); }
@@ -12,5 +13,6 @@ with (player)
 var spwnEffect = instance_create(player.x, player.y, obj_spawnEffect);
 spwnEffect.m_id = argument1;
 with(spwnEffect) { event_user(0); }
+screenshake(64);
 
 return player;

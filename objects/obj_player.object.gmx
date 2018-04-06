@@ -119,7 +119,7 @@ m_keyAbility = m_buttonXPressed;
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
 
-if (m_playerId == 0)
+if (m_playerId == 1)
 {
    if(!gamepad_is_connected(1))
    {
@@ -1316,7 +1316,7 @@ m_hatHeight = get_hat_height(global.playerHead[m_playerId]);
           <argument>
             <kind>1</kind>
             <string>/// Draw debug info
-if (m_playerId != 0)
+//if (m_playerId != 0)
    exit;
 
 draw_text_debug(0, "lStick: h " + string(m_lStickH));

@@ -232,7 +232,6 @@
     <object>objects\obj_scoreEffect</object>
     <object>objects\obj_drawRays</object>
     <object>objects\obj_rumble</object>
-    <object>objects\obj_chicken</object>
     <object>objects\obj_teleportEffect</object>
     <object>objects\obj_spawnEffect</object>
     <object>objects\obj_explosion</object>

@@ -14,7 +14,7 @@
 
 global.deathCooldown = 30;
 global.maxPlayers = 12;
-global.playerAmount = 4;
+global.playerAmount = 3;
 global.grav = 0.8;
 global.timeScale = 1;
 
@@ -36,9 +36,6 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.surfacehole[i] = 0;
     global.surfaceoutline[i] = 0;
 }
-
-
-
 
 room_goto_next();</code>
   <enableViews>0</enableViews>
