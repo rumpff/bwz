@@ -210,6 +210,8 @@
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>
+    <shader type="GLSLES">shaders\shd_stereo3d0_.shader</shader>
+    <shader type="GLSLES">shaders\shd_stereo3d.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
@@ -235,6 +237,7 @@
     <object>objects\obj_teleportEffect</object>
     <object>objects\obj_spawnEffect</object>
     <object>objects\obj_explosion</object>
+    <object>objects\obj_sample_stereo3d</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

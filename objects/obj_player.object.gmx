@@ -50,6 +50,29 @@ m_keyJumpPrev = (m_rTrigger &gt; m_controllerDeadzone);
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Stop if game is paused
+if(obj_gameManager.m_gamePaused)
+    exit;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Get the player's input
 
 // Controller
@@ -119,9 +142,9 @@ m_keyAbility = m_buttonXPressed;
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
 
-if (m_playerId == 1)
+if (m_playerId == 0)
 {
-   if(!gamepad_is_connected(1))
+   if(!gamepad_is_connected(0))
    {
       m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
       m_keyJump = keyboard_check_pressed(vk_up);

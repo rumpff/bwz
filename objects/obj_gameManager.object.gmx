@@ -46,6 +46,9 @@ m_indicatorAlpha = 0;
 m_deathSlowdown = 99^99;
 
 m_gameTime = 0;
+
+m_gamePaused = false;
+m_pauseHost = 0;
 </string>
           </argument>
         </arguments>
@@ -100,7 +103,47 @@ instance_create(x, y, obj_camera);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>m_bgm = audio_play_sound(bgm_game, 1 , 0);
+            <string>/// Start music
+m_bgm = audio_play_sound(bgm_game, 1 , 0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Controll pause
+if(m_gamePaused)
+{
+    global.timeScale = 0;
+    
+    if(keyboard_check_pressed(vk_escape))
+    {
+        m_gamePaused = false;
+    }
+}
+else
+{
+    if(keyboard_check_pressed(vk_escape))
+    {
+        m_gamePaused = true;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -124,8 +167,10 @@ instance_create(x, y, obj_camera);
           <argument>
             <kind>1</kind>
             <string>/// Time timerz
-
-m_gameTime += (delta_time / 1000000);
+if(!m_gamePaused)
+{
+    m_gameTime += (delta_time / 1000000);
+}
 </string>
           </argument>
         </arguments>
@@ -319,11 +364,13 @@ audio_sound_pitch(m_bgm, global.timeScale);
           <argument>
             <kind>1</kind>
             <string>/// Do timescale thingy
-
+if(!m_gamePaused)
+{
 var time = clamp(m_deathSlowdown, 0, 80);
 global.timeScale = ease_out_quint(time, 0.01, 0.99, 80);
 
 m_deathSlowdown++;
+}
 </string>
           </argument>
         </arguments>
@@ -606,6 +653,35 @@ milStr = string(floor(frac(m_gameTime) * 100));
 if(string_length(milStr) &lt; 2) { milStr = "0" + milStr; }
 
 draw_text(m_guiW/2, 20, timeStr + ":"  + secStr + ":" + milStr );
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw paused overlay
+
+if(m_gamePaused)
+{
+    draw_set_color(c_black);
+    draw_set_alpha(0.2);
+    draw_rectangle(0, 0, m_guiW, m_guiH, 0);
+    draw_set_alpha(1);
+}
 </string>
           </argument>
         </arguments>
