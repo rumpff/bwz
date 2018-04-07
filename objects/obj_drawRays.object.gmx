@@ -32,6 +32,9 @@ m_multiplier = 1;
 
 x = 0;
 y = room_height;
+
+if(room == rm_matchResult || room == rm_mainMenu) { x = room_width/2; }
+if(room == rm_mainMenu) {y = room_height/2; }
 </string>
           </argument>
         </arguments>

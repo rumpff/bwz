@@ -51,7 +51,7 @@ m_keyJumpPrev = (m_rTrigger &gt; m_controllerDeadzone);
           <argument>
             <kind>1</kind>
             <string>/// Stop if game is paused
-if(obj_gameManager.m_gamePaused)
+if(obj_gameManager.m_gamePaused || obj_gameManager.m_gameEnd)
     exit;
 </string>
           </argument>

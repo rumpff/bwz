@@ -10,6 +10,7 @@
     <extension index="3">extensions\Split Sprite By Any Line</extension>
     <extension index="4">extensions\Chromatic Aberration Shader</extension>
     <extension index="5">extensions\Draw Circle Width</extension>
+    <extension index="6">extensions\shdStereo3D</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Arrow">
@@ -28,12 +29,7 @@
       </sounds>
       <sound>sound\snd_StringStretch</sound>
     </sounds>
-    <sounds name="Player">
-      <sound>sound\snd_PlayerJump1</sound>
-      <sound>sound\snd_playerDeath1</sound>
-      <sound>sound\snd_PlayerWallslide</sound>
-      <sound>sound\snd_PlayerStep</sound>
-    </sounds>
+    <sound>sound\bgm_game</sound>
     <sounds name="Menu">
       <sounds name="Character Select">
         <sound>sound\snd_cursorMove</sound>
@@ -51,16 +47,44 @@
         <sound>sound\snd_uwah4</sound>
       </sounds>
     </sounds>
+    <sounds name="Player">
+      <sound>sound\snd_PlayerJump1</sound>
+      <sound>sound\snd_playerDeath1</sound>
+      <sound>sound\snd_PlayerWallslide</sound>
+      <sound>sound\snd_PlayerStep</sound>
+    </sounds>
     <sound>sound\snd_abilityActivate</sound>
     <sound>sound\snd_abilityDeactivate</sound>
-    <sound>sound\snd_scoreStreak</sound>
-    <sound>sound\snd_score</sound>
-    <sound>sound\snd_teleport</sound>
     <sound>sound\snd_explosion</sound>
+    <sound>sound\snd_laughing</sound>
+    <sound>sound\snd_rumble</sound>
+    <sound>sound\snd_score</sound>
+    <sound>sound\snd_scoreStreak</sound>
     <sound>sound\snd_spawn</sound>
-    <sound>sound\bgm_game</sound>
+    <sound>sound\snd_teleport</sound>
+    <sound>sound\snd_win1</sound>
+    <sound>sound\snd_win2</sound>
+    <sound>sound\snd_win3</sound>
+    <sound>sound\snd_win4</sound>
+    <sound>sound\snd_win5</sound>
+    <sound>sound\snd_win6</sound>
+    <sound>sound\snd_win7</sound>
   </sounds>
   <sprites name="sprites">
+    <sprites name="Hats">
+      <sprite>sprites\spr_hats</sprite>
+      <sprite>sprites\spr_hat1</sprite>
+      <sprite>sprites\spr_hat2</sprite>
+      <sprite>sprites\spr_hat3</sprite>
+      <sprite>sprites\spr_hat4</sprite>
+      <sprite>sprites\spr_hat5</sprite>
+    </sprites>
+    <sprites name="Menu">
+      <sprites name="Character Select">
+        <sprite>sprites\spr_players</sprite>
+      </sprites>
+    </sprites>
+    <sprite>sprites\msk_player</sprite>
     <sprites name="Players">
       <sprites name="Player1">
         <sprite>sprites\spr_p1_idle</sprite>
@@ -98,30 +122,18 @@
         <sprite>sprites\spr_bow5</sprite>
       </sprites>
     </sprites>
-    <sprites name="Hats">
-      <sprite>sprites\spr_hats</sprite>
-      <sprite>sprites\spr_hat1</sprite>
-      <sprite>sprites\spr_hat2</sprite>
-      <sprite>sprites\spr_hat3</sprite>
-      <sprite>sprites\spr_hat4</sprite>
-      <sprite>sprites\spr_hat5</sprite>
-    </sprites>
-    <sprites name="Menu">
-      <sprites name="Character Select">
-        <sprite>sprites\spr_players</sprite>
-      </sprites>
-    </sprites>
-    <sprite>sprites\spr_player</sprite>
-    <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_spwn</sprite>
     <sprite>sprites\spr_arrowMask</sprite>
-    <sprite>sprites\msk_player</sprite>
     <sprite>sprites\spr_bloodParticles</sprite>
-    <sprite>sprites\spr_outlineTexture</sprite>
-    <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_bloodSplat</sprite>
+    <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_controller</sprite>
     <sprite>sprites\spr_explosion</sprite>
+    <sprite>sprites\spr_outlineTexture</sprite>
+    <sprite>sprites\spr_player</sprite>
+    <sprite>sprites\spr_spwn</sprite>
+    <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_sample_stereo3d</sprite>
+    <sprite>sprites\spr_splash</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -136,6 +148,22 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <script>scripts\array_to_string.gml</script>
+    <script>scripts\bow_sprite.gml</script>
+    <script>scripts\collision_line_multiple.gml</script>
+    <script>scripts\collision_line_point.gml</script>
+    <script>scripts\death.gml</script>
+    <scripts name="Draw player">
+      <script>scripts\draw_player_outline.gml</script>
+      <script>scripts\draw_player_hat.gml</script>
+    </scripts>
+    <script>scripts\draw_bezier.gml</script>
+    <script>scripts\draw_circle_width.gml</script>
+    <script>scripts\draw_paralellogram.gml</script>
+    <script>scripts\draw_roundrect_width.gml</script>
+    <script>scripts\draw_sprite_outlined.gml</script>
+    <script>scripts\draw_text_debug.gml</script>
+    <script>scripts\draw_text_outline.gml</script>
     <scripts name="Easing">
       <script>scripts\ease_in_back.gml</script>
       <script>scripts\ease_in_bounce.gml</script>
@@ -169,49 +197,35 @@
       <script>scripts\ease_out_sine.gml</script>
       <script>scripts\ease_linear.gml</script>
     </scripts>
-    <scripts name="Draw player">
-      <script>scripts\draw_player_outline.gml</script>
-      <script>scripts\draw_player_hat.gml</script>
-    </scripts>
+    <script>scripts\gamepad_rumble.gml</script>
+    <script>scripts\generate_player_splices.gml</script>
+    <script>scripts\get_ability.gml</script>
+    <script>scripts\get_hat_height.gml</script>
+    <script>scripts\hat_sprite.gml</script>
+    <script>scripts\head_sprite.gml</script>
+    <script>scripts\input_timers_active.gml</script>
+    <script>scripts\input_timers_reset.gml</script>
+    <script>scripts\leg_sprite.gml</script>
+    <script>scripts\play_sound.gml</script>
+    <script>scripts\pyth.gml</script>
+    <script>scripts\random_pausetext.gml</script>
+    <script>scripts\screenshake.gml</script>
+    <script>scripts\shoot_arrow.gml</script>
+    <script>scripts\spawn_player.gml</script>
     <scripts name="Split Sprite">
       <script>scripts\sprite_split.gml</script>
       <script>scripts\sprite_split_real_dimensions.gml</script>
     </scripts>
-    <script>scripts\death.gml</script>
-    <script>scripts\collision_line_multiple.gml</script>
-    <script>scripts\draw_text_debug.gml</script>
-    <script>scripts\spawn_player.gml</script>
-    <script>scripts\shoot_arrow.gml</script>
-    <script>scripts\screenshake.gml</script>
-    <script>scripts\draw_bezier.gml</script>
+    <script>scripts\string_to_array.gml</script>
+    <script>scripts\within.gml</script>
     <script>scripts\x_to_gui_x.gml</script>
     <script>scripts\y_to_gui_y.gml</script>
-    <script>scripts\draw_text_outline.gml</script>
-    <script>scripts\input_timers_active.gml</script>
-    <script>scripts\input_timers_reset.gml</script>
-    <script>scripts\pyth.gml</script>
-    <script>scripts\get_hat_height.gml</script>
-    <script>scripts\draw_roundrect_width.gml</script>
-    <script>scripts\head_sprite.gml</script>
-    <script>scripts\bow_sprite.gml</script>
-    <script>scripts\leg_sprite.gml</script>
-    <script>scripts\hat_sprite.gml</script>
-    <script>scripts\gamepad_rumble.gml</script>
-    <script>scripts\play_sound.gml</script>
-    <script>scripts\collision_line_point.gml</script>
-    <script>scripts\draw_paralellogram.gml</script>
-    <script>scripts\draw_sprite_outlined.gml</script>
-    <script>scripts\generate_player_splices.gml</script>
-    <script>scripts\within.gml</script>
-    <script>scripts\draw_circle_width.gml</script>
-    <script>scripts\string_to_array.gml</script>
-    <script>scripts\array_to_string.gml</script>
-    <script>scripts\get_ability.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>
     <shader type="GLSLES">shaders\shd_stereo3d0_.shader</shader>
     <shader type="GLSLES">shaders\shd_stereo3d.shader</shader>
+    <shader type="GLSLES">shaders\shd_stereo3d_new.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
@@ -238,11 +252,17 @@
     <object>objects\obj_spawnEffect</object>
     <object>objects\obj_explosion</object>
     <object>objects\obj_sample_stereo3d</object>
+    <object>objects\obj_matchResult</object>
+    <object>objects\obj_mainMenu</object>
+    <object>objects\obj_sample_stereo3d_new</object>
+    <object>objects\obj_setRoomSize</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
+    <room>rooms\rm_mainMenu</room>
     <room>rooms\rm_charSelect</room>
     <room>rooms\rm_tstLvl</room>
+    <room>rooms\rm_matchResult</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

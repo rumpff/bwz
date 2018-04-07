@@ -686,7 +686,7 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="8">
+    <constants number="9">
       <constant name="ARROW_LENGTH">48</constant>
       <constant name="ARROW_SPEED">46</constant>
       <constant name="ARROW_WIDTH">8</constant>
@@ -695,6 +695,7 @@
       <constant name="HEAD_AMOUNT">8</constant>
       <constant name="LEG_AMOUNT">9</constant>
       <constant name="BOUNTY_THRESHOLD">3</constant>
+      <constant name="SCORE_CAP">3</constant>
     </constants>
   </ConfigConstants>
 </Config>

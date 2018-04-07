@@ -17,7 +17,7 @@ global.maxPlayers = 12;
 global.playerAmount = 3;
 global.grav = 0.8;
 global.timeScale = 1;
-
+global.winner = -1;
 
 for (i = 0; i &lt; global.maxPlayers; i++)
 {
@@ -37,14 +37,16 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.surfaceoutline[i] = 0;
 }
 
+// Set the window
+
 room_goto_next();</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1012</w>
-    <h>606</h>
+    <w>984</w>
+    <h>620</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -53,9 +55,9 @@ room_goto_next();</code>
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>1</page>
-    <xoffset>47</xoffset>
-    <yoffset>142</yoffset>
+    <page>0</page>
+    <xoffset>-88</xoffset>
+    <yoffset>-58</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -77,7 +79,9 @@ room_goto_next();</code>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
-  <instances/>
+  <instances>
+    <instance objName="obj_setRoomSize" x="32" y="64" name="inst_8FB99BFD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+  </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

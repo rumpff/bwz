@@ -22,7 +22,8 @@ if(killerId != player.m_playerId && killerId != -1)
     
     obj_gameManager.m_playerScore[killerId] += scoreAmount;
     obj_gameManager.m_playerKillStreak[killerId]++;
-    global.playerAbility[killerId] += abilityAmount;
+    if(!obj_gameManager.m_playerAbilityActive[killerId])
+    { global.playerAbility[killerId] += abilityAmount; }
     
     with(instance_create(x, y, obj_scoreEffect))
     {
@@ -30,7 +31,10 @@ if(killerId != player.m_playerId && killerId != -1)
        event_user(0);
     }
 }
-
+else if(killerId == player.m_playerId)
+{
+    play_sound(snd_laughing);
+}
 obj_gameManager.m_playerDeathTimers[player.m_playerId] = global.deathCooldown;
 obj_gameManager.m_playerKillStreak[player.m_playerId] = 0;
 
