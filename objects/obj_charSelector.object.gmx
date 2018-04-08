@@ -1294,7 +1294,7 @@ if(m_currentState == 1)
 {
     // Draw the name
     draw_set_color(c_white)
-    draw_text_outline(x, y - m_drawHeight/4, m_name, 6, c_black, 360);
+    draw_text_outline(x, y - m_drawHeight/4, m_name, 6, c_black, 64);
     
     // Draw the selector
     for (i=0; i&lt;4; i+=1)
@@ -1491,7 +1491,7 @@ if(m_currentState == 2)
                      
     // Draw ready
     draw_set_color(make_color_hsv(m_currentColor, 255, 255));
-    draw_text_outline(x, y + (h/2.5), m_readyText, 1, c_black, 20);
+    draw_text_outline(x, y + (h/2.5), m_readyText, 1, c_black, 64);
     
 }
 </string>

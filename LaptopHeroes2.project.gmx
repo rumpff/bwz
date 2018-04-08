@@ -69,6 +69,7 @@
     <sound>sound\snd_win5</sound>
     <sound>sound\snd_win6</sound>
     <sound>sound\snd_win7</sound>
+    <sound>sound\snd_start</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Hats">
