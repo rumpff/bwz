@@ -70,6 +70,7 @@
     <sound>sound\snd_win6</sound>
     <sound>sound\snd_win7</sound>
     <sound>sound\snd_start</sound>
+    <sound>sound\snd_cinImpact</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="Hats">
@@ -257,6 +258,7 @@
     <object>objects\obj_mainMenu</object>
     <object>objects\obj_sample_stereo3d_new</object>
     <object>objects\obj_setRoomSize</object>
+    <object>objects\obj_bountyEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

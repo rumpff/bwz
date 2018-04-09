@@ -35,6 +35,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     m_playerScore[i] = 0;
     m_playerKillStreak[i] = 0;
     m_abilityDrawValue[i] = 0;
+    m_playerBounty[i] = false;
 }
 
 m_sfxList = ds_list_create();
@@ -459,6 +460,43 @@ else // Check if someone won already
             audio_play_sound(snd_rumble, 1, 0);
         }
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update bounty state
+
+for (i = 0; i &lt; global.maxPlayers; i++)
+{
+    if(m_playerKillStreak[i] &gt; BOUNTY_THRESHOLD)
+    {
+        if(m_playerBounty[i] == false)
+        {
+            var effect = instance_create(0, 0, obj_bountyEffect);
+            effect.player = i;
+            with(effect) { event_user(0); }
+        }
+        m_playerBounty[i] = true;
+    }
+    else
+    m_playerBounty[i] = false;
 }
 </string>
           </argument>
