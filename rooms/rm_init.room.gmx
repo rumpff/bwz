@@ -45,8 +45,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>984</w>
-    <h>620</h>
+    <w>1020</w>
+    <h>602</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -55,7 +55,7 @@ room_goto_next();</code>
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>0</page>
+    <page>1</page>
     <xoffset>-88</xoffset>
     <yoffset>-58</yoffset>
   </makerSettings>

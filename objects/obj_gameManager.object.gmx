@@ -50,6 +50,8 @@ m_gameEnd = false;
 m_winner = -1;
 m_endTimer = 0;
 
+m_gameStarted = false;
+m_gameStartTimer = 0;
 m_gamePaused = false;
 m_pauseHost = 0;
 m_pauseText = "";
@@ -73,21 +75,7 @@ m_pauseText = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Create instances
-
-for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
-{
-    m_spawnLocations[i] = instance_find(obj_spawnLocation, i);
-}
-
-
-for (i = 0; i &lt; global.playerAmount; i++)
-{
-    m_playerArray[i] = spawn_player(m_spawnLocations, i);
-}
-
-instance_create(x, y, obj_camera);
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -107,9 +95,7 @@ instance_create(x, y, obj_camera);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Start music
-m_bgm = audio_play_sound(bgm_game, 1 , 0);
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -176,7 +162,7 @@ else
           <argument>
             <kind>1</kind>
             <string>/// Time timerz
-if(!m_gamePaused)
+if(!m_gamePaused &amp;&amp; m_gameStarted)
 {
     m_gameTime += (delta_time / 1000000);
 }
@@ -186,6 +172,77 @@ if(!m_gamePaused)
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update values
+
+m_guiW = display_get_gui_width();
+m_guiH = display_get_gui_height();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start game
+if(m_gameStartTimer &gt; 180 &amp;&amp; !m_gameStarted)
+{
+    // Create instances
+    for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
+    {
+        m_spawnLocations[i] = instance_find(obj_spawnLocation, i);
+    }
+    
+    
+    for (i = 0; i &lt; global.playerAmount; i++)
+    {
+        m_playerArray[i] = spawn_player(m_spawnLocations, i);
+    }
+    
+    instance_create(x, y, obj_camera);
+    
+    // Start music
+    m_bgm = audio_play_sound(bgm_game, 1 , 0);
+    
+    m_gameStarted = true;
+}
+else if(!m_gameStarted)
+{
+    m_gameStartTimer++;
+    exit;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -218,30 +275,6 @@ for (i = 0; i &lt; global.playerAmount; i++)
       }
    }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update values
-
-m_guiW = display_get_gui_width();
-m_guiH = display_get_gui_height();
 </string>
           </argument>
         </arguments>
@@ -403,7 +436,7 @@ if(!m_gamePaused)
             <string>/// Do gameEnded stuff
 if(m_gameEnd)
 {
-    global.timeScale = 0;
+    global.timeScale = 0.05;
     audio_stop_sound(m_bgm);
     screenshake(m_endTimer/6);
     
@@ -496,6 +529,39 @@ else // Check if someone won already
           <argument>
             <kind>1</kind>
             <string>shoot_arrow(mouse_x, mouse_y, 0, 15, 0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set screen to full and shit
+window_set_fullscreen(true);
+
+view_wport[0] = display_get_width();
+view_hport[0] = display_get_height();
+
+view_wview[0] = display_get_width();
+view_hview[0] = display_get_height();
+
+view_xview = (room_width/2 - view_wview/2);
+view_yview = (room_height/2 - view_hview/2);
 </string>
           </argument>
         </arguments>

@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>for (i=0; i&lt;4; i+=1)
 {
-    if(gamepad_button_check(i, gp_start))
+    if(gamepad_button_check(i, gp_start) || keyboard_check(vk_enter))
     {
         audio_play_sound(snd_start, 1, 0);
         room_goto(rm_charSelect);

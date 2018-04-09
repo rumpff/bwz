@@ -368,9 +368,7 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
       {
          m_lerpedStick -= m_wallDir;
          m_vsp = -m_jumpspeed * 1.2;
-      }
-      
-      
+      }      
       
       effect_create_below(ef_smoke, x, y + 16, 1, c_gray);
    }
@@ -547,11 +545,14 @@ y += (m_vsp * global.timeScale);
             <kind>1</kind>
             <string>/// Activate ability
 
-if(m_keyAbility)
+
+if(obj_gameManager.m_playerAbilityActive[m_playerId] == false)
 {
-    if(obj_gameManager.m_playerAbilityActive[m_playerId] == false)
+    if(global.playerAbility[m_playerId] == 100)
     {
-        if(global.playerAbility[m_playerId] == 100)
+        effect_create_below(ef_smokeup, x, y, 0, global.playerColor[m_playerId]);
+        
+        if(m_keyAbility)
         {
             obj_gameManager.m_playerAbilityActive[m_playerId] = true;
             play_sound(snd_abilityActivate);
