@@ -104,14 +104,16 @@ m_drawHeight = lerp(m_drawHeight, m_contHeight, 0.2) + (sin(m_containterSin) * 2
             <kind>1</kind>
             <string>/// Do tings for all states
 
-/*
-if((m_inputBack) &amp;&amp; (m_currentState &gt; 0))
+// Check for input
+if ((m_inputSelect) &amp;&amp; (m_currentState &lt; 2)) // Go to the next state
+{ 
+    m_currentState++; 
+} 
+
+if((m_inputBack) &amp;&amp; (m_currentState &gt; 0)) // Go to the previous state
 {
     m_currentState--;
-    audio_play_sound(snd_charReturn, 1, 0);
-    obj_drawRays.m_multiplier -= 5;
 }
-*/
 
 m_sinCounter += 0.03;
 m_containterSin -= 0.07;
@@ -150,13 +152,63 @@ if(m_currentState == 0)
 {
     // set the box to the right size
     m_contWidth = 330;
-    m_contHeight = 440;
+    m_contHeight = 330;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update for state 1
 
-    // Check for input
-    if (m_inputSelect) // Go to the next state
-    { 
-        m_currentState++; 
-    } 
+if(m_currentState == 1)
+{
+    // set the box to the right size
+    m_contWidth = 330;
+    m_contHeight = 440;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update for state 2
+
+if(m_currentState == 2)
+{
+    // set the box to the right size
+    m_contWidth = 330;
+    m_contHeight = 220;
 }
 </string>
           </argument>
@@ -203,7 +255,7 @@ if(m_currentState == 0)
             <string>/// Initalize variables
 
 //m_id
-m_keybaord = true;
+m_keybaord = false;
 m_currentState = 0; // The current state of the box
 m_ready = false;
 //m_totalAmount // The total amount of this object, used for positioning
@@ -222,6 +274,13 @@ m_controllerId = m_id; // Which controller controlls this selector
 
 m_inputSelect = false;
 m_inputBack = false;
+
+m_place = 0;
+m_placeColor = 0;
+m_placeText = 0;
+m_placeColorLight = 0;
+
+m_noob = "nobody, lol";
 </string>
           </argument>
         </arguments>
@@ -246,6 +305,137 @@ m_inputBack = false;
 
 y = (room_height / 2) + (room_height / 8);
 x = room_width / 4 * (m_controllerId+1) - room_width / 8;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check which placed finished
+var scoreList;
+var pScore = global.playerScore[m_id];
+var sortedList = bubblesort(global.playerScore);
+
+// Check wich id is own score
+for (i = 0; i &lt; global.playerAmount; i++)
+{
+    if(pScore == sortedList[i])
+    {
+        m_place = i + 1;
+        break;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Get colors and place strings
+
+switch(m_place)
+{
+    case 1:
+        m_placeColor = $00d7ff;
+        m_placeText = "1st";
+        break;
+    
+    case 2:
+        m_placeColor = $c0c0c0;
+        m_placeText = "2nd";
+        break;
+        
+    case 3:
+        m_placeColor = $327fcd;
+        m_placeText = "3rd";
+        break;
+        
+    default:
+        m_placeColor = $13458b;
+        m_placeText = string(m_place) + "th";
+        break;
+}
+
+m_placeColorLight = make_color_hsv(
+    color_get_hue(m_placeColor), 
+    color_get_saturation(m_placeColor) * 0.8, 
+    color_get_value(m_placeColor));
+    
+m_placeColor = $00d7ff;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Get most killed player
+
+var highestKill = 0;
+
+for (i = 0; i &lt; global.maxPlayers; i++)
+{
+    var k = global.playersKilled[m_id, i];
+    if(highestKill &lt; k)
+    {
+        highestKill = k;
+    }
+}
+
+if(highestKill != 0)
+{
+    for (i = 0; i &lt; global.maxPlayers; i++)
+    {
+        var k = global.playersKilled[m_id, i];
+        
+        if(k == highestKill)
+        {
+            m_noob = global.playerName[i];
+        }
+    }
+    
+}
 </string>
           </argument>
         </arguments>
@@ -308,7 +498,54 @@ draw_text_outline(x, y-h-4, global.playerName[m_id], 3, c_black, 42);
           <argument>
             <kind>1</kind>
             <string>/// Draw exclusively for state 0
+
 if(m_currentState == 0)
+{
+    var w = m_drawWidth;
+    var h = m_drawHeight;
+    var killCount = string(global.playerScore[m_id]);
+    
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_set_color(c_black);
+    
+    draw_set_font(fnt_gui);
+    draw_text(x, y - (h / 4), "You scored")
+    
+    draw_set_font(fnt_score);
+    //draw_text_color(x, y, m_placeText, m_placeColorLight, m_placeColorLight, 
+    //    m_placeColor, m_placeColor, 1);
+    
+    draw_set_color(m_placeColor);
+    draw_text(x, y, killCount)
+    
+    
+    draw_set_font(fnt_gui);
+        draw_set_color(c_black);
+    draw_text(x, y + (h / 4), "kills")
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw exclusively for state 1
+if(m_currentState == 1)
 {
     var w = m_drawWidth;
     var h = m_drawHeight;
@@ -317,13 +554,50 @@ if(m_currentState == 0)
     draw_set_valign(fa_center);
     draw_set_color(c_black);
     draw_text(x, y,
-    "Ur stats:#
-    Jumps: " + string(global.jumps[m_id]) + "#" +
+    "Ur stats:#" +
+    "Jumps: " + string(global.jumps[m_id]) + "#" +
     "AirTime: " + string(global.airTime[m_id] / 60) + "s" + "#" +
     "Arrows Fired: " + string(global.arrowsFired[m_id]) + "#" +
     "Abilites used: " + string(global.abilitiesUsed[m_id]) + "#" +
     "Deaths: " + string(global.deaths[m_id]) + "#" +
-    "Self kills: " + string(global.selfKills[m_id]))
+    "Self kills: " + string(global.selfKills[m_id]) + "#" +
+    "Highest streak: " + string(global.highestStreak[m_id]));
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw exclusively for state 2
+
+if(m_currentState == 2)
+{
+    var w = m_drawWidth;
+    var h = m_drawHeight;
+    var killCount = string(global.playerScore[m_id]);
+    
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_set_color(c_black);
+    
+    draw_set_font(fnt_letters);
+    draw_set_color(c_black);
+    draw_text(x, y, "boi that you#rek'd the most:##" + m_noob)
 }
 </string>
           </argument>

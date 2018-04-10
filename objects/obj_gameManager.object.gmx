@@ -32,7 +32,6 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     m_playerArray[i] = noone;
     m_playerDeathTimers[i] = 0;
     m_playerAbilityActive[i] = false;
-    m_playerScore[i] = 0;
     m_playerKillStreak[i] = 0;
     m_abilityDrawValue[i] = 0;
     m_playerBounty[i] = false;
@@ -55,6 +54,8 @@ m_gameStartTimer = 180;
 m_gamePaused = false;
 m_pauseHost = 0;
 m_pauseText = "";
+
+m_recentKillPos = 0;
 </string>
           </argument>
         </arguments>
@@ -141,6 +142,61 @@ else
             m_gamePaused = true;
             m_pauseHost = 0;
             m_pauseText = random_pausetext();
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Do gameEnded stuff
+if(m_gameEnd)
+{
+    global.timeScale = 0.05;
+    audio_stop_sound(m_bgm);
+    screenshake(m_endTimer/6);
+    
+    var r = m_endTimer/3;
+    
+    if(m_endTimer/200 &gt; 1)
+    {
+        audio_stop_all();
+        room_goto(rm_matchResult);
+    }
+    m_endTimer++;
+    
+    view_wview = 640 * obj_camera.ViewRatio;
+    view_hview = 640;
+    
+    view_xview = m_recentKillPos[0] - (640 * obj_camera.ViewRatio / 2) + random_range(-r, r);
+    view_yview = m_recentKillPos[1] - (640 / 2) + random_range(-r, r);
+    
+}
+else // Check if someone won already
+{
+    for (i = 0; i &lt; global.playerAmount; i++)
+    {
+        if(global.playerScore[i] &gt;= SCORE_CAP)
+        {
+            m_gameEnd = true;
+            global.winner = i;
+            audio_play_sound(snd_rumble, 1, 0);
         }
     }
 }
@@ -438,53 +494,6 @@ if(!m_gamePaused)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Do gameEnded stuff
-if(m_gameEnd)
-{
-    global.timeScale = 0.05;
-    audio_stop_sound(m_bgm);
-    screenshake(m_endTimer/6);
-    
-    if(m_endTimer/200 &gt; 1)
-    {
-        audio_stop_all();
-        room_goto(rm_matchResult);
-    }
-    m_endTimer++;
-    
-}
-else // Check if someone won already
-{
-    for (i = 0; i &lt; global.playerAmount; i++)
-    {
-        if(m_playerScore[i] &gt;= SCORE_CAP)
-        {
-            m_gameEnd = true;
-            global.winner = i;
-            audio_play_sound(snd_rumble, 1, 0);
-        }
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Update bounty state
 
 for (i = 0; i &lt; global.maxPlayers; i++)
@@ -501,76 +510,12 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     }
     else
     m_playerBounty[i] = false;
+    
+    if(m_playerKillStreak[i] &gt; global.highestStreak[i])
+    {
+        global.highestStreak[i] = m_playerKillStreak[i];
+    }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="61">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>global.timeScale -= 0.05;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="60">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>global.timeScale += 0.05;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="50">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>shoot_arrow(mouse_x, mouse_y, 0, 15, 0);
 </string>
           </argument>
         </arguments>
@@ -693,10 +638,10 @@ for (i = 0; i &lt; pAmount; i++)
     draw_set_font(fnt_score);
     
     draw_set_color(c_black);
-    draw_text_outline(xP+42, yP, m_playerScore[i], 1, c_black, 50);
+    draw_text_outline(xP+42, yP, global.playerScore[i], 1, c_black, 50);
     
     draw_set_color(c_white);
-    draw_text_outline(xP-5+42, yP-5, m_playerScore[i], 1, c_black, 50);
+    draw_text_outline(xP-5+42, yP-5, global.playerScore[i], 1, c_black, 50);
        
     // Draw player sprite
     
@@ -921,15 +866,19 @@ if(m_gameEnd)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!m_gameStarted)
+            <string>/// Draw start countdown
+if(!m_gameStarted)
 {
     var numb = floor(m_gameStartTimer / 60) + 1;
+    var scale = (m_gameStartTimer mod 60) / 3;
+    var angle = (m_gameStartTimer mod 60) / 2 - 15;
+    
     if(numb &lt;= 3)
     {
         draw_set_color(c_white);
         draw_set_font(fnt_score);
         draw_set_valign(fa_center);
-        draw_text_transformed(m_guiW/2, m_guiH/2, numb, 3, 3, 0);
+        draw_text_transformed(m_guiW/2, m_guiH/2, numb, scale, scale, angle);
     }
 }
 </string>

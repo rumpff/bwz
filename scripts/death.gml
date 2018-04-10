@@ -10,6 +10,9 @@ split_sprite_1 = noone;
 split_sprite_2 = noone;
 
 ds_sprites = ds_list_create();
+obj_gameManager.m_recentKillPos[0] = player.x;
+obj_gameManager.m_recentKillPos[1] = player.y;
+
 
 global.deaths[player.m_playerId]++;
 screenshake(100); // Add some screenshake
@@ -21,10 +24,11 @@ if(killerId != player.m_playerId && killerId != -1)
     if(obj_gameManager.m_playerKillStreak[player.m_playerId] > BOUNTY_THRESHOLD) 
     { scoreAmount = 2; abilityAmount = 20;}
     
-    obj_gameManager.m_playerScore[killerId] += scoreAmount;
+    global.playerScore[killerId] += scoreAmount;
     obj_gameManager.m_playerKillStreak[killerId]++;
     if(!obj_gameManager.m_playerAbilityActive[killerId])
     { global.playerAbility[killerId] += abilityAmount; }
+    global.playersKilled[killerId, player.m_playerId]++;
     
     with(instance_create(x, y, obj_scoreEffect))
     {

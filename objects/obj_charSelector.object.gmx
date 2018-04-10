@@ -333,7 +333,7 @@ if(m_currentState == 2)
             
         case 1:
             m_topText = string_to_array("Choose your weapon", m_infoTextSize);
-            m_bottomText = string_to_array("Ability: " + get_ability(m_currentBow), m_infoTextSize);
+            m_bottomText = string_to_array("Ability:#" + get_ability(m_currentBow), m_infoTextSize);
             break;
             
         case 2:
@@ -895,8 +895,8 @@ if(m_currentState == 1)
 if(m_currentState == 0)
 {
     // set the box to the right size
-    m_contHeight = 170*1.3;
-    m_contWidth = 230*1.6   ;
+    m_contHeight = 190*1.3;
+    m_contWidth = 230*1.6;
     
     // Check for input
     if (m_inputSelect) // Go to the next state
@@ -1000,7 +1000,7 @@ enum m_selectStates // The states where the box can be in
     Ready // 3
 }
 
-m_keybaord = true;
+m_keybaord = false;
 m_currentState = 0; // The current state of the box
 m_ready = false;
 //m_totalAmount = noone; // The total amount of this object, used for positioning
@@ -1231,6 +1231,7 @@ draw_set_alpha(1);
 draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
 
 // Draw text
+draw_set_font(fnt_gui);
 draw_set_halign(fa_center)
 
 draw_set_valign(fa_bottom);
@@ -1274,13 +1275,13 @@ if(m_currentState == 0)
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_center);
-    draw_set_font(fnt_letters);
+    draw_set_font(fnt_debug);
     
     
-    draw_sprite_ext(spr_controller, 0, x, y, 1, 1, angle, c_white, 1);
+    draw_sprite_ext(spr_controller, 0, x, y-25, 1, 1, angle, c_white, 1);
     
     draw_set_color(c_black);
-    draw_text_transformed(x, y, string(m_id+1), .6, .6, angle);
+    draw_text_transformed(x, y-25, string(m_id+1), 1, 1, angle);
 }
 </string>
           </argument>

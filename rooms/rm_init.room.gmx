@@ -30,6 +30,11 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.playerColor[i] = c_fuchsia;
     global.playerName[i] = 0;
     
+    for (ii = 0; ii &lt; global.maxPlayers; ii++)
+    {
+        global.playersKilled[i, ii] = 0; // killer, noob
+    }
+    
     global.playerAbility[i] = 0;
     
     global.playerPartA[i] = ds_list_create();
@@ -38,6 +43,8 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.surfacehole[i] = 0;
     global.surfaceoutline[i] = 0;
     
+    global.playerScore[i] = 0;
+    global.highestStreak[i] = 0;
     global.jumps[i] = 0;
     global.abilitiesUsed[i] = 0;
     global.arrowsFired[i] = 0;
@@ -45,6 +52,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.selfKills[i] = 0;
     global.airTime[i] = 0;       
 }
+
 
 // Set the window
 
