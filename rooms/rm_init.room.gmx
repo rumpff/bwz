@@ -53,8 +53,7 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     global.airTime[i] = 0;       
 }
 
-
-// Set the window
+instance_create(0, 0, obj_quitGame);
 
 room_goto_next();</code>
   <enableViews>0</enableViews>

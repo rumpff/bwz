@@ -264,6 +264,7 @@
     <object>objects\obj_bountyEffect</object>
     <object>objects\obj_firstBlood</object>
     <object>objects\obj_vs</object>
+    <object>objects\obj_quitGame</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
