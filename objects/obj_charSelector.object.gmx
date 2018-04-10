@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(true)
+if(m_keybaord)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -530,15 +530,24 @@ if(m_currentState == 2)
     
     if(m_charCurrent == 0)
     {
-        var stickH = gamepad_axis_value(m_controllerId, gp_axislh);
-        var stickV = gamepad_axis_value(m_controllerId, gp_axislv);
-        var angle = point_direction(0, 0, stickH, stickV);
-        
-        if(max(abs(stickH), abs(stickV)) &gt; 0.3)
+        if(m_keybaord)
         {
-            m_currentColor = floor(angle / 360 * 255);
+            var angle = point_direction(0, 0, -keyboard_check(vk_left) + keyboard_check(vk_right), 
+                -keyboard_check(vk_up) + keyboard_check(vk_down));
+                
+             m_currentColor = floor(angle / 360 * 255);
         }
-        
+        else
+        {
+            var stickH = gamepad_axis_value(m_controllerId, gp_axislh);
+            var stickV = gamepad_axis_value(m_controllerId, gp_axislv);
+            var angle = point_direction(0, 0, stickH, stickV);
+            
+            if(max(abs(stickH), abs(stickV)) &gt; 0.3)
+            {
+                m_currentColor = floor(angle / 360 * 255);
+            }
+        }
         //m_currentColor += m_colorAmount;
     }
     
@@ -886,8 +895,8 @@ if(m_currentState == 1)
 if(m_currentState == 0)
 {
     // set the box to the right size
-    m_contHeight = 170;
-    m_contWidth = 230;
+    m_contHeight = 170*1.3;
+    m_contWidth = 230*1.6   ;
     
     // Check for input
     if (m_inputSelect) // Go to the next state
@@ -991,7 +1000,7 @@ enum m_selectStates // The states where the box can be in
     Ready // 3
 }
 
-
+m_keybaord = true;
 m_currentState = 0; // The current state of the box
 m_ready = false;
 //m_totalAmount = noone; // The total amount of this object, used for positioning
@@ -1260,13 +1269,18 @@ if(m_currentState == 0)
     var sW = sprite_get_width(spr_controller);
     var sH = sprite_get_height(spr_controller);
     
+    var angle = sin(m_sinCounter + (m_id / 4) * 2) * 20;
+    
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_center);
     draw_set_font(fnt_letters);
     
     
-    draw_sprite_ext(spr_controller, 0, x, y, 1, 1, sin(m_sinCounter + (m_id / 4) * 2) * 20, c_white, 1);
+    draw_sprite_ext(spr_controller, 0, x, y, 1, 1, angle, c_white, 1);
+    
+    draw_set_color(c_black);
+    draw_text_transformed(x, y, string(m_id+1), .6, .6, angle);
 }
 </string>
           </argument>

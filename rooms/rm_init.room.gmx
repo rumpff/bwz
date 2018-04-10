@@ -18,6 +18,8 @@ global.playerAmount = 3;
 global.grav = 0.8;
 global.timeScale = 1;
 global.winner = -1;
+global.gameTime = 0;
+global.firstBlood = false;
 
 for (i = 0; i &lt; global.maxPlayers; i++)
 {
@@ -35,6 +37,13 @@ for (i = 0; i &lt; global.maxPlayers; i++)
     
     global.surfacehole[i] = 0;
     global.surfaceoutline[i] = 0;
+    
+    global.jumps[i] = 0;
+    global.abilitiesUsed[i] = 0;
+    global.arrowsFired[i] = 0;
+    global.deaths[i] = 0;
+    global.selfKills[i] = 0;
+    global.airTime[i] = 0;       
 }
 
 // Set the window
@@ -45,8 +54,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>1020</w>
-    <h>602</h>
+    <w>992</w>
+    <h>616</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>

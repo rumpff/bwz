@@ -194,7 +194,7 @@ if (place_meeting(x,y+1,obj_collider))
 else 
 {
     m_onGround = false;
-    
+    global.airTime[m_playerId]++;
     // Against a wall
    if ((place_meeting(x - 3,y, obj_collider)) || (place_meeting(x + 3,y, obj_collider)))
    {
@@ -350,6 +350,7 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
 {
    m_jumps -= 1;
    m_vsp = -m_jumpspeed;
+   global.jumps[m_playerId]++;
     
    if(m_jumps == 0) // Activate air-dash
    {
@@ -556,6 +557,7 @@ if(obj_gameManager.m_playerAbilityActive[m_playerId] == false)
         {
             obj_gameManager.m_playerAbilityActive[m_playerId] = true;
             play_sound(snd_abilityActivate);
+            global.abilitiesUsed[m_playerId]++;
         }
     }
 }
@@ -663,6 +665,7 @@ if(m_arrowForce &gt; m_arrowForceMin &amp;&amp; m_arrowActive)
         m_arrowActive = false;
         m_arrowForceOld = m_arrowForce;
         m_arrowForce = 0;
+        global.arrowsFired[m_playerId]++;
     }
     
     m_holdTimer += global.timeScale;

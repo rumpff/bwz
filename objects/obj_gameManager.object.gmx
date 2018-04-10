@@ -46,13 +46,12 @@ m_guiH = 0;
 m_indicatorAlpha = 0;
 m_deathSlowdown = 99^99;
 
-m_gameTime = 0;
 m_gameEnd = false;
 m_winner = -1;
 m_endTimer = 0;
 
 m_gameStarted = false;
-m_gameStartTimer = 0;
+m_gameStartTimer = 180;
 m_gamePaused = false;
 m_pauseHost = 0;
 m_pauseText = "";
@@ -118,7 +117,7 @@ m_pauseText = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Controll pause
+            <string>/// Control pause
 if(m_gamePaused)
 {
     global.timeScale = 0;
@@ -126,6 +125,11 @@ if(m_gamePaused)
     if(gamepad_button_check_pressed(m_pauseHost, gp_start))
     {
         m_gamePaused = false;
+    }
+    
+    if(gamepad_button_check_pressed(m_pauseHost, gp_select))
+    {
+        game_restart();
     }
 }
 else
@@ -163,9 +167,9 @@ else
           <argument>
             <kind>1</kind>
             <string>/// Time timerz
-if(!m_gamePaused &amp;&amp; m_gameStarted)
+if(!m_gamePaused &amp;&amp; m_gameStarted &amp;&amp; !m_gameEnd)
 {
-    m_gameTime += (delta_time / 1000000);
+    global.gameTime += (delta_time / 1000000);
 }
 </string>
           </argument>
@@ -214,7 +218,7 @@ m_guiH = display_get_gui_height();
           <argument>
             <kind>1</kind>
             <string>/// Start game
-if(m_gameStartTimer &gt; 180 &amp;&amp; !m_gameStarted)
+if(m_gameStartTimer &lt;= 0 &amp;&amp; !m_gameStarted)
 {
     // Create instances
     for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
@@ -237,7 +241,7 @@ if(m_gameStartTimer &gt; 180 &amp;&amp; !m_gameStarted)
 }
 else if(!m_gameStarted)
 {
-    m_gameStartTimer++;
+    m_gameStartTimer--;
     exit;
 }
 </string>
@@ -803,13 +807,13 @@ draw_set_color(c_white);
 
 var timeStr, secStr, milStr;
 
-timeStr = string(m_gameTime div 60);
+timeStr = string(global.gameTime div 60);
 if(string_length(timeStr) &lt; 2) { timeStr = "0" + timeStr; }
 
-secStr = string(floor(m_gameTime) mod 60);
+secStr = string(floor(global.gameTime) mod 60);
 if(string_length(secStr) &lt; 2) { secStr = "0" + secStr; }
 
-milStr = string(floor(frac(m_gameTime) * 100));
+milStr = string(floor(frac(global.gameTime) * 100));
 if(string_length(milStr) &lt; 2) { milStr = "0" + milStr; }
 
 draw_text(m_guiW/2, 20, timeStr + ":"  + secStr + ":" + milStr );
@@ -896,6 +900,37 @@ if(m_gameEnd)
     draw_set_alpha(m_endTimer/200);
     draw_rectangle(0, 0, m_guiW, m_guiH, 0);
     draw_set_alpha(1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!m_gameStarted)
+{
+    var numb = floor(m_gameStartTimer / 60) + 1;
+    if(numb &lt;= 3)
+    {
+        draw_set_color(c_white);
+        draw_set_font(fnt_score);
+        draw_set_valign(fa_center);
+        draw_text_transformed(m_guiW/2, m_guiH/2, numb, 3, 3, 0);
+    }
 }
 </string>
           </argument>

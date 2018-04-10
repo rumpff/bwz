@@ -695,7 +695,7 @@
       <constant name="HEAD_AMOUNT">8</constant>
       <constant name="LEG_AMOUNT">9</constant>
       <constant name="BOUNTY_THRESHOLD">3</constant>
-      <constant name="SCORE_CAP">20</constant>
+      <constant name="SCORE_CAP"> 3</constant>
     </constants>
   </ConfigConstants>
 </Config>

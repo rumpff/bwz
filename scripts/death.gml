@@ -11,6 +11,7 @@ split_sprite_2 = noone;
 
 ds_sprites = ds_list_create();
 
+global.deaths[player.m_playerId]++;
 screenshake(100); // Add some screenshake
 
 if(killerId != player.m_playerId && killerId != -1)
@@ -34,6 +35,7 @@ if(killerId != player.m_playerId && killerId != -1)
 else if(killerId == player.m_playerId)
 {
     play_sound(snd_laughing);
+    global.selfKills[killerId]++;
 }
 obj_gameManager.m_playerDeathTimers[player.m_playerId] = global.deathCooldown;
 obj_gameManager.m_playerKillStreak[player.m_playerId] = 0;
@@ -88,5 +90,13 @@ else
 }
 instance_destroy(player);
 play_sound(snd_playerDeath1);
+
+if(!global.firstBlood)
+{
+    global.firstBlood = true;
+    effec = instance_create(0, 0, obj_firstBlood);
+    effec.player = killerId;
+    with(effec) { event_user(0); }
+}
 
 obj_gameManager.m_deathSlowdown = 0;

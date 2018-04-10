@@ -8,41 +8,6 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>var sound = choose(
-snd_win1,
-snd_win2,
-snd_win3,
-snd_win4,
-snd_win5,
-snd_win6,
-snd_win7
-);
-
-audio_play_sound(sound, 1, 0);
-
-m_timer = 600;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -60,19 +25,39 @@ m_timer = 600;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i=0; i&lt;4; i+=1)
+            <string>if (angle &lt; 0)
 {
-    if(gamepad_button_check(i, gp_start) || keyboard_check(vk_enter))
-    {
-        game_restart();
-    }
+    angle += 2;
 }
+if (scale &gt; 1)
+{
+    scale -= 1;
+}
+if (scale == 1 &amp;&amp; angle == 0 &amp;&amp; timer &gt; 0)
+{
+    timer--;
+}
+if (timer == 30)
+{
+    //audio_play_sound(snd_cinImpact, 1, 0);
+}
+if (timer == 0)
+{
+    alpha -= 0.01; //0.02
+}
+if (alpha == 0)
+{
+    instance_destroy();
+}
+
+xX = window_get_width() / 2;
+yY = window_get_height() / 2;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -89,39 +74,47 @@ m_timer = 600;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var winner = string(global.playerName[global.winner]);
+            <string>//player
+scale = 10;
+angle = -18;
+alpha = 1;
+timer = 90; //45
+xX = 0;
+yY = 0;
+text = global.playerName[player] + " drew first blood";
 
-draw_set_halign(fa_center);
+audio_play_sound(snd_cinImpact, 1, 0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_halign(fa_center);
 draw_set_valign(fa_center);
-draw_set_color(c_white);
-draw_set_font(fnt_score);
-draw_text_outline(room_width/2, room_height/2, "winner is " + winner, 2, c_black, 42);
-
-// get da time
-var timeStr, secStr, milStr;
-
-timeStr = string(global.gameTime div 60);
-if(string_length(timeStr) &lt; 2) { timeStr = "0" + timeStr; }
-
-secStr = string(floor(global.gameTime) mod 60);
-if(string_length(secStr) &lt; 2) { secStr = "0" + secStr; }
-
-milStr = string(floor(frac(global.gameTime) * 100));
-if(string_length(milStr) &lt; 2) { milStr = "0" + milStr; }
-
-// Draw stats
 draw_set_font(fnt_gui);
-draw_set_halign(fa_right);
-draw_set_valign(fa_bottom);
-draw_text(room_width - 10, room_height - 10,
-"Ur stats:#
-Jumps: " + string(global.jumps[global.winner]) + "#" +
-"AirTime: " + string(global.airTime[global.winner] / 60) + "s" + "#" +
-"Arrows Fired: " + string(global.arrowsFired[global.winner]) + "#" +
-"Abilites used: " + string(global.abilitiesUsed[global.winner]) + "#" +
-"Deaths: " + string(global.deaths[global.winner]) + "#" +
-"Self kills: " + string(global.selfKills[global.winner]) + "##" + 
-"Game Time:#" + timeStr + ":"  + secStr + ":" + milStr);
+draw_set_alpha(alpha);
+draw_set_color(c_black);
+draw_text_transformed(xX, yY + 5, text, scale, scale, angle);
+draw_set_color(c_white);
+draw_text_transformed(xX, yY, text, scale, scale, angle);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
