@@ -221,6 +221,8 @@ m_guiH = display_get_gui_height();
 if(m_gameStartTimer &lt;= 0 &amp;&amp; !m_gameStarted)
 {
     // Create instances
+    instance_create(x, y, obj_camera);
+    
     for (i=0; i&lt;instance_number(obj_spawnLocation); i+=1)
     {
         m_spawnLocations[i] = instance_find(obj_spawnLocation, i);
@@ -231,8 +233,6 @@ if(m_gameStartTimer &lt;= 0 &amp;&amp; !m_gameStarted)
     {
         m_playerArray[i] = spawn_player(m_spawnLocations, i);
     }
-    
-    instance_create(x, y, obj_camera);
     
     // Start music
     m_bgm = audio_play_sound(bgm_game, 1 , 0);

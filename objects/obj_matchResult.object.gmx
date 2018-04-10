@@ -37,7 +37,14 @@ snd_win7
 
 audio_play_sound(sound, 1, 0);
 
-m_timer = 600;
+m_selectors[0] = noone;
+
+for (i = 0; i &lt; 4; i++)
+{
+    m_selectors[i] = instance_create(x, y, obj_playerResults);
+    m_selectors[i].m_id = i;
+    with(m_selectors[i]) { event_user(0); }
+}
 </string>
           </argument>
         </arguments>
@@ -95,7 +102,7 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_color(c_white);
 draw_set_font(fnt_score);
-draw_text_outline(room_width/2, room_height/2, "winner is " + winner, 2, c_black, 42);
+draw_text_outline(room_width/2, room_height/4, "winner is " + winner, 2, c_black, 42);
 
 // get da time
 var timeStr, secStr, milStr;
@@ -109,19 +116,12 @@ if(string_length(secStr) &lt; 2) { secStr = "0" + secStr; }
 milStr = string(floor(frac(global.gameTime) * 100));
 if(string_length(milStr) &lt; 2) { milStr = "0" + milStr; }
 
-// Draw stats
+// Draw time
 draw_set_font(fnt_gui);
-draw_set_halign(fa_right);
+draw_set_halign(fa_center);
 draw_set_valign(fa_bottom);
-draw_text(room_width - 10, room_height - 10,
-"Ur stats:#
-Jumps: " + string(global.jumps[global.winner]) + "#" +
-"AirTime: " + string(global.airTime[global.winner] / 60) + "s" + "#" +
-"Arrows Fired: " + string(global.arrowsFired[global.winner]) + "#" +
-"Abilites used: " + string(global.abilitiesUsed[global.winner]) + "#" +
-"Deaths: " + string(global.deaths[global.winner]) + "#" +
-"Self kills: " + string(global.selfKills[global.winner]) + "##" + 
-"Game Time:#" + timeStr + ":"  + secStr + ":" + milStr);
+draw_text(room_width/2, room_height - 10,
+"Game Time: " + timeStr + ":"  + secStr + ":" + milStr);
 </string>
           </argument>
         </arguments>

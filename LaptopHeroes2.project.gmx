@@ -256,6 +256,7 @@
     <object>objects\obj_explosion</object>
     <object>objects\obj_sample_stereo3d</object>
     <object>objects\obj_matchResult</object>
+    <object>objects\obj_playerResults</object>
     <object>objects\obj_mainMenu</object>
     <object>objects\obj_sample_stereo3d_new</object>
     <object>objects\obj_setRoomSize</object>

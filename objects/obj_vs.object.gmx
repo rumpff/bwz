@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>m_max = room_width*1.4
+            <string>m_max = room_width*1.7/2;
 m_baseLength = m_max;
 m_timer = 0;
 m_state = 0;
@@ -58,7 +58,7 @@ m_state = 0;
 
 if(m_state = 1)
 {
-    m_baseLength = ease_out_expo(m_timer, 0, m_max, 80);
+    m_baseLength = ease_out_expo(m_timer, 0, m_max * 1.4, 80);
 }
     
 if (m_timer &gt; 130 &amp;&amp; m_state = 0)
@@ -105,9 +105,10 @@ for (i = 0; i &lt; pAmount; i++)
     var centerX = room_width / 2;
     var centerY = room_height / 2;
     
-    var length = room_width * 1.4;
+    var length = room_width * 3;
     var baseAngle = i * (360 / pAmount);
     var nextAngle = baseAngle - (360 / pAmount);
+    var err = i * (360 / pAmount) / 2;
     var angleOffset = 16;
     var color = global.playerColor[i];
     
