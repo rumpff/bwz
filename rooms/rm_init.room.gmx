@@ -14,7 +14,7 @@
 
 global.deathCooldown = 30;
 global.maxPlayers = 12;
-global.playerAmount = 3;
+global.playerAmount = 2;
 global.grav = 0.8;
 global.timeScale = 1;
 global.winner = -1;
@@ -61,8 +61,8 @@ room_goto_next();</code>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
-    <w>988</w>
-    <h>618</h>
+    <w>1016</w>
+    <h>604</h>
     <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>

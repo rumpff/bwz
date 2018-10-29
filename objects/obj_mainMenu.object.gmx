@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i=0; i&lt;4; i+=1)
+            <string>for (i=0; i&lt;12; i+=1)
 {
     if(gamepad_button_check_pressed(i, gp_start) || keyboard_check_pressed(vk_enter))
     {

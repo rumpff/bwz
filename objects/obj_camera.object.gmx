@@ -242,7 +242,6 @@ ViewRatio = view_wview[0] / view_hview[0];                  // View ration ensur
 x_Camera = view_xview[0] + view_wview[0]/2;
 y_Camera = view_yview[0] + view_hview[0]/2;
 PanSpeed = 0.3;                                             // Must be between 0 and 1; the larger the faster the pan speed
-
 </string>
           </argument>
         </arguments>
