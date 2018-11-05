@@ -790,7 +790,7 @@ if (m_lStickH != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection 
 
 // All the code here is for when the player faces right
 // Check in which state the player is
-if (place_meeting(x,y+1,obj_collider)) // Player is on the ground
+if (m_onGround) // Player is on the ground
 {
     if (abs(move) &gt; 0.1) // walking
     {   

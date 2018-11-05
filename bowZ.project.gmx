@@ -29,6 +29,8 @@
       </sounds>
       <sound>sound\snd_StringStretch</sound>
     </sounds>
+    <sound>sound\bgm_introLoop</sound>
+    <sound>sound\bgm_menuIntro</sound>
     <sound>sound\bgm_game</sound>
     <sounds name="Menu">
       <sounds name="Character Select">
@@ -166,6 +168,7 @@
     <script>scripts\draw_sprite_outlined.gml</script>
     <script>scripts\draw_text_debug.gml</script>
     <script>scripts\draw_text_outline.gml</script>
+    <script>scripts\draw_text_outline_transformed.gml</script>
     <scripts name="Easing">
       <script>scripts\ease_in_back.gml</script>
       <script>scripts\ease_in_bounce.gml</script>
@@ -234,6 +237,7 @@
   <fonts name="fonts">
     <font>fonts\fnt_gui</font>
     <font>fonts\fnt_score</font>
+    <font>fonts\fnt_title</font>
     <font>fonts\fnt_debug</font>
     <font>fonts\fnt_letters</font>
   </fonts>
@@ -249,6 +253,8 @@
     <object>objects\obj_charSelector</object>
     <object>objects\obj_charSelectManager</object>
     <object>objects\obj_blood</object>
+    <object>objects\obj_bloodMainmenu</object>
+    <object>objects\obj_arrowParticleMainmenu</object>
     <object>objects\obj_scoreEffect</object>
     <object>objects\obj_drawRays</object>
     <object>objects\obj_rumble</object>
