@@ -138,6 +138,7 @@
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_sample_stereo3d</sprite>
     <sprite>sprites\spr_splash</sprite>
+    <sprite>sprites\spr_9sliceTest</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -168,6 +169,7 @@
     <script>scripts\draw_sprite_outlined.gml</script>
     <script>scripts\draw_text_debug.gml</script>
     <script>scripts\draw_text_outline.gml</script>
+    <script>scripts\draw_9slice.gml</script>
     <script>scripts\draw_text_outline_transformed.gml</script>
     <scripts name="Easing">
       <script>scripts\ease_in_back.gml</script>
@@ -224,9 +226,14 @@
     <script>scripts\string_to_array.gml</script>
     <script>scripts\within.gml</script>
     <script>scripts\x_to_gui_x.gml</script>
+    <scripts name="Color">
+      <script>scripts\color_lerp.gml</script>
+      <script>scripts\color_change_hue.gml</script>
+    </scripts>
     <script>scripts\y_to_gui_y.gml</script>
     <script>scripts\draw_triangle_width.gml</script>
     <script>scripts\bubblesort.gml</script>
+    <script>scripts\wave.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_chromatic_abberation.shader</shader>
@@ -266,19 +273,25 @@
     <object>objects\obj_playerResults</object>
     <object>objects\obj_mainMenu</object>
     <object>objects\obj_sample_stereo3d_new</object>
-    <object>objects\obj_setRoomSize</object>
+    <object>objects\obj_windowController</object>
     <object>objects\obj_bountyEffect</object>
     <object>objects\obj_firstBlood</object>
     <object>objects\obj_vs</object>
     <object>objects\obj_quitGame</object>
+    <object>objects\obj_fancyBackground</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
-    <room>rooms\rm_mainMenu</room>
     <room>rooms\rm_charSelect</room>
     <room>rooms\rm_tstLvl</room>
     <room>rooms\rm_matchResult</room>
+    <room>rooms\rm_mainMenu</room>
+    <room>rooms\room5</room>
   </rooms>
+  <constants number="2">
+    <constant name="BASE_SCREEN_W">1920</constant>
+    <constant name="BASE_SCREEN_H">1080</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

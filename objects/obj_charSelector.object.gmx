@@ -128,7 +128,7 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
             <kind>1</kind>
             <string>/// Get input keyboar
 
-if(m_id &lt;= 1)
+if(false)
 {
     // Up
     m_inputUp = keyboard_check_pressed(vk_up);
@@ -1216,7 +1216,8 @@ m_RBY2 = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the container
+            <string>/// Draw the container -manually-
+/*
 var w = m_drawWidth/2;
 var h = m_drawHeight/2;
 
@@ -1229,6 +1230,46 @@ draw_set_alpha(1);
 
 // Draw outline
 draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
+
+// Draw text
+draw_set_font(fnt_gui);
+draw_set_halign(fa_center)
+
+draw_set_valign(fa_bottom);
+draw_text(x, y-h-4, array_to_string(m_topTextDraw));
+
+draw_set_valign(fa_top);
+draw_text(x, y+h+4, array_to_string(m_bottomTextDraw));
+
+draw_set_valign(fa_center);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the container -9slice-
+
+var w = m_drawWidth/2;
+var h = m_drawHeight/2;
+
+// Draw box
+//draw_roundrect(x - w, y - h, x + w, y + h, false);
+draw_9slice(spr_9sliceTest, x - w, y - h, w*2, h*2, true);
 
 // Draw text
 draw_set_font(fnt_gui);
@@ -1561,7 +1602,8 @@ if(m_currentState == 3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw outline
+            <string>/// Draw outline -manually-
+/*
 var w = m_drawWidth/2;
 var h = m_drawHeight/2;
 

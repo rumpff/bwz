@@ -25,23 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>m_selectors[0] = noone;
+            <string>m_circleRadius = 128;
+m_cicleAmount = 18;
 
-for (i = 0; i &lt; 4; i++)
-{
-    m_selectors[i] = instance_create(x, y, obj_charSelector);
-    m_selectors[i].m_id = i;
-    with(m_selectors[i]) { event_user(0); }
-}
+m_circleColorA = make_color_rgb(35, 31, 32);
+m_circleColorB = make_color_rgb(209, 211, 212);
 
-m_gotoNext = false;
-m_players = 1;
+m_waveTime = 0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="5" enumb="40">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,82 +54,13 @@ m_players = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check if ready
-var readyz
-for (i = 0; i &lt; 4; i++)
-{
-    readyz[i] = m_selectors[i].m_ready;
-}
-
-if(readyz[3])
-{
-    if(readyz[2] &amp;&amp; readyz[1] &amp;&amp; readyz[0])
-    {
-        m_ready = true;
-        m_players = 4;
-    }
-}
-else if(readyz[2] &amp;&amp; !readyz[3])
-{
-    if(readyz[1] &amp;&amp; readyz[0])
-    {
-        m_ready = true;
-        m_players = 3;
-    }
-}
-else if(readyz[1] &amp;&amp; !readyz[2] &amp;&amp; !readyz[3])
-{
-    if(readyz[0])
-    {
-        m_ready = true;
-        m_players = 2;
-    }
-}
-else
-{
-    m_ready = false;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// 'N sterdd
-if(m_ready || keyboard_check(vk_f1))
-{
-    for (i=0; i&lt;4; i+=1)
-    {
-        if(gamepad_button_check(i, gp_start) || keyboard_check(vk_f1))
-        {
-            if(!instance_exists(obj_vs))
-            {
-                global.playerAmount = m_players;
-                instance_create(0, 0, obj_vs);
-            }
-        }
-    }
-}
+            <string>m_waveTime -= 0.02;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="5" enumb="38">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -150,19 +77,92 @@ if(m_ready || keyboard_check(vk_f1))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var rw = room_width;
-var rh = room_height;
-if(m_gotoNext)
+            <string>m_waveTime += 0.03;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Debug color test
+/*
+var mouseDistance = point_distance(x, y, mouse_x, mouse_y);
+var circleR = 15;
+var interpolationAmount = 25;
+
+for (var i = 0; i &lt; interpolationAmount; i++)
 {
-    draw_set_valign(fa_center);
-    draw_set_font(fnt_score)
-    draw_text_transformed(rw/2, rh/2, "Loading...", 2, 2, 20);
+    var curInterp = i / interpolationAmount;
+    
+    var xpos = lerp(x, mouse_x, curInterp);
+    var ypos = lerp(y, mouse_y, curInterp);
+    
+    draw_set_color(color_lerp(m_circleColorA, m_circleColorB, curInterp));
+    draw_circle(xpos, ypos, circleR, false);
 }
-else if(m_ready)
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the circles
+
+// Set high precision because the circles are very large
+draw_set_circle_precision(64);
+
+for (var i = m_cicleAmount; i &gt; 0 ; i--)
 {
-    draw_set_valign(fa_bottom);
-    draw_text(rw/2, rh, "Press start to play with " + string(m_players) + " players");
+    var curCirc = i / m_cicleAmount;
+    var r = m_circleRadius * i;
+    r += wave(-64, m_waveTime - (i * 0.04), true);
+    
+    draw_set_color(color_lerp(m_circleColorA, m_circleColorB, curCirc));
+    draw_circle(mouse_x, mouse_y, r, false);
 }
+
+// Reset the precision
+draw_set_circle_precision(24);
+
+draw_set_color(c_white);
+draw_set_font(fnt_title);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+
+draw_text(mouse_x, mouse_y, string(obj_windowController.m_windowSizeW) + "x" + string(obj_windowController.m_windowSizeH));
+
+// http://setosa.io/ev/sine-and-cosine/
 </string>
           </argument>
         </arguments>
