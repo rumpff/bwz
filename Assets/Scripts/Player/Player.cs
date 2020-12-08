@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -11,7 +12,7 @@ public class Player : MonoBehaviour
 
     /* Components */
     public Rigidbody2D Rigidbody { get; private set; }
-
+    public PlayerControls Controls { get; private set; }
 
     /** Methods **/
     /* Unity */
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     {
         // Get Components
         Rigidbody = GetComponent<Rigidbody2D>();
+        Controls = new PlayerControls();
     }
     private void Start()
     {
