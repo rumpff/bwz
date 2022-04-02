@@ -35,6 +35,13 @@ if(killerId != player.m_playerId && killerId != -1)
        m_playerId = argument1
        event_user(0);
     }
+    
+    if(global.playerScore[killerId] = SCORE_CAP-1)
+    {
+        var effect = instance_create(0, 0, obj_matchPoint);
+        effect.player = killerId;
+        with(effect) { event_user(0); }
+    }
 }
 else if(killerId == player.m_playerId)
 {

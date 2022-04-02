@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,51 +25,33 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!instance_exists(obj_gameManager.m_playerArray[m_playerId]))
+            <string>if (angle &lt; 0)
+{
+    angle += 2;
+}
+if (scale &gt; 1)
+{
+    scale -= 1;
+}
+if (scale == 1 &amp;&amp; angle == 0 &amp;&amp; timer &gt; 0)
+{
+    timer--;
+}
+if (timer == 30)
+{
+    //audio_play_sound(snd_cinImpact, 1, 0);
+}
+if (timer == 0)
+{
+    alpha -= 0.01; //0.02
+}
+if (alpha == 0)
 {
     instance_destroy();
 }
-else
-{
-    m_player = obj_gameManager.m_playerArray[m_playerId];
-    if(m_startTimer &gt; 0)
-    {
-        m_startTimer -= global.timeScale;
-        
-        x = m_player.x;
-        y = m_player.y;
-    }
-    else if(m_startTimer &lt;= 0 &amp;&amp; !m_active)
-    {   
-        var snd = snd_score;
-        var pitch = (m_streak * 0.1) + 1;
-        
-        if(m_streak &gt; BOUNTY_THRESHOLD)
-        { 
-            snd = snd_scoreStreak; 
-            pitch = (m_streak - BOUNTY_THRESHOLD) * 0.1 + 1
-        }
-        
-        var sound = play_sound(snd);
-        
-        x = m_player.x;
-        y = m_player.y;
-        
-        m_active = true;
-    } 
-    else if(m_startTimer &lt;= 0 &amp;&amp; m_active)
-    {
-        x = m_player.x;
-        y = m_player.y - 
-        ease_out_back(clamp(m_easeTimer, 0, 30), 0, 96, 30);
-        
-        m_easeTimer += global.timeScale;
-    }
-    if(m_easeTimer &gt; 45)
-    {
-        instance_destroy();
-    }
-}
+
+xX = window_get_width() / 2;
+yY = window_get_height() / 2;
 </string>
           </argument>
         </arguments>
@@ -92,18 +74,22 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// m_playerId
-m_startTimer = 20;
-m_player = 0;
-m_easeTimer = 0;
-m_active = false;
-m_streak = obj_gameManager.m_playerKillStreak[m_playerId];
+            <string>//player
+scale = 10;
+angle = -18;
+alpha = 1;
+timer = 90; //45
+xX = 0;
+yY = 0;
+text = global.playerName[player] + " needs ONE more kill to win!";
+
+audio_play_sound(snd_cinImpact, 1, 0);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -120,15 +106,15 @@ m_streak = obj_gameManager.m_playerKillStreak[m_playerId];
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(m_startTimer &lt;= 0)
-{
-    draw_set_color(c_white);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    draw_set_font(fnt_gui);
-    
-    draw_text_outline(x, y, m_streak, 2, global.playerColor[m_playerId], 30);
-}
+            <string>draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(fnt_gui);
+draw_set_alpha(alpha);
+draw_set_color(c_black);
+draw_text_transformed(xX, yY + 5, text, scale, scale, angle);
+draw_set_color(c_white);
+draw_text_transformed(xX, yY, text, scale, scale, angle);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

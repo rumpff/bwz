@@ -277,6 +277,7 @@
     <object>objects\obj_windowController</object>
     <object>objects\obj_bountyEffect</object>
     <object>objects\obj_firstBlood</object>
+    <object>objects\obj_matchPoint</object>
     <object>objects\obj_vs</object>
     <object>objects\obj_quitGame</object>
     <object>objects\obj_fancyBackground</object>
