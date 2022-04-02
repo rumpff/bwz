@@ -258,6 +258,7 @@
     <object>objects\obj_spawnLocation</object>
     <object>objects\obj_arrow</object>
     <object>objects\obj_charSelector</object>
+    <object>objects\obj_charSelectorNew</object>
     <object>objects\obj_charSelectManager</object>
     <object>objects\obj_blood</object>
     <object>objects\obj_bloodMainmenu</object>

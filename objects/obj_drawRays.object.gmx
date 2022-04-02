@@ -85,14 +85,18 @@ m_multiplier = lerp(m_multiplier, 1, 0.1);
             <kind>1</kind>
             <string>for (i = 0; i &lt; rayAmount; i++)
 {
-    color = make_colour_hsv(i *  (255 / (360 / rayAmount)), 255, 255); // 17
+    var rayAngle = i * (pi * 2) / rayAmount + angle;
+    var rayAngleNext = (i + 1) * (pi * 2) / rayAmount + angle;
+
+    var color = make_colour_hsv(i *  (255 / (360 / rayAmount)), 255, 255); // 17
+    //var color = make_colour_hsv((rayAngle * 25) + (get_timer() / 100000), 255, 255); // 17
     draw_set_color(color);
     
-    x2 = x + cos(i * (pi * 2) / rayAmount + angle) * length;
-    y2 = y + sin(i * (pi * 2) / rayAmount + angle) * length;
+    x2 = x + cos(rayAngle) * length;
+    y2 = y + sin(rayAngle) * length;
     
-    x3 = x + cos((i + 1) * (pi * 2) / rayAmount + angle) * length;
-    y3 = y + sin((i + 1) * (pi * 2) / rayAmount + angle) * length;
+    x3 = x + cos(rayAngleNext) * length;
+    y3 = y + sin(rayAngleNext) * length;
     
     draw_triangle(x, y, x2, y2, x3, y3, false);
 }
