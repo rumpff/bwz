@@ -152,8 +152,9 @@ stickV = gamepad_axis_value(gpDevice, gp_axislv);
 
 // Buttons
 m_inputSelect = gamepad_button_check_pressed(gpDevice, gp_face1);
-m_inputShift = gamepad_button_check(gpDevice, gp_shoulderrb);
 m_inputBack = gamepad_button_check_pressed(gpDevice, gp_face2);
+m_inputTriggerL = gamepad_button_check(gpDevice, gp_shoulderlb);
+m_inputTriggerR = gamepad_button_check(gpDevice, gp_shoulderrb);
 </string>
           </argument>
         </arguments>
@@ -198,6 +199,8 @@ if(DEBUG_MODE == 1 &amp;&amp; m_id == 1)
     // Buttons
     m_inputSelect = keyboard_check_pressed(vk_enter);
     m_inputShift = keyboard_check(vk_lshift);
+    m_inputTriggerL = keyboard_check(vk_lshift);
+    m_inputTriggerR = keyboard_check(vk_lcontrol);
     m_inputBack = keyboard_check_pressed(vk_escape);
 }
 </string>
@@ -732,10 +735,11 @@ if(m_currentState == 2)
 
 if(m_currentState == 1)
 {
-    // Set, depending on the size of the name and if shift is helf, the letters in uppercase or lowercase
-    if((string_length(m_name) == 0 &amp;&amp; !m_inputShift) || (m_inputShift &amp;&amp; string_length(m_name) != 0)) 
-    { m_alphabet = string_upper(m_alphabet) }
-    else { m_alphabet = string_lower(m_alphabet) }
+    // Set charset
+    if(m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetD; }
+    else if(m_inputTriggerL &amp;&amp; !m_inputTriggerR) { m_charsetCurrent = m_charsetC; }
+    else if(!m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetB; }
+    else { m_charsetCurrent = m_charsetA; }
     
     // set the container to the right size
  
@@ -771,7 +775,7 @@ if(m_currentState == 1)
     {
         for (ix = 0; ix &lt; 4; ix++)
         {
-            if(boxIndex &lt; string_length(m_alphabet))
+            if(boxIndex &lt; string_length(m_charsetCurrent))
             {
                 m_letterBoxX[boxIndex] = sx + (ix * bwidth); // left x
                 m_letterBoxY[boxIndex] = sy + (iy * bheight * 0.66); // upper y
@@ -804,7 +808,7 @@ if(m_currentState == 1)
     // Get input from the selection
     if(m_inputSelect)
     {
-        var newLetter = string_copy(m_alphabet, m_selectorPos+1, 1);
+        var newLetter = string_copy(m_charsetCurrent, m_selectorPos+1, 1);
         var nameLength = string_length(m_name);
         m_letterRot[m_selectorPos] = choose(-30, 30);
         m_letterSat[m_selectorPos] = 255;
@@ -1149,7 +1153,12 @@ var b2b = sqrt(sqr(16) * 2); // Selector's with to exact touch borders
 m_selectorMaxDistance = b2b * 1.5;
 m_clickDistance = b2b / 1.5;
 
-m_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ&lt;&gt;";
+m_charsetA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ&lt;&gt;";
+m_charsetB = "abcdefghijklmnopqrstuvwxyz?!";
+m_charsetC = "ÀÂÃÄÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØŒÙÛÜßµ¶";
+m_charsetD = "0123456789@$%^&amp;+-*/=()™~_|. ";
+m_charsetCurrent = m_charsetA;
+
 
 m_letterBoxX[0] = 0;
 m_letterBoxY[0] = 0;
@@ -1446,7 +1455,7 @@ if(m_currentState == 1)
         var xCenter = m_letterBoxX[i] + (bwidth / 2) + m_letterXOff[i];
         var yCenter = m_letterBoxY[i] + (bheight / 2) + m_letterYOff[i];
         
-        var letter = string_copy(m_alphabet, i + 1, 1);
+        var letter = string_copy(m_charsetCurrent, i + 1, 1);
         draw_set_color(make_color_hsv(i * 255 / array_length_1d(m_letterBoxX), m_letterSat[i], 255));
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);
