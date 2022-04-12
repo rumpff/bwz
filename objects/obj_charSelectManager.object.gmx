@@ -25,9 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>m_selectors[0] = noone;
+            <string>m_selectorAmount = 4;
 
-for (i = 0; i &lt; 4; i++)
+m_ready = false;
+m_selectors[0] = noone;
+
+for (i = 0; i &lt; m_selectorAmount; i++)
 {
     m_selectors[i] = instance_create(x, y, obj_charSelector);
     m_selectors[i].m_id = i;
@@ -42,6 +45,106 @@ m_players = 1;
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Assign controllers
+
+var controllerID = -1
+
+// Look for gamepad input
+for(c = 0; c &lt; 12; c++)
+{
+    // Rule out active controllers
+    var skip = false;
+    for (i = 0; i &lt; global.maxPlayers; i++)
+    {
+        if(global.playerGamepadID[i] == c)
+            skip = true;
+    }
+        
+    if(skip) continue;
+        
+    if(gamepad_button_check(c, gp_start))
+    {
+        controllerID = c;
+        continue;
+    }
+    
+    if(DEBUG_MODE == 1 &amp;&amp; keyboard_check_pressed(vk_enter) &amp;&amp; m_selectors[1].m_currentState == 0)
+    {
+        controllerID = 99;
+        continue;
+    }        
+}
+
+if(controllerID != -1)
+{   
+    // Look for open playerslot and assign controller
+    for (i = 0; i &lt; m_selectorAmount; i++)
+    {
+        var selector = m_selectors[i];
+        
+        if(selector.m_currentState == 0)
+        {
+            global.playerGamepadID[i] = controllerID;
+            with(selector) { event_user(1); } // next state
+            exit;
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// 'N sterdd
+if(m_ready || keyboard_check(vk_delete))
+{
+    for (i=0; i&lt;4; i+=1)
+    {
+        if(gamepad_button_check(i, gp_start) || keyboard_check(vk_delete))
+        {
+            if(!instance_exists(obj_vs))
+            {
+                global.playerAmount = m_players;
+                instance_create(0, 0, obj_vs);
+            }
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -97,41 +200,6 @@ else
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// 'N sterdd
-if(m_ready || keyboard_check(vk_f1))
-{
-    for (i=0; i&lt;4; i+=1)
-    {
-        if(gamepad_button_check(i, gp_start) || keyboard_check(vk_f1))
-        {
-            if(!instance_exists(obj_vs))
-            {
-                global.playerAmount = m_players;
-                instance_create(0, 0, obj_vs);
-            }
-        }
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -163,6 +231,30 @@ else if(m_ready)
     draw_set_valign(fa_bottom);
     draw_text(rw/2, rh, "Press start to play with " + string(m_players) + " players");
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// draw debug
+
+draw_set_color(c_black);
+draw_text(x,y, "gpcount: " + string(gamepad_get_device_count()));
 </string>
           </argument>
         </arguments>

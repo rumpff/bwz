@@ -8,6 +8,47 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Animate the text
+
+for (i = 0; i &lt; m_infoTextSize; i++)
+{
+    if(m_topTextDraw[i] != m_topText[i])
+    {
+        m_topTextDraw[i] = m_topText[i];
+        break;
+    }
+}
+
+for (i = 0; i &lt; m_infoTextSize; i++)
+{
+    if(m_bottomTextDraw[i] != m_bottomText[i])
+    {
+        m_bottomTextDraw[i] = m_bottomText[i];
+        break;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -26,15 +67,18 @@
           <argument>
             <kind>1</kind>
             <string>/// Get input
+
+var gpDevice = global.playerGamepadID[m_id];
+
 // Up
-if (gamepad_axis_value(m_controllerId, gp_axislv) &lt; -m_gpDeadzone)
+if (gamepad_axis_value(gpDevice, gp_axislv) &lt; -m_gpDeadzone)
 {
     m_inputUp = input_timers_active(0);
 }
 else
 {   
     // Check for d-pad
-    if(gamepad_button_check_pressed(m_controllerId, gp_padu))
+    if(gamepad_button_check_pressed(gpDevice, gp_padu))
     {
         m_inputUp = true;
     }
@@ -46,14 +90,14 @@ else
 }
 
 // Down
-if (gamepad_axis_value(m_controllerId, gp_axislv) &gt; m_gpDeadzone)
+if (gamepad_axis_value(gpDevice, gp_axislv) &gt; m_gpDeadzone)
 {
     m_inputDown = input_timers_active(1);
 }
 else
 {
     // Check for d-pad
-    if(gamepad_button_check_pressed(m_controllerId, gp_padd))
+    if(gamepad_button_check_pressed(gpDevice, gp_padd))
     {
         m_inputDown = true;
     }
@@ -65,14 +109,14 @@ else
 }
 
 // Left
-if (gamepad_axis_value(m_controllerId, gp_axislh) &lt; -m_gpDeadzone)
+if (gamepad_axis_value(gpDevice, gp_axislh) &lt; -m_gpDeadzone)
 {
     m_inputLeft = input_timers_active(2);
 }
 else
 {
     // Check for d-pad
-    if(gamepad_button_check_pressed(m_controllerId, gp_padl))
+    if(gamepad_button_check_pressed(gpDevice, gp_padl))
     {
         m_inputLeft = true;
     }
@@ -84,14 +128,14 @@ else
 }
 
 // Right
-if (gamepad_axis_value(m_controllerId, gp_axislh) &gt; m_gpDeadzone)
+if (gamepad_axis_value(gpDevice, gp_axislh) &gt; m_gpDeadzone)
 {
     m_inputRight = input_timers_active(3);
 }
 else
 {
     // Check for d-pad
-    if(gamepad_button_check_pressed(m_controllerId, gp_padr))
+    if(gamepad_button_check_pressed(gpDevice, gp_padr))
     {
         m_inputRight = true;
     }
@@ -102,10 +146,14 @@ else
     }
 }
 
+// Raw sticks
+stickH = gamepad_axis_value(gpDevice, gp_axislh);
+stickV = gamepad_axis_value(gpDevice, gp_axislv);
+
 // Buttons
-m_inputSelect = gamepad_button_check_pressed(m_controllerId, gp_face1);
-m_inputShift = gamepad_button_check(m_controllerId, gp_shoulderrb);
-m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
+m_inputSelect = gamepad_button_check_pressed(gpDevice, gp_face1);
+m_inputShift = gamepad_button_check(gpDevice, gp_shoulderrb);
+m_inputBack = gamepad_button_check_pressed(gpDevice, gp_face2);
 </string>
           </argument>
         </arguments>
@@ -126,30 +174,31 @@ m_inputBack = gamepad_button_check_pressed(m_controllerId, gp_face2);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Get input keyboar
+            <string>/// debug mode input keyboard override
 
-if(m_controllerId = 1)
+if(DEBUG_MODE == 1 &amp;&amp; m_id == 1)
 {
-   if(!gamepad_is_connected(1))
-   {
-        // Up
-        m_inputUp = keyboard_check_pressed(vk_up);
-        
-        // Down
-        m_inputDown = keyboard_check_pressed(vk_down);
-        
-        // Left
-        m_inputLeft = keyboard_check_pressed(vk_left);
-        
-        // Right
-        
-        m_inputRight = keyboard_check_pressed(vk_right);
-        
-        // Buttons
-        m_inputSelect = keyboard_check_pressed(vk_enter);
-        m_inputShift = keyboard_check(vk_lshift);
-        m_inputBack = keyboard_check_pressed(vk_escape);
-    }
+    // Up
+    m_inputUp = keyboard_check_pressed(vk_up);
+    
+    // Down
+    m_inputDown = keyboard_check_pressed(vk_down);
+    
+    // Left
+    m_inputLeft = keyboard_check_pressed(vk_left);
+    
+    // Right
+    
+    m_inputRight = keyboard_check_pressed(vk_right);
+    
+    // Raw Sticks
+    stickH = 1;
+    stickV = 0;
+    
+    // Buttons
+    m_inputSelect = keyboard_check_pressed(vk_enter);
+    m_inputShift = keyboard_check(vk_lshift);
+    m_inputBack = keyboard_check_pressed(vk_escape);
 }
 </string>
           </argument>
@@ -242,6 +291,7 @@ else
 
 if(m_currentState == 3)
 {   
+    m_ready = true;
     var w = m_drawWidth;
     var h = m_drawHeight;
     
@@ -251,9 +301,8 @@ if(m_currentState == 3)
 
     if(m_inputBack)
     {
-        m_currentState--;
-        audio_play_sound(snd_charReturn, 1, 0);
-        obj_drawRays.m_multiplier -= 5;
+        m_ready = false;
+        event_user(2);
     }
         
     global.playerHead[m_id] = m_currentHead;
@@ -407,10 +456,9 @@ if(m_currentState == 2)
     {
         if(m_charCurrent == 5)
         {
-            m_currentState++;
+            event_user(1);
             audio_play_sound(snd_swordSlice, 1, 0);
             m_uwahTimer = 0;
-            obj_drawRays.m_multiplier += 10;
         }
         else
         {
@@ -430,9 +478,7 @@ if(m_currentState == 2)
         }
         else
         {
-            m_currentState--;
-            audio_play_sound(snd_charReturn, 1, 0);
-            obj_drawRays.m_multiplier -= 5;
+            event_user(2);
         }
     }
     
@@ -533,26 +579,14 @@ if(m_currentState == 2)
     
     if(m_charCurrent == 0)
     {
-        if(m_keybaord)
+        var angle = point_direction(0, 0, stickH, stickV);
+        
+        if(max(abs(stickH), abs(stickV)) &gt; 0.3)
         {
-            var angle = point_direction(0, 0, -keyboard_check(vk_left) + keyboard_check(vk_right), 
-                -keyboard_check(vk_up) + keyboard_check(vk_down));
-                
-             m_currentColor = floor(angle / 360 * 255);
+            m_currentColor = floor(angle / 360 * 255);
         }
-        else
-        {
-            var stickH = gamepad_axis_value(m_controllerId, gp_axislh);
-            var stickV = gamepad_axis_value(m_controllerId, gp_axislv);
-            var angle = point_direction(0, 0, stickH, stickV);
-            
-            if(max(abs(stickH), abs(stickV)) &gt; 0.3)
-            {
-                m_currentColor = floor(angle / 360 * 255);
-            }
-        }
-        //m_currentColor += m_colorAmount;
-    }
+    }   
+    //m_currentColor += m_colorAmount;
     
     // Lerp thumbs    
     m_bowThumbOffset = lerp(m_bowThumbOffset, (m_charCurrent == 1), 0.2);
@@ -718,7 +752,7 @@ if(m_currentState == 1)
     
     // Set the name
     m_topText = string_to_array("Enter your name", m_infoTextSize);
-    m_bottomText = string_to_array("", m_infoTextSize);
+    m_bottomText = string_to_array(gamepad_get_description(global.playerGamepadID[m_id]) + " [" + string(global.playerGamepadID[m_id]) + "]", m_infoTextSize);
     
     // Set all the positions for the letters
     m_letterBoxX[0] = 0;
@@ -789,9 +823,7 @@ if(m_currentState == 1)
                 // Goto next state
                 if(nameLength &gt; 0) // name isn't empty
                 {
-                    m_currentState++;
-                    audio_play_sound(snd_charNext, 1, 0);
-                    obj_drawRays.m_multiplier += 5;
+                    event_user(1);
                 }
                 break;
                 
@@ -830,9 +862,8 @@ if(m_currentState == 1)
         }
         else
         {
-            m_currentState--;
-            audio_play_sound(snd_charReturn, 1, 0);
-            obj_drawRays.m_multiplier -= 5;
+            event_user(2);
+            global.playerGamepadID[m_id] = -1;
         }
     }
     
@@ -901,21 +932,23 @@ if(m_currentState == 0)
     m_contHeight = 190*1.3;
     m_contWidth = 230*1.6;
     
-    // Check for input
+    /* // Check for input
     if (m_inputSelect) // Go to the next state
     { 
         audio_play_sound(snd_pressedA, 1, 0); 
         m_currentState++; 
         obj_drawRays.m_multiplier += 5;
-    } 
+    }*/ 
     
-    m_topText = string_to_array("Press A to join!", m_infoTextSize);
+    m_topText = string_to_array("Press START/OPTIONS!", m_infoTextSize);
     m_bottomText = string_to_array("", m_infoTextSize);
 }
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="7" enumb="12">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -932,25 +965,38 @@ if(m_currentState == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Animate the text
+            <string>/// PreviousState()
 
-for (i = 0; i &lt; m_infoTextSize; i++)
-{
-    if(m_topTextDraw[i] != m_topText[i])
-    {
-        m_topTextDraw[i] = m_topText[i];
-        break;
-    }
-}
+m_currentState--;
+audio_play_sound(snd_charReturn, 1, 0);
+obj_drawRays.m_multiplier -= 5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// NextState()
 
-for (i = 0; i &lt; m_infoTextSize; i++)
-{
-    if(m_bottomTextDraw[i] != m_bottomText[i])
-    {
-        m_bottomTextDraw[i] = m_bottomText[i];
-        break;
-    }
-}
+m_currentState++;
+audio_play_sound(snd_charNext, 1, 0);
+obj_drawRays.m_multiplier += 5;
 </string>
           </argument>
         </arguments>
@@ -1027,7 +1073,6 @@ m_topTextDraw = string_to_array("", m_infoTextSize);
 m_bottomTextDraw = string_to_array("", m_infoTextSize);
 
 /// Input
-m_controllerId = m_id; // Which controller controlls this selector
 m_gpDeadzone = 0.3;
 
 m_inputUp = false;
@@ -1068,7 +1113,7 @@ for (i = 0; i &lt; 4; i++) // 0 = up, 1 = down, 2 = left, 3 = right
             <string>/// Set position
 
 y = (room_height / 2) + (room_height / 10);
-x = room_width / 4 * (m_controllerId+1) - room_width / 8;
+x = room_width / 4 * (m_id+1) - room_width / 8;
 
 /*
 x = room_width / 4 * ((m_controllerId % 2 == 1) + 1);

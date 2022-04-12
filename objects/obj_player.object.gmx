@@ -142,20 +142,17 @@ m_keyAbility = m_buttonXPressed;
             <kind>1</kind>
             <string>/// DEBUG KEYBOARD INPUT
 
-if (m_playerId == 1)
+if (DEBUG_MODE &amp;&amp; m_playerId == 1)
 {
-   if(!gamepad_is_connected(1))
-   {
-      m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
-      m_keyJump = keyboard_check_pressed(vk_up);
-      m_keyJumpHeld = keyboard_check(vk_up);
-      m_keyAbility = keyboard_check_pressed(vk_lcontrol);
-      
-      m_rStickH = (-keyboard_check(ord("A")) + keyboard_check(ord("D")));
-      m_rStickV = (-keyboard_check(ord("W")) + keyboard_check(ord("S")));
-      
-      m_lTrigger = keyboard_check(vk_rshift);
-   }
+    m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
+    m_keyJump = keyboard_check_pressed(vk_up);
+    m_keyJumpHeld = keyboard_check(vk_up);
+    m_keyAbility = keyboard_check_pressed(vk_lcontrol);
+    
+    m_rStickH = (-keyboard_check(ord("A")) + keyboard_check(ord("D")));
+    m_rStickV = (-keyboard_check(ord("W")) + keyboard_check(ord("S")));
+    
+    m_lTrigger = keyboard_check(vk_rshift);
 }
 </string>
           </argument>
@@ -1246,7 +1243,7 @@ m_buttonYPressed = false;
           <argument>
             <kind>1</kind>
             <string>/// Initalize player
-m_controllerId = m_playerId;
+m_controllerId = global.playerGamepadID[m_playerId];
 </string>
           </argument>
         </arguments>

@@ -13,7 +13,7 @@
   <code>randomize();
 
 global.deathCooldown = 30;
-global.maxPlayers = 12;
+global.maxPlayers = 4;
 global.playerAmount = 2;
 global.grav = 0.8;
 global.timeScale = 1;
@@ -23,6 +23,8 @@ global.firstBlood = false;
 
 for (i = 0; i &lt; global.maxPlayers; i++)
 {
+    global.playerGamepadID[i] = -1;
+    
     global.playerHead[i] = 0;
     global.playerLeg[i] = 0;
     global.playerBow[i] = 0;
