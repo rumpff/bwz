@@ -26,8 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Assign 'prevs'
-m_lerpStickPrev = m_lerpedStick;
-m_keyJumpPrev = (m_rTrigger &gt; m_controllerDeadzone);
+m_smoothMovePrev = m_smoothMove;
+//m_keyJumpPrev = (m_rTrigger &gt; m_controllerDeadzone);
+m_keyJumpPrev = m_keyJumpHeld;
 </string>
           </argument>
         </arguments>
@@ -75,16 +76,20 @@ if(obj_gameManager.m_gamePaused || obj_gameManager.m_gameEnd)
             <kind>1</kind>
             <string>/// Get the player's input
 
-// Controller
-
 m_lStickH = gamepad_axis_value(m_controllerId, gp_axislh);
 m_lStickV = gamepad_axis_value(m_controllerId, gp_axislv);
 
 m_rStickH = gamepad_axis_value(m_controllerId, gp_axisrh);
 m_rStickV = gamepad_axis_value(m_controllerId, gp_axisrv);
 
+m_dPadH = (-gamepad_button_check(m_controllerId, gp_padl) 
+    + gamepad_button_check(m_controllerId, gp_padr));
+
 m_lTrigger = gamepad_button_value(m_controllerId, gp_shoulderlb);
 m_rTrigger = gamepad_button_value(m_controllerId, gp_shoulderrb);
+
+m_lBumper = gamepad_button_check(m_controllerId, gp_shoulderl);
+m_rBumper = gamepad_button_check(m_controllerId, gp_shoulderr);
 
 m_buttonA = gamepad_button_check(m_controllerId, gp_face1);
 m_buttonB = gamepad_button_check(m_controllerId, gp_face2);
@@ -117,8 +122,13 @@ m_buttonYPressed = gamepad_button_check_pressed(m_controllerId, gp_face4);
             <kind>1</kind>
             <string>/// Assign buttons
 
-m_keyJump = (m_rTrigger &gt; m_controllerDeadzone &amp;&amp; !m_keyJumpPrev);
-m_keyJumpHeld = (m_rTrigger &gt; m_controllerDeadzone);
+if(m_dPadH != 0) { m_rawMove = m_dPadH; }
+else { m_rawMove = m_lStickH; }
+
+
+
+m_keyJump = ((m_rTrigger &gt; m_controllerDeadzone || m_rBumper) &amp;&amp; !m_keyJumpPrev);
+m_keyJumpHeld = ((m_rTrigger &gt; m_controllerDeadzone) || m_rBumper);
 m_keyAbility = m_buttonXPressed;
 </string>
           </argument>
@@ -144,7 +154,7 @@ m_keyAbility = m_buttonXPressed;
 
 if (DEBUG_MODE &amp;&amp; m_playerId == 1)
 {
-    m_lStickH = (-keyboard_check(vk_left) + keyboard_check(vk_right));
+    m_rawMove = (-keyboard_check(vk_left) + keyboard_check(vk_right));
     m_keyJump = keyboard_check_pressed(vk_up);
     m_keyJumpHeld = keyboard_check(vk_up);
     m_keyAbility = keyboard_check_pressed(vk_lcontrol);
@@ -210,7 +220,7 @@ else
    }
 }
 
-if (abs(m_lStickH) &lt; m_dashDanceMargin )
+if (abs(m_rawMove) &lt; m_dashDanceMargin )
 {
    m_dashDanceActive = false;
 }
@@ -237,7 +247,6 @@ if (abs(m_lStickH) &lt; m_dashDanceMargin )
             <string>/// Calculate accelleration
 //* and control speed in mid-air
 
-var stick = m_lStickH
 var inertia = 0;
 
 if (m_onGround) // On the ground
@@ -250,7 +259,7 @@ else // InAir
     inertia = m_inertiaAir;
 }
 
-m_lerpedStick = lerp(m_lerpedStick, stick, (inertia * global.timeScale));
+m_smoothMove = lerp(m_smoothMove, m_rawMove, (inertia * global.timeScale));
 
 
 </string>
@@ -275,8 +284,8 @@ m_lerpedStick = lerp(m_lerpedStick, stick, (inertia * global.timeScale));
             <kind>1</kind>
             <string>/// Move to inputs
 
-move = m_lerpedStick;
-m_hsp = move * m_movespeed;
+//move = m_smoothMove;
+m_hsp = m_smoothMove * m_movespeed;
 </string>
           </argument>
         </arguments>
@@ -354,17 +363,17 @@ if ((m_keyJump) &amp;&amp; (m_jumps &gt; 0))
       m_hspFinal = 0;
       m_hsp = 0;
         
-      if(m_lStickH != 0)
-      { m_bodyAngle += (360 * sign(m_lStickH)); }
+      if(m_rawMove != 0)
+      { m_bodyAngle += (360 * sign(m_rawMove)); }
       else
       { m_bodyAngle += (360 * m_imageDirection); }
       
       m_playerState = m_playerStates.airDashing
-      m_lerpedStick = (m_lStickH * m_airDashSpeed) * 0.7; 
+      m_smoothMove = (m_rawMove * m_airDashSpeed) * 0.7; 
       
       if (m_againstWall)
       {
-         m_lerpedStick -= m_wallDir;
+         m_smoothMove -= m_wallDir;
          m_vsp = -m_jumpspeed * 1.2;
       }      
       
@@ -409,18 +418,18 @@ if (m_onGround) // Check if the player is on the ground
 {  
    if (m_dashDanceTimer &gt; 0) // Check if the timer is larger than 0
    {
-      if(m_lStickH * -m_dashDancePrev &gt; m_dashDanceMargin) // Check if the current input is the same as the previous * -0.9
+      if(m_rawMove * -m_dashDancePrev &gt; m_dashDanceMargin) // Check if the current input is the same as the previous * -0.9
       {
-         m_lerpedStick = sign(m_lStickH); // Apply the new velocity multiplier
+         m_smoothMoveInput = sign(m_rawMove); // Apply the new velocity multiplier
       }
    
       m_dashDanceTimer -= global.timeScale; // Time the timer
    }
    
-   if (abs(m_lerpedStick) &gt; m_dashDanceMargin &amp;&amp; !m_dashDanceActive) // Check if the velocity multiplier is higher then 0.9
+   if (abs(m_smoothMove) &gt; m_dashDanceMargin &amp;&amp; !m_dashDanceActive) // Check if the velocity multiplier is higher then 0.9
    {
       m_dashDanceTimer = m_dashDanceWindow; // Set the timer
-      m_dashDancePrev = sign(m_lStickH); // Set the old position of the stick to the current
+      m_dashDancePrev = sign(m_rawMove); // Set the old position of the stick to the current
       
       m_dashDanceActive = true;
    }
@@ -485,7 +494,7 @@ if (place_meeting(x + (m_hspFinal * global.timeScale), y, obj_collider))
     
     m_hspFinal = 0;
     m_hsp = 0;
-    m_lerpedStick = 0;
+    m_smoothMove = 0;
 }
 
 x += (m_hspFinal * global.timeScale);
@@ -581,7 +590,9 @@ if(obj_gameManager.m_playerAbilityActive[m_playerId] == false)
             <string>/// Control bow
 
 var largStick = max(abs(m_rStickH), abs(m_rStickV))
-var trigger = m_lTrigger;
+
+if(m_lTrigger &gt; 0) { var trigger = m_lTrigger}
+else { var trigger = m_lBumper}
 
 // Check if active
 if(largStick &gt; 0.5)
@@ -780,19 +791,19 @@ if(m_imageIndex &gt; sprite_get_number(m_spriteIndex))
             <kind>1</kind>
             <string>/// Animate New
 
-signMove = sign(move);
+signMove = sign(m_smoothMove);
 
 // Check which direction the player should face
-if (m_lStickH != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
+if (m_smoothMove != 0 &amp;&amp; (m_onGround || m_againstWall)) { m_imageDirection = signMove; }
 
 // All the code here is for when the player faces right
 // Check in which state the player is
 if (m_onGround) // Player is on the ground
 {
-    if (abs(move) &gt; 0.1) // walking
+    if (abs(m_smoothMove) &gt; 0.1) // walking
     {   
         // Time the timer pretty fast 
-        m_bodyOffSin += (0.20 * abs(move) * global.timeScale);
+        m_bodyOffSin += (0.20 * abs(m_smoothMove) * global.timeScale);
         m_legAngleSin = m_bodyOffSin; // The legs must time perfectly with the body
         
         // Calculate an offset which makes the body bounce
@@ -863,7 +874,7 @@ else // Player is in the air
         // Lerp the offset to zero
         m_bodyOffsetY = lerp(m_bodyOffsetY, 0, (0.4 * global.timeScale));
         
-        m_bodyAngle = lerp(m_bodyAngle, (25 * (move * -1)), (0.1 * global.timeScale));
+        m_bodyAngle = lerp(m_bodyAngle, (25 * (m_smoothMove * -1)), (0.1 * global.timeScale));
     }
 }
 
@@ -1065,7 +1076,9 @@ m_inertiaGround = 0.2;
 m_inertiaAir = 0.07;
 m_inertiaDash = 0.02;
 
-m_lerpedStick = 0;
+m_rawMove = 0;
+m_smoothMove = 0;
+m_smoothMovePrev = 0;
 
 // Jumping
 m_jumps = 0;
@@ -1210,8 +1223,13 @@ m_lStickV = 0;
 m_rStickH = 0;
 m_rStickV = 0;
 
+m_dPadH = 0;
+
 m_lTrigger = 0;
 m_rTrigger = 0;
+
+m_lBumper = 0;
+m_rBumper = 0;
 
 m_buttonA = false;
 m_buttonB = false;
