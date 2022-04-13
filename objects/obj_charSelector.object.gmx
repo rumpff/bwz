@@ -306,6 +306,7 @@ if(m_currentState == 3)
     {
         m_ready = false;
         event_user(2);
+        exit;
     }
         
     global.playerHead[m_id] = m_currentHead;
@@ -482,6 +483,7 @@ if(m_currentState == 2)
         else
         {
             event_user(2);
+            exit;
         }
     }
     
@@ -866,8 +868,9 @@ if(m_currentState == 1)
         }
         else
         {
-            event_user(2);
             global.playerGamepadID[m_id] = -1;
+            event_user(2);
+            exit;
         }
     }
     
