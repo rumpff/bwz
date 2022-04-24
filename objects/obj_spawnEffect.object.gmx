@@ -28,12 +28,14 @@
             <string>/// Animate and the rest
 m_timer += global.timeScale;
 
-if(m_timer &gt; m_duration)
+if(m_timer &gt; m_spawnDuration + m_fadeDuration)
 {
     instance_destroy();
 }
 
-m_radius = ease_out_expo(m_timer, m_start, m_change, m_duration);
+m_radius = ease_out_cubic(clamp(m_timer,0, m_spawnDuration), m_spanwStart, m_spawnChange, m_spawnDuration);
+m_alpha = ease_linear(m_timer - m_spawnDuration, 1, -1, m_fadeDuration);
+
 </string>
           </argument>
         </arguments>
@@ -57,12 +59,15 @@ m_radius = ease_out_expo(m_timer, m_start, m_change, m_duration);
           <argument>
             <kind>1</kind>
             <string>//m_id;
-m_start = 0;
-m_change = 1;
+m_spanwStart = 0;
+m_spawnChange = 1;
 
 m_timer = 0;
-m_duration = 30;
+m_spawnDuration = 30;
+m_fadeDuration = 10;
+
 m_radius = 0;
+m_alpha = 1;
 
 var sound
 
@@ -114,7 +119,9 @@ play_sound(sound);
 color = global.playerColor[m_id]
 
 draw_set_color(color);
+draw_set_alpha(m_alpha)
 draw_circle_width(x, y, m_radius * 512, 16 * m_radius, 64);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

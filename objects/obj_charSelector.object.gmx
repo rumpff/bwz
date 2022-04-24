@@ -8,47 +8,6 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="3" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Animate the text
-
-for (i = 0; i &lt; m_infoTextSize; i++)
-{
-    if(m_topTextDraw[i] != m_topText[i])
-    {
-        m_topTextDraw[i] = m_topText[i];
-        break;
-    }
-}
-
-for (i = 0; i &lt; m_infoTextSize; i++)
-{
-    if(m_bottomTextDraw[i] != m_bottomText[i])
-    {
-        m_bottomTextDraw[i] = m_bottomText[i];
-        break;
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -223,44 +182,7 @@ if(DEBUG_MODE == 1 &amp;&amp; m_id == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// BoxUpdate
-
-// Lerp the size
-m_drawWidth = lerp(m_drawWidth, m_contWidth, 0.2) + (cos(m_containterSin) * 2);
-m_drawHeight = lerp(m_drawHeight, m_contHeight, 0.2) + (sin(m_containterSin) * 2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Do tings for all states
-
-/*
-if((m_inputBack) &amp;&amp; (m_currentState &gt; 0))
-{
-    m_currentState--;
-    audio_play_sound(snd_charReturn, 1, 0);
-    obj_drawRays.m_multiplier -= 5;
-}
-*/
-
-m_sinCounter += 0.03;
-m_containterSin -= 0.07;
+            <string>/// Force ready
 
 if(m_currentState == 3)
 {
@@ -290,17 +212,11 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update for state 3
+            <string>/// Update State "Ready"
 
-if(m_currentState == 3)
+if(m_currentState == m_selectStates.Ready)
 {   
     m_ready = true;
-    var w = m_drawWidth;
-    var h = m_drawHeight;
-    
-    // set the container to the right size   
-    m_contWidth = 250;
-    m_contHeight = 125;
 
     if(m_inputBack)
     {
@@ -364,55 +280,177 @@ if(m_currentState == 3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update for state 2
+            <string>/// Update State "EnterName"
 
-if(m_currentState == 2)
-{   
-    var w = m_drawWidth;
-    var h = m_drawHeight;
+if(m_currentState == m_selectStates.EnterName)
+{
+    // Set charset
+    if(m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetD; }
+    else if(m_inputTriggerL &amp;&amp; !m_inputTriggerR) { m_charsetCurrent = m_charsetC; }
+    else if(!m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetB; }
+    else { m_charsetCurrent = m_charsetA; }
     
-    // set the container to the right size   
-    m_contHeight = 750;
+    // Animate selecor
+    m_selectorDist = lerp(m_selectorDist, m_selectorMaxDistance, 0.17);
+    m_selectorAngleOff = lerp(m_selectorAngleOff, 0, 0.17);
     
-    if(m_drawHeight &gt; 740)
+    // Set all the positions for the letters
+    m_letterBoxX[0] = 0;
+    m_letterBoxY[0] = 0;  
+    
+    
+    var sx = x - m_contWidth/2;
+    var sy = y - m_contHeight/6;
+    
+    var boxIndex = 0;
+    
+    var bwidth = m_contWidth / m_xRows;
+    var bheight = m_contHeight / m_yRows;
+    
+    for (iy = 0; iy &lt; 8; iy++)
     {
-        m_contWidth = 350; 
+        for (ix = 0; ix &lt; 4; ix++)
+        {
+            if(boxIndex &lt; string_length(m_charsetCurrent))
+            {
+                m_letterBoxX[boxIndex] = sx + (ix * bwidth); // left x
+                m_letterBoxY[boxIndex] = sy + (iy * bheight * 0.66); // upper y
+                
+                boxIndex++;
+            }
+        }    
     }
     
-    // Set the text
-    switch(m_charCurrent)
+    
+    // Get input from the selection
+    if(m_inputSelect)
     {
-        case 0:
-            m_topText = string_to_array("Pick a color", m_infoTextSize);
-            m_bottomText = string_to_array("", m_infoTextSize);
-            break;
-            
-        case 1:
-            m_topText = string_to_array("Choose your weapon", m_infoTextSize);
-            m_bottomText = string_to_array("Ability:#" + get_ability(m_currentBow), m_infoTextSize);
-            break;
-            
-        case 2:
-            m_topText = string_to_array("Choose a hat", m_infoTextSize);
-            m_bottomText = string_to_array("", m_infoTextSize);
-            break;
+        var newLetter = string_copy(m_charsetCurrent, m_selectorPos+1, 1);
+        var nameLength = string_length(m_name);
+        m_letterRot[m_selectorPos] = choose(-30, 30);
+        m_letterSat[m_selectorPos] = 255;
+        m_selectorDist = m_clickDistance;
         
-        case 3:
-            m_topText = string_to_array("Choose your head", m_infoTextSize);
-            m_bottomText = string_to_array("", m_infoTextSize);       
-            break;
-            
-        case 4:
-            m_topText = string_to_array("Choose your legs", m_infoTextSize);
-            m_bottomText = string_to_array("", m_infoTextSize);  
-            break;
-            
-        case 5:
-            m_topText = string_to_array("", m_infoTextSize);
-            m_bottomText = string_to_array("", m_infoTextSize);
-            break;
+        switch(newLetter)
+        {
+            case "&lt;":
+                // Remove a letter   
+                m_name = string_delete(m_name, nameLength, 1);
+                audio_play_sound(snd_letterRemove, 1, 0);
+                m_selectorAngleOff = -90;
+                break;
+                
+            case "&gt;":
+                // Goto next state
+                if(nameLength &gt; 0) // name isn't empty
+                {
+                    event_user(1);
+                }
+                break;
+                
+            default:
+                // Add the letter
+                if(nameLength &lt; m_maxNameLength)
+                { 
+                    m_name += newLetter;
+                    var snd = audio_play_sound(snd_letterEnter, 1, 0);
+                    audio_sound_pitch(snd, random_range(.9, 1.1));
+                }
+                else
+                {
+                    // name at limit
+                }
+                
+                if (nameLength == m_maxNameLength) // Move the cursor to confirm if the max length is reached
+                {
+                    m_selectorPos = array_length_1d(m_letterBoxX)-1;
+                    audio_play_sound(snd_letterFull, 1, 0);
+                }
+                
+                m_selectorAngleOff = 90;
+                break;
+        }
     }
     
+    if(m_inputBack)
+    {  
+        var nameLength = string_length(m_name);
+        if(nameLength &gt; 0) // Remove a letter 
+        {
+            m_name = string_delete(m_name, nameLength, 1);
+            audio_play_sound(snd_letterRemove, 1, 0);
+            m_selectorAngleOff = -90;
+        }
+        else
+        {
+            event_user(2);
+            exit;
+        }
+    }
+    
+    // Move the selection
+    var addAmount = 0;
+    
+    if(m_inputUp &amp;&amp; (m_selectorPos - m_xRows) &gt;= 0)
+    {
+        // Move up
+        addAmount -= m_xRows;
+    }
+    if(m_inputDown &amp;&amp; (m_selectorPos + m_xRows) &lt; array_length_1d(m_letterBoxX))
+    {
+        // Move down
+        addAmount += m_xRows;
+    }  
+    if(m_inputLeft &amp;&amp; ((m_selectorPos-1+m_xRows) mod m_xRows) != m_xRows-1)
+    {
+        // Move left
+        addAmount--;
+    }
+    if(m_inputRight &amp;&amp; ((m_selectorPos+1+m_xRows) mod m_xRows) != 0 &amp;&amp; m_selectorPos+1 &lt; array_length_1d(m_letterBoxX))
+    {
+        // Move right
+        addAmount++;
+    }
+    
+    if(addAmount != 0) 
+    { 
+        m_selectorPos += addAmount;
+        m_selectorDist =  (m_selectorMaxDistance * .8); 
+        audio_play_sound(snd_cursorMove, 1, 0);
+    }
+    
+    // Set the selector's position
+    m_selectorX = lerp(m_selectorX, m_letterBoxX[m_selectorPos] + (bwidth / 2), 0.4);
+    m_selectorY = lerp(m_selectorY, m_letterBoxY[m_selectorPos] + (bheight / 2), 0.4);
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update State "Create Character"
+
+if(m_currentState == m_selectStates.SelectCharacter)
+{   
+    var w = m_contWidth;
+    var h = m_contHeight;
+
     // Lerp the selector pos
     switch(m_charCurrent)
     {
@@ -733,185 +771,41 @@ if(m_currentState == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update for state 1
+            <string>/// Update State "PressA"
 
-if(m_currentState == 1)
-{
-    // Set charset
-    if(m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetD; }
-    else if(m_inputTriggerL &amp;&amp; !m_inputTriggerR) { m_charsetCurrent = m_charsetC; }
-    else if(!m_inputTriggerL &amp;&amp; m_inputTriggerR) { m_charsetCurrent = m_charsetB; }
-    else { m_charsetCurrent = m_charsetA; }
-    
-    // set the container to the right size
- 
-    m_contWidth = 300;   
-    m_contHeight = 350;
-    if(m_drawWidth &gt; m_contWidth - 10)
-    {
-        m_contHeight = 600; 
-    }
-    
-    // Animate selecor
-    m_selectorDist = lerp(m_selectorDist, m_selectorMaxDistance, 0.17);
-    m_selectorAngleOff = lerp(m_selectorAngleOff, 0, 0.17);
-    
-    // Set the name
-    m_topText = string_to_array("Enter your name", m_infoTextSize);
-    m_bottomText = string_to_array(gamepad_get_description(global.playerGamepadID[m_id]) + " [" + string(global.playerGamepadID[m_id]) + "]", m_infoTextSize);
-    
-    // Set all the positions for the letters
-    m_letterBoxX[0] = 0;
-    m_letterBoxY[0] = 0;  
-    
-    
-    var sx = x - m_drawWidth/2;
-    var sy = y - m_drawHeight/6;
-    
-    var boxIndex = 0;
-    
-    var bwidth = m_drawWidth / m_xRows;
-    var bheight = m_drawHeight / m_yRows;
-    
-    for (iy = 0; iy &lt; 8; iy++)
-    {
-        for (ix = 0; ix &lt; 4; ix++)
-        {
-            if(boxIndex &lt; string_length(m_charsetCurrent))
-            {
-                m_letterBoxX[boxIndex] = sx + (ix * bwidth); // left x
-                m_letterBoxY[boxIndex] = sy + (iy * bheight * 0.66); // upper y
-                
-                boxIndex++;
-            }
-        }    
-    }
-    
-    // Animate the letters
-    for (i = 0; i &lt; array_length_1d(m_letterBoxX); i++)
-    {
-        if ((array_length_1d(m_letterRot) - 1) &lt; i)
-        { 
-            m_letterRot[i] = 0; 
-            m_letterSat[i] = 0; 
-            m_letterXOff[i] = 0;
-            m_letterYOff[i] = 0;
-        }
-        else
-        { 
-            m_letterRot[i] = lerp(m_letterRot[i], 0, 0.1); 
-            m_letterSat[i] = lerp(m_letterSat[i], 0, 0.2);
-            m_letterXOff[i] = lerp(m_letterXOff[i], 0, 0.1);
-            m_letterYOff[i] = lerp(m_letterYOff[i], 0, 0.1); 
-        }
-    }
-    
-    
-    // Get input from the selection
-    if(m_inputSelect)
-    {
-        var newLetter = string_copy(m_charsetCurrent, m_selectorPos+1, 1);
-        var nameLength = string_length(m_name);
-        m_letterRot[m_selectorPos] = choose(-30, 30);
-        m_letterSat[m_selectorPos] = 255;
-        m_selectorDist = m_clickDistance;
-        
-        switch(newLetter)
-        {
-            case "&lt;":
-                // Remove a letter   
-                m_name = string_delete(m_name, nameLength, 1);
-                audio_play_sound(snd_letterRemove, 1, 0);
-                m_selectorAngleOff = -90;
-                break;
-                
-            case "&gt;":
-                // Goto next state
-                if(nameLength &gt; 0) // name isn't empty
-                {
-                    event_user(1);
-                }
-                break;
-                
-            default:
-                // Add the letter
-                if(nameLength &lt; m_maxNameLength)
-                { 
-                    m_name += newLetter;
-                    var snd = audio_play_sound(snd_letterEnter, 1, 0);
-                    audio_sound_pitch(snd, random_range(.9, 1.1));
-                }
-                else
-                {
-                    // name at limit
-                }
-                
-                if (nameLength == m_maxNameLength) // Move the cursor to confirm if the max length is reached
-                {
-                    m_selectorPos = array_length_1d(m_letterBoxX)-1;
-                    audio_play_sound(snd_letterFull, 1, 0);
-                }
-                
-                m_selectorAngleOff = 90;
-                break;
-        }
-    }
-    
-    if(m_inputBack)
-    {  
-        var nameLength = string_length(m_name);
-        if(nameLength &gt; 0) // Remove a letter 
-        {
-            m_name = string_delete(m_name, nameLength, 1);
-            audio_play_sound(snd_letterRemove, 1, 0);
-            m_selectorAngleOff = -90;
-        }
-        else
-        {
-            global.playerGamepadID[m_id] = -1;
-            event_user(2);
-            exit;
-        }
-    }
-    
-    // Move the selection
-    var addAmount = 0;
-    
-    if(m_inputUp &amp;&amp; (m_selectorPos - m_xRows) &gt;= 0)
-    {
-        m_letterYOff[m_selectorPos] -= 8;
-        addAmount -= m_xRows;
-    }
-    if(m_inputDown &amp;&amp; (m_selectorPos + m_xRows) &lt; array_length_1d(m_letterBoxX))
-    {
-        m_letterYOff[m_selectorPos] += 8;
-        addAmount += m_xRows;
-    }
-    
-    if(m_inputLeft &amp;&amp; ((m_selectorPos-1+m_xRows) mod m_xRows) != m_xRows-1)
-    {
-        m_letterXOff[m_selectorPos] -= 8;
-        addAmount--;
-    }
-    if(m_inputRight &amp;&amp; ((m_selectorPos+1+m_xRows) mod m_xRows) != 0 &amp;&amp; m_selectorPos+1 &lt; array_length_1d(m_letterBoxX))
-    {
-        m_letterXOff[m_selectorPos] += 8;
-        addAmount++;
-    }
-    
-    if(addAmount != 0) 
+if(m_currentState == m_selectStates.PressA)
+{    
+    /* // Check for input
+    if (m_inputSelect) // Go to the next state
     { 
-        m_selectorPos += addAmount;
-        m_selectorDist =  (m_selectorMaxDistance * .8); 
-        audio_play_sound(snd_cursorMove, 1, 0);
-    }
-    
-    // Set the selector's position
-    m_selectorX = lerp(m_selectorX, m_letterBoxX[m_selectorPos] + (bwidth / 2), 0.4);
-    m_selectorY = lerp(m_selectorY, m_letterBoxY[m_selectorPos] + (bheight / 2), 0.4);
-    
+        audio_play_sound(snd_pressedA, 1, 0); 
+        m_currentState++; 
+        obj_drawRays.m_multiplier += 5;
+    }*/ 
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Reset values to default</string>
           </argument>
         </arguments>
       </action>
@@ -931,25 +825,11 @@ if(m_currentState == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update for state 0
+            <string>/// Reset values to default
 
-if(m_currentState == 0)
-{
-    // set the box to the right size
-    m_contHeight = 190*1.3;
-    m_contWidth = 230*1.6;
-    
-    /* // Check for input
-    if (m_inputSelect) // Go to the next state
-    { 
-        audio_play_sound(snd_pressedA, 1, 0); 
-        m_currentState++; 
-        obj_drawRays.m_multiplier += 5;
-    }*/ 
-    
-    m_topText = string_to_array("Press START/OPTIONS!", m_infoTextSize);
-    m_bottomText = string_to_array("", m_infoTextSize);
-}
+global.playerGamepadID[m_id] = -1
+
+m_currentColor = (180.0 + 50.0 + (m_id * 90.0)) / 360.0 * 255.0 % 255.0
 </string>
           </argument>
         </arguments>
@@ -958,12 +838,12 @@ if(m_currentState == 0)
     <event eventtype="7" enumb="12">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>605</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -972,17 +852,10 @@ if(m_currentState == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// PreviousState()
-
-m_currentState--;
-audio_play_sound(snd_charReturn, 1, 0);
-obj_drawRays.m_multiplier -= 5;
-</string>
+            <string>Previous State</string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -999,11 +872,55 @@ obj_drawRays.m_multiplier -= 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// NextState()
+            <string>m_currentState--;
+audio_play_sound(snd_charReturn, 1, 0);
 
-m_currentState++;
+if(m_currentState == m_selectStates.PressA)
+    event_user(3); // Reset to default
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Next State</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>m_currentState++;
 audio_play_sound(snd_charNext, 1, 0);
-obj_drawRays.m_multiplier += 5;
 </string>
           </argument>
         </arguments>
@@ -1026,7 +943,7 @@ obj_drawRays.m_multiplier += 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>"Create Event"</string>
+            <string>Initualize</string>
           </argument>
         </arguments>
       </action>
@@ -1050,10 +967,10 @@ obj_drawRays.m_multiplier += 5;
 
 enum m_selectStates // The states where the box can be in
 {
-    PressA, // 0
-    EnterName, // 1
-    SelectCharacter, // 2
-    Ready // 3
+    PressA = 0,
+    SelectCharacter = 1,
+    EnterName = 2,
+    Ready = 3
 }
 
 m_keybaord = false;
@@ -1061,23 +978,10 @@ m_currentState = 0; // The current state of the box
 m_ready = false;
 //m_totalAmount = noone; // The total amount of this object, used for positioning
 
-m_drawWidth = 0; // The current width of the container
-m_drawHeight = 0; // The current height of the container
-
-m_contWidth = 0; // The width where the box lerps to
-m_contHeight = 0; // The height where the box lerps to
-
-m_sinCounter = 0; // Value for sinus effects
-m_containterSin = (m_id / 4);
+m_contWidth = 480; // The width of the container
+m_contHeight = 810; // The height of the container
 
 m_uwahTimer = 0;
-
-m_infoTextSize = 32;
-
-m_topText = string_to_array("", m_infoTextSize);
-m_bottomText = string_to_array("", m_infoTextSize);
-m_topTextDraw = string_to_array("", m_infoTextSize);
-m_bottomTextDraw = string_to_array("", m_infoTextSize);
 
 /// Input
 m_gpDeadzone = 0.3;
@@ -1119,7 +1023,7 @@ for (i = 0; i &lt; 4; i++) // 0 = up, 1 = down, 2 = left, 3 = right
             <kind>1</kind>
             <string>/// Set position
 
-y = (room_height / 2) + (room_height / 10);
+y = 675;
 x = room_width / 4 * (m_id+1) - room_width / 8;
 
 /*
@@ -1149,7 +1053,7 @@ y += room_height / 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// State 1 specifics
+            <string>/// State "Enter Name" specifics
 
 var b2b = sqrt(sqr(16) * 2); // Selector's with to exact touch borders
 
@@ -1157,18 +1061,14 @@ m_selectorMaxDistance = b2b * 1.5;
 m_clickDistance = b2b / 1.5;
 
 m_charsetA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ&lt;&gt;";
-m_charsetB = "abcdefghijklmnopqrstuvwxyz?!";
-m_charsetC = "ÀÂÃÄÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØŒÙÛÜßµ¶";
-m_charsetD = "0123456789@$%^&amp;+-*/=()™~_|. ";
+m_charsetB = "abcdefghijklmnopqrstuvwxyz&lt;&gt;";
+m_charsetC = "ÀÂÃÄÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØŒÙÛÜß&lt;&gt;";
+m_charsetD = "0123456789?!@$%^&amp;*/()™~_. &lt;&gt;";
 m_charsetCurrent = m_charsetA;
 
 
 m_letterBoxX[0] = 0;
 m_letterBoxY[0] = 0;
-m_letterRot[0] = 0;
-m_letterSat[0] = 0;
-m_letterXOff[0] = 0;
-m_letterYOff[0] = 0;
 
 m_xRows = 4;
 m_yRows = 8;
@@ -1201,7 +1101,7 @@ m_maxNameLength = 10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// State 2 specifics
+            <string>/// State "Select Character" specifics
 
 m_currentBow = 0;
 m_currentHead = 0;
@@ -1266,6 +1166,29 @@ m_RBY2 = y;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reset values to default
+
+event_user(3);
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -1284,32 +1207,14 @@ m_RBY2 = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the container -manually-
-/*
-var w = m_drawWidth/2;
-var h = m_drawHeight/2;
+            <string>/// Draw the container
+
+var w = m_contWidth/2;
+var h = m_contHeight/2;
 
 // Draw box
-draw_set_color(c_black);
-draw_set_alpha(0.4);
-draw_roundrect(x - w, y - h, x + w, y + h, false);
-
-draw_set_alpha(1);
-
-// Draw outline
-draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
-
-// Draw text
-draw_set_font(fnt_gui);
-draw_set_halign(fa_center)
-
-draw_set_valign(fa_bottom);
-draw_text(x, y-h-4, array_to_string(m_topTextDraw));
-
-draw_set_valign(fa_top);
-draw_text(x, y+h+4, array_to_string(m_bottomTextDraw));
-
-draw_set_valign(fa_center);
+draw_set_color(make_colour_hsv(m_currentColor,255,255));
+draw_rectangle(x - w, y - h, x + w, y + h, false);
 </string>
           </argument>
         </arguments>
@@ -1330,143 +1235,27 @@ draw_set_valign(fa_center);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the container -9slice-
-
-var w = m_drawWidth/2;
-var h = m_drawHeight/2;
-
-// Draw box
-//draw_roundrect(x - w, y - h, x + w, y + h, false);
-draw_9slice(spr_9sliceTest, x - w, y - h, w*2, h*2, true);
-
-// Draw text
-draw_set_color(c_black);
-draw_set_font(fnt_gui);
-draw_set_halign(fa_center)
-
-draw_set_valign(fa_bottom);
-draw_text(x, y-h-4, array_to_string(m_topTextDraw));
-
-draw_set_valign(fa_top);
-draw_text(x, y+h+4, array_to_string(m_bottomTextDraw));
-
-draw_set_valign(fa_center);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw exclusively for state 0
-if(m_currentState == 0)
-{
-    var w = m_drawWidth;
-    var h = m_drawHeight;
+            <string>/// Draw state "PressA"
+if(m_currentState == m_selectStates.PressA)
+{  
+    // override container
+    var w = m_contWidth/2;
+    var h = m_contHeight/2;
     
-    var sW = sprite_get_width(spr_controller);
-    var sH = sprite_get_height(spr_controller);
-    
-    var angle = sin(m_sinCounter + (m_id / 4) * 2) * 20;
-    
-    draw_set_color(c_white);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    draw_set_font(fnt_debug);
-    
-    
-    draw_sprite_ext(spr_controller, 0, x, y-25, 1, 1, angle, c_white, 1);
-    
+    // Draw box
     draw_set_color(c_black);
-    draw_text_transformed(x, y-25, string(m_id+1), 1, 1, angle);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw exclusively for state 1
-
-if(m_currentState == 1)
-{
-    // Draw the name
-    draw_set_color(c_white)
-    draw_text_outline(x, y - m_drawHeight/4, m_name, 6, c_black, 64);
+    draw_rectangle(x - w, y - h, x + w, y + h, false);
     
-    // Draw the selector
-    for (i=0; i&lt;4; i+=1)
-    {
-        var angle = i * 90;
-        var distance = m_selectorDist + (sin(m_sinCounter) * 5);
-        
-        var xSelect = m_selectorX + lengthdir_x(distance, angle + 90 + m_selectorAngleOff); //135
-        var ySelect = m_selectorY + lengthdir_y(distance, angle + 90 + m_selectorAngleOff); // 135
-        
-        var xSelect2 = m_selectorX + lengthdir_x(distance * .75, angle + 90 - (45/2) + m_selectorAngleOff); //135
-        var ySelect2 = m_selectorY + lengthdir_y(distance * .75, angle + 90 - (45/2) + m_selectorAngleOff); // 135
-        
-        var xSelect3 = m_selectorX + lengthdir_x(distance * .75, angle + 90 + (45/2) + m_selectorAngleOff); //135
-        var ySelect3 = m_selectorY + lengthdir_y(distance * .75, angle + 90 + (45/2) + m_selectorAngleOff); // 135
-        
-        //draw_sprite_ext(m_selectorPart, -1, xSelect, ySelect, 1, 1, i * 90, c_white, 1);
-        
-        draw_line(xSelect, ySelect, xSelect2, ySelect2);
-        draw_line(xSelect, ySelect, xSelect3, ySelect3);
-        
-        
-    }   
-    
-    // Draw the letters
-    var bwidth = m_drawWidth / m_xRows;
-    var bheight = m_drawHeight / m_yRows;
-    
+    var o = 10; // outline offset
     draw_set_color(c_white);
-    draw_set_font(fnt_letters);
+    draw_rectangle(x - w + o, y - h + o, x + w - o, y + h - o, true);
+
+    draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_center);
-    
-    for (i = 0; i &lt; array_length_1d(m_letterBoxX); i++)
-    {
-        var xCenter = m_letterBoxX[i] + (bwidth / 2) + m_letterXOff[i];
-        var yCenter = m_letterBoxY[i] + (bheight / 2) + m_letterYOff[i];
-        
-        var letter = string_copy(m_charsetCurrent, i + 1, 1);
-        draw_set_color(make_color_hsv(i * 255 / array_length_1d(m_letterBoxX), m_letterSat[i], 255));
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_center);
-        
-        draw_text_transformed(xCenter, yCenter, letter,
-        1, 1, 0)//m_letterRot[i]);
-    }
-    
+    draw_set_font(fnt_letters);
+    draw_text(x, y, "PRESS
+START")
 }
 </string>
           </argument>
@@ -1488,14 +1277,15 @@ if(m_currentState == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw exclusively for state 2
+            <string>/// Draw state "Select Character"
 
-if(m_currentState == 2)
+if(m_currentState == m_selectStates.SelectCharacter)
 {
-    var w = m_drawWidth;
-    var h = m_drawHeight;
+    var w = m_contWidth;
+    var h = m_contHeight;
     var offset = 0
-    if(m_charSelectState == 0) { offset = sin(m_sinCounter) * 10; }
+    //if(m_charSelectState == 0) { offset = sin(m_sinCounter) * 10; }
+    if(m_charSelectState == 0) { offset = 10; }
         
     // Draw the selector
     draw_set_color(c_white);
@@ -1639,17 +1429,64 @@ if(m_currentState == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw exclusively for state 3
+            <string>/// Draw state "Enter Name"
 
-if(m_currentState == 3)
-{                 
-    draw_set_color(c_white);
+if(m_currentState == m_selectStates.EnterName)
+{
+    var textColor = make_colour_hsv((m_currentColor + 128) % 255,255,255);
+
+    // Draw the name
+    draw_set_color(textColor)
+    draw_text(x, y - m_contHeight/4, m_name);
     
+    // Draw the selector
+    for (i=0; i&lt;4; i+=1)
+    {
+        var angle = i * 90;
+        var distance = m_selectorDist;
+        
+        var xSelect = m_selectorX + lengthdir_x(distance, angle + 90 + m_selectorAngleOff); //135
+        var ySelect = m_selectorY + lengthdir_y(distance, angle + 90 + m_selectorAngleOff); // 135
+        
+        var xSelect2 = m_selectorX + lengthdir_x(distance * .75, angle + 90 - (45/2) + m_selectorAngleOff); //135
+        var ySelect2 = m_selectorY + lengthdir_y(distance * .75, angle + 90 - (45/2) + m_selectorAngleOff); // 135
+        
+        var xSelect3 = m_selectorX + lengthdir_x(distance * .75, angle + 90 + (45/2) + m_selectorAngleOff); //135
+        var ySelect3 = m_selectorY + lengthdir_y(distance * .75, angle + 90 + (45/2) + m_selectorAngleOff); // 135
+        
+        //draw_sprite_ext(m_selectorPart, -1, xSelect, ySelect, 1, 1, i * 90, c_white, 1);
+        
+        draw_line(xSelect, ySelect, xSelect2, ySelect2);
+        draw_line(xSelect, ySelect, xSelect3, ySelect3);
+        
+        
+    }   
     
-    draw_text_transformed(x, y, "READY!", 
-        1 + (cos(m_containterSin * 2) * 0.2), 1 + (sin(m_containterSin * 3) * 0.2), 
-        sin(m_sinCounter) * 20)
+    // Draw the letters
+    var spacing = 5;
+    var bwidth = m_contWidth / m_xRows;
+    var bheight = m_contHeight / m_yRows;
     
+    draw_set_color(textColor);
+    draw_set_font(fnt_letters);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    
+    for (i = 0; i &lt; array_length_1d(m_letterBoxX); i++)
+    {
+        var xCenter = m_letterBoxX[i] + (bwidth / 2);
+        var yCenter = m_letterBoxY[i] + (bheight / 2);
+        
+        var letter = string_copy(m_charsetCurrent, i + 1, 1);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        
+        draw_text_transformed(xCenter, yCenter, letter,
+        1, 1, 0)//m_letterRot[i]);
+    }
+    
+    draw_set_color(c_red);
+    draw_text(x,y,string(string_width("m"))+"px")
 }
 </string>
           </argument>
@@ -1671,16 +1508,16 @@ if(m_currentState == 3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw outline -manually-
-/*
-var w = m_drawWidth/2;
-var h = m_drawHeight/2;
+            <string>/// Draw state "Ready"
 
-
-draw_set_color(c_black);
-draw_set_alpha(1);
-
-draw_roundrect_width(x - w, y - h, x + w, y + h, 6);
+if(m_currentState == 3)
+{                 
+    draw_set_color(c_white);
+    
+    
+    draw_text(x, y, "READY!");
+    
+}
 </string>
           </argument>
         </arguments>
