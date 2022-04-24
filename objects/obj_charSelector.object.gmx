@@ -1080,7 +1080,7 @@ m_selectorDist = 0;
 m_selectorAngleOff = 0;
 
 m_name = ""; // The name that the player enters
-m_maxNameLength = 10;
+m_maxNameLength = string_length("broodroost3r");
 </string>
           </argument>
         </arguments>
